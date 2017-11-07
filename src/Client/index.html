@@ -18,6 +18,7 @@
         socket.emit('ready', "ok");
     }
 
+
     var parameters = {
         "id":"ggbApplet",
         "width":1000,
@@ -43,8 +44,6 @@
     }
 
     function ggbOnInit() {
-//         register add, remove, rename and update listeners
-        var applet = document.ggbApplet;
         applet.registerAddListener("event");
 //        applet.registerRemoveListener("event");
 //        applet.registerRenameListener("event");
@@ -54,7 +53,6 @@
     }
     
     function event() {
-//        var applet = document.ggbApplet;
 //        var toExport = applet.getBase64();
 //        socket.emit('update', toExport);
         console.log("yakir");
