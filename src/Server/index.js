@@ -1,10 +1,10 @@
+const path = require("path");
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.get('/room/:roomId*', function(req, res) {
-	//res.send(req.params.roomId);
-	res.sendFile('index.html' , { root : __dirname});
+    res.sendFile('index.html', { root: path.join(__dirname, '../Client') });
 });
 
 var rooms = [];
