@@ -12,6 +12,7 @@ app.get('/room/:roomId*', function(req, res) {
 
 var rooms = [];
 
+
 function getRoomById(roomId) {
     var room = rooms.find(o => o.id === roomId);
     if(room === undefined){
