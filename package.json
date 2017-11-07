@@ -2,7 +2,7 @@
   "name": "VMT",
   "version": "1.0.0",
   "description": "a wrapper for geogebra with chat and calibration",
-  "main": "index.js",
+  "main": "src/Server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
