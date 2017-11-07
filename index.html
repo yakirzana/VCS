@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello world</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.geogebra.org/apps/deployggb.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+<script>
+    var socket = io();
+    function setListenerToUpdate() {
+        socket.on('update',function(data) {
+            var applet = document.ggbApplet;
+            if(data !== undefined && data !== null)
+                applet.setBase64(data);
+        });
+        socket.emit('ready', "ok");
+    }
+
+    var parameters = {
+        "id":"ggbApplet",
+        "width":1000,
+        "height":600,
+        "showToolBar":true,
+        "borderColor":null,
+        "showMenuBar":false,
+        "allowStyleBar":true,
+        "showAlgebraInput":true,
+        "enableLabelDrags":false,
+        "enableShiftDragZoom":true,
+        "capturingThreshold":null,
+        "showToolBarHelp":false,
+        "errorDialogsActive":true,
+        "showTutorialLink":true,
+        "showLogging":false,
+        "useBrowserForJS":true,
+        "perspective":"AG"};
+    var applet = new GGBApplet(parameters, '5.0', 'applet_container');
+
+    window.onload = function() {
+        applet.inject('applet_container');
+    }
+
+    function ggbOnInit() {
+//         register add, remove, rename and update listeners
+        var applet = document.ggbApplet;
+        applet.registerAddListener("event");
+//        applet.registerRemoveListener("event");
+//        applet.registerRenameListener("event");
+//        applet.registerClearListener("event");
+//        applet.registerUpdateListener("event");
+        setListenerToUpdate();
+    }
+    
+    function event() {
+//        var applet = document.ggbApplet;
+//        var toExport = applet.getBase64();
+//        socket.emit('update', toExport);
+        console.log("yakir");
+    }
+
+</script>
+
+<div id="applet_container"></div>
+</body>
+</html>
