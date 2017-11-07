@@ -1,7 +1,10 @@
 const path = require("path");
-var app = require('express')();
+const express = require('express');
+const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+app.use(express.static(path.join(__dirname, '../Client/public')));
 
 app.get('/room/:roomId*', function(req, res) {
     res.sendFile('index.html', { root: path.join(__dirname, '../Client') });
@@ -30,13 +33,27 @@ function updateCurrentRoomState(socket, roomId) {
 io.on('connection', function(socket) {
    var roomId = socket.handshake.headers.referer.split("/").pop();
    socket.join(roomId);
-    socket.on('ready', function(data) {
-        updateCurrentRoomState(socket, roomId);
-    });
+
+   socket.on('ready', function(data) {
+        //updateCurrentRoomState(socket, roomId);
+   });
+
    socket.on('update', function(data) {
        getRoomById(roomId).base64 = data;
        socket.broadcast.to(roomId).emit('update', data);
    });
+
+    socket.on('lockFromClient', function(user) {
+        if(user == "")
+            user = "לא ידוע";
+        socket.broadcast.to(roomId).emit('lockFromServer', user);
+    });
+
+    socket.on('releaseFromClient', function(user) {
+        if(user == "")
+            user = "לא ידוע";
+        socket.broadcast.to(roomId).emit('releaseFromServer', user);
+    });
 })
 
 http.listen(80, function() {

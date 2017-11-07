@@ -1,0 +1,10 @@
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.toolBar {
+    align: center;
+    margin: 0 auto;
+    padding: 10px;
+}
