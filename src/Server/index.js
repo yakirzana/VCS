@@ -10,7 +10,7 @@ app.get('/room/:roomId*', function(req, res) {
     res.sendFile('index.html', { root: path.join(__dirname, '../Client') });
 });
 
-var rooms = [];
+var rooms = ['yakir'];
 
 
 function getRoomById(roomId) {

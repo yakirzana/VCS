@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="rtl">
 <head>
     <title>Hello world</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
+{{rooms}}
 <script>
     var _strings;
     var _user;
@@ -49,7 +50,7 @@
     var parameters = {
         "id":"ggbApplet",
         "width":$(window).width() * 0.8,
-        "height": $(window).height() * 0.8,
+        "height": $(window).height() * 0.88,
         "showToolBar":true,
         "borderColor":null,
         "showMenuBar":false,
@@ -58,7 +59,9 @@
         "enableLabelDrags":false,
         "enableShiftDragZoom":true,
         "capturingThreshold":null,
-        "showToolBarHelp":false,
+        "showToolBarHelp":true,
+        "language":"iw",
+        "country":"IL",
         "errorDialogsActive":true,
         "showTutorialLink":false,
         "showLogging":false,
@@ -120,9 +123,9 @@
 
 </script>
 <div class="toolBar text-center">
-    <div id="userInControl" style="width: 10%; margin: 0 auto;" class="alert alert-info">No one in control</div>
     <input id="name" type="text" placeholder="הכנס את שמך">
     <button id="btnControl" type="button" onclick="lockBoard(_isLocked)" class="btn btn-success">loading..</button>
+    <span id="userInControl" style="width: 10%; float:none;" class="alert alert-info">No one in control</span>
 </div>
 <div id="applet_container" class="disabledbutton"></div>
 </body>

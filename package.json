@@ -4,7 +4,8 @@
   "description": "a wrapper for geogebra with chat and calibration",
   "main": "src/Server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/Server/index.js"
   },
   "author": "Yakir Zana",
   "license": "MIT",
