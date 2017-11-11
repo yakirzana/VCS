@@ -4,10 +4,15 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../Client/views'));
+
+
 app.use(express.static(path.join(__dirname, '../Client/public')));
 
 app.get('/room/:roomId*', function(req, res) {
-    res.sendFile('index.html', { root: path.join(__dirname, '../Client') });
+    res.render('pages/index');
 });
 
 var rooms = ['yakir'];

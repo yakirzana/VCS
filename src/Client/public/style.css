@@ -4,7 +4,14 @@
 }
 
 .toolBar {
-    align: center;
-    margin: 0 auto;
-    padding: 10px;
+    margin: 5px;
+    padding: 15px;
+    border: 1px solid grey;
+    border-radius: 5px;
+    width: 50%;
+}
+
+.alert {
+    height: 60px;
+    margin: 0 0 20px;
 }
