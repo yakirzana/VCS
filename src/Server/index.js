@@ -4,45 +4,39 @@ const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var strings = require('./Lang/heb.json');
+var Room = require('./classes/Room.js');
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../Client/views'));
-
-
 app.use(express.static(path.join(__dirname, '../Client/public')));
 
+var rooms = [];
+
+function getRoomById(roomId) {
+    var room = rooms.find (o => o.id === roomId);
+    return room;
+}
+
 app.get('/room/:roomId*', function(req, res) {
-    res.render('pages/room', {page: "room" , strings: strings});
+    var roomId = req.params.roomId;
+    var room = getRoomById(roomId);
+    if (room === undefined) {
+        room = new Room(roomId, true, "name", "desc", false, true);
+        rooms.push(room);
+    }
+
+    res.render('pages/room', {page: "room" , strings: strings, room});
 });
 
 app.get('/', function(req, res) {
     res.render('pages/home', {page:"home", strings: strings});
 });
 
-var rooms = ['yakir'];
-
-
-function getRoomById(roomId) {
-    var room = rooms.find(o => o.id === roomId);
-    if(room === undefined){
-        room = {
-            id : roomId,
-            base64 : null
-        };
-        rooms.push(room);
-    }
-    return room;
-}
-
-function updateCurrentRoomState(socket, roomId) {
-    var room = getRoomById(roomId);
-    if(room.base64 != null)
-        socket.emit('update', room.base64);
-}
 
 io.on('connection', function(socket) {
    var roomId = socket.handshake.headers.referer.split("/").pop();
+   var room = getRoomById(roomId);
    socket.join(roomId);
 
    socket.on('ready', function(data) {
@@ -50,19 +44,23 @@ io.on('connection', function(socket) {
    });
 
    socket.on('update', function(data) {
-       getRoomById(roomId).base64 = data;
+       //getRoomById(roomId).base64 = data;
        socket.broadcast.to(roomId).emit('update', data);
    });
 
     socket.on('lockFromClient', function(user) {
         if(user == "")
             user = "לא ידוע";
+        room.isLocked = true;
+        room.userInControl = user;
         socket.broadcast.to(roomId).emit('lockFromServer', user);
     });
 
     socket.on('releaseFromClient', function(user) {
         if(user == "")
             user = "לא ידוע";
+        room.isLocked = false;
+        room.userInControl = undefined;
         socket.broadcast.to(roomId).emit('releaseFromServer', user);
     });
 })

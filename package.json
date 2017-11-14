@@ -9,13 +9,13 @@
   },
   "author": "Yakir Zana",
   "license": "MIT",
-  "repository" :
-  { "type" : "git",
-    "url" : "https://github.com/yakirzana/VMT"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yakirzana/VMT"
   },
   "dependencies": {
+    "ejs": "^1.0.0",
     "express": "^4.16.2",
-    "socket.io": "^2.0.4",
-    "ejs": "^1.0.0"
+    "socket.io": "^2.0.4"
   }
 }
