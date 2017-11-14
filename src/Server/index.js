@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+var strings = require('./Lang/heb.json');
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
@@ -12,7 +13,11 @@ app.set('views', path.join(__dirname, '../Client/views'));
 app.use(express.static(path.join(__dirname, '../Client/public')));
 
 app.get('/room/:roomId*', function(req, res) {
-    res.render('pages/index');
+    res.render('pages/room', {page: "room" , strings: strings});
+});
+
+app.get('/', function(req, res) {
+    res.render('pages/home', {page:"home", strings: strings});
 });
 
 var rooms = ['yakir'];

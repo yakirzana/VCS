@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>Hello world</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <title>VCS Demo</title>
+    <% include ../partials/head %>
     <script src="https://cdn.geogebra.org/apps/deployggb.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <link rel="stylesheet" type="text/css" href="/style.css">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 </head>
 <body>
-{{rooms}}
+<header>
+    <% include ../partials/header %>
+</header>
 <script>
-    var _strings;
     var _user;
     var _isLocked = true;
 
-    $.getJSON("/Lang/heb.json", function(json) {
-        _strings = json;
-        initText();
-    });
-
     function initText() {
-        $("#btnControl").html(_strings.takeControl);
-        $('#userInControl').html(_strings.noOneInControl);
+        $("#btnControl").html(strings.takeControl);
+        $('#userInControl').html(strings.noOneInControl);
     }
 
     var socket = io();
@@ -50,7 +42,7 @@
     var parameters = {
         "id":"ggbApplet",
         "width":$(window).width() * 0.8,
-        "height": $(window).height() * 0.88,
+        "height": $(window).height() * 0.79,
         "showToolBar":true,
         "borderColor":null,
         "showMenuBar":false,
@@ -95,12 +87,12 @@
     function putUserInControl(userInControl) {
         if(_user != userInControl)
             $('#btnControl').attr("disabled", true);
-        $('#userInControl').html(userInControl + " " + _strings.inControl);
+        $('#userInControl').html(userInControl + " " + strings.inControl);
     }
 
     function releaseUserControl(user) {
         $('#btnControl').attr("disabled", false);
-        $('#userInControl').html(_strings.noOneInControl);
+        $('#userInControl').html(strings.noOneInControl);
     }
 
     function lockBoard(lock) {
@@ -109,7 +101,7 @@
             releaseUserControl();
             $("#applet_container").addClass("disabledbutton");
             _isLocked = true;
-            $("#btnControl").html(_strings.takeControl);
+            $("#btnControl").html(strings.takeControl);
         }
         else { // _user take control
             _user = $("#name").val();
@@ -117,16 +109,19 @@
             putUserInControl(_user);
             $("#applet_container").removeClass("disabledbutton");
             _isLocked = false;
-            $("#btnControl").html(_strings.release);
+            $("#btnControl").html(strings.release);
         }
     }
 
 </script>
-<div class="toolBar text-center">
+<div class="toolBar">
     <input id="name" type="text" placeholder="הכנס את שמך">
-    <button id="btnControl" type="button" onclick="lockBoard(_isLocked)" class="btn btn-success">loading..</button>
-    <span id="userInControl" style="width: 10%; float:none;" class="alert alert-info">No one in control</span>
+    <button id="btnControl" type="button" onclick="lockBoard(_isLocked)" class="btn btn-success"><%- strings.takeControl %></button>
+    <span id="userInControl" style="width: 10%; float:none;" class="alert alert-info"><%- strings.noOneInControl %></span>
 </div>
 <div id="applet_container" class="disabledbutton"></div>
+<footer>
+    <% include ../partials/footer %>
+</footer>
 </body>
 </html>
