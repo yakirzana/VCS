@@ -4,11 +4,9 @@
 }
 
 .toolBar {
-    margin: 5px;
-    padding: 15px;
-    border: 1px solid grey;
-    border-radius: 5px;
-    width: 50%;
+    padding: 10px 0px 0px 0px;
+    margin: 5px 0px 10px 10px;
+    width: 41%;
 }
 
 .alert {
@@ -25,4 +23,8 @@
 .jumbotron .btn {
     padding: 14px 24px;
     font-size: 21px;
+}
+
+#footer {
+    margin-top: 100px;
 }

@@ -3,6 +3,7 @@
     var _user;
     var _isLocked = true;
     var socket = io();
+    var strings = <%-JSON.stringify(strings)%>;
 
     function setListenerToUpdate() {
         socket.on('update',function(data) {
@@ -14,7 +15,6 @@
         socket.on('lockFromServer',function(user) {
             putUserInControl(user);
         });
-
 
 
         socket.on('releaseFromServer',function(user) {
@@ -101,6 +101,6 @@
 <div class="toolBar">
     <input id="name" type="text" placeholder="הכנס את שמך">
     <button id="btnControl" type="button" onclick="lockBoard(_isLocked)" class="btn btn-success"><%- strings.takeControl %></button>
-    <span id="userInControl" style="width: 10%; float:none;" class="alert alert-info"><%- strings.noOneInControl %></span>
+    <span id="userInControl" style="width: 10%;" class="alert alert-info"><%- strings.noOneInControl %></span>
 </div>
 <div id="applet_container" class="disabledbutton"></div>
