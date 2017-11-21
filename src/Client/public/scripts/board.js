@@ -107,6 +107,7 @@ function fixVisiblityOnRefresh(value) {
     for(i=0; i<cols.length; i++) {
         cols[i].style.visibility = value;
     }
+
 }
 
 function releaseUserControl(user) {
