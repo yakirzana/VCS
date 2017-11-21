@@ -8,7 +8,14 @@
     var strings = <%-JSON.stringify(strings)%>;
     var room = <%-JSON.stringify(room)%>;
 
+
     function setListenerToUpdate() {
+        socket.emit('init', "");
+        socket.on('init',function (userInControl) {
+            if (userInControl != null)
+                putUserInControl(userInControl);
+        });
+
         socket.on('update',function(data) {
             var applet = document.ggbApplet;
             if(data !== undefined && data !== null) {
@@ -63,8 +70,6 @@
     }
 
     function initBoard() {
-        if (room._isLocked && room._userInControl != undefined)
-            putUserInControl(room._userInControl);
         $(".loading").addClass("hidden");
         $("#applet_container").removeClass("hidden");
         setListenerToUpdate();
