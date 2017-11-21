@@ -4,7 +4,7 @@
     var _isLocked = true;
     var _firstTime = true;
     var _refreshIntervalId = undefined;
-    var socket = io();
+    var socket = io('/rooms');
     var strings = <%-JSON.stringify(strings)%>;
     var room = <%-JSON.stringify(room)%>;
 
