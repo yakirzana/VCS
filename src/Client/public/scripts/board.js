@@ -1,7 +1,7 @@
 var _user;
 var _isLocked = true;
 var _firstTime = true;
-var _refreshIntervalId = undefined;
+var refreshIntervalId = undefined;
 var socket = io('/rooms');
 var strings = strings;
 var room = room;
@@ -91,17 +91,28 @@ function addListener(objName) {
 
 
 function putUserInControl(userInControl) {
-    if(_user !== userInControl)
+    if(_user !== userInControl) {
         $('#btnControl').attr("disabled", true);
-    else
+        fixVisiblityOnRefresh("hidden");
+    }
+    else {
         refreshIntervalId = setInterval(event, 1000);
-    $('#userInControl').html(userInControl + " " + strings.inControl);
+    }
+    $('#userInControl').html(userInControl + " " + strings.inControl)
 
+}
+
+function fixVisiblityOnRefresh(value) {
+    var cols = document.getElementsByClassName('algebraPanel');
+    for(i=0; i<cols.length; i++) {
+        cols[i].style.visibility = value;
+    }
 }
 
 function releaseUserControl(user) {
     $('#btnControl').attr("disabled", false);
     $('#userInControl').html(strings.noOneInControl);
+    fixVisiblityOnRefresh("visible");
     if(_user === user) {
         clearInterval(refreshIntervalId);
     }
