@@ -1,12 +1,14 @@
-.disabledbutton {
+.disabled {
     pointer-events: none;
     opacity: 0.7;
 }
 
 .toolBar {
-    padding: 10px 0px 0px 0px;
+    padding: 10px 5px 0px 0px;
     margin: 5px 0px 10px 10px;
-    width: 41%;
+    height: 10%;
+    display: inline-block;
+    float: right;
 }
 
 .alert {
@@ -27,4 +29,16 @@
 
 #footer {
     margin-top: 100px;
+}
+
+.loading {
+    margin: 0 auto;
+    width: 500px;
+    height: 500px;
+    background: url("images/ajax-loader.gif") no-repeat center ;
+    background-size: 100%;
+}
+
+.hidden {
+    display: none;
 }
