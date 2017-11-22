@@ -19,7 +19,7 @@
 /* Main marketing message and sign up button */
 .jumbotron {
     text-align: center;
-    background-color: transparent;
+    background-color: #f7f7f7;
 }
 .jumbotron .btn {
     padding: 14px 24px;
