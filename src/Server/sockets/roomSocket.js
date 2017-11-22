@@ -16,6 +16,7 @@ module.exports = function(io, data) {
 
         socket.on('update', function (data) {
             socket.broadcast.to(roomId).emit('update', data);
+            room.base64 = data;
         });
 
         socket.on('lockFromClient', function (user) {

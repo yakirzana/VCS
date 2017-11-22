@@ -27,9 +27,11 @@ module.exports = function(app, data) {
     app.get('/room/:roomId*', checkAuth, function(req, res) {
         var roomId = req.params.roomId;
         var room = data.rooms.getRoomById(roomId);
+        //TODO: remove later and return a error
         if (room === undefined) {
-            room = data.rooms.addRoom(roomId, true, "name", "desc", false, true);
+            room = data.rooms.addRoom(roomId, true, "name", "desc", false, true, null);
         }
+        //
         res.render('pages/room', {page: "room" , strings: data.strings, room});
     });
 

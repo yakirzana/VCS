@@ -17,7 +17,6 @@ function setListenerToUpdate() {
     socket.on('update',function(data) {
         var applet = document.ggbApplet;
         if(data !== undefined && data !== null) {
-            console.log("got");
             applet.setBase64(data);
         }
     });
@@ -53,7 +52,9 @@ var parameters = {
     "showLogging":false,
     "useBrowserForJS":true,
     "preventFocus":true,
-    "perspective":"AG"};
+    "perspective":"AG"
+};
+
 
 var applet = new GGBApplet(parameters, '5.0', 'applet_container');
 
@@ -68,6 +69,10 @@ function ggbOnInit(){
 }
 
 function initBoard() {
+    var applet = document.ggbApplet;
+    //initial state of board if available
+    if(room._base64 != null && room._base64 != undefined)
+        applet.setBase64(room._base64);
     $(".loading").addClass("hidden");
     $("#applet_container").removeClass("hidden");
     setListenerToUpdate();
