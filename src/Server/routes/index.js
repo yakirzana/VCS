@@ -38,4 +38,8 @@ module.exports = function(app, data) {
     app.get('/', function(req, res) {
         res.render('pages/home', {page:"home", strings: data.strings});
     });
+
+    app.get('/myRooms', function(req, res) {
+        res.render('pages/myRooms', {page:"room", strings: data.strings});
+    });
 }

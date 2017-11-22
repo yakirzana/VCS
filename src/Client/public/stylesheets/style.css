@@ -34,7 +34,7 @@
     margin: 0 auto;
     width: 500px;
     height: 500px;
-    background: url("images/ajax-loader.gif") no-repeat center ;
+    background: url("../images/ajax-loader.gif") no-repeat center ;
     background-size: 100%;
 }
 
