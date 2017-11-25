@@ -1,3 +1,3 @@
-module.exports = function(io, data) {
-    require('./roomSocket')(io, data);
+module.exports = function(io, bl) {
+    require('./roomSocket')(io, bl);
 }

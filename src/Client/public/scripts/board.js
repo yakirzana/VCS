@@ -45,18 +45,19 @@ var parameters = {
     "enableShiftDragZoom":true,
     "capturingThreshold":null,
     "showToolBarHelp":true,
-    "language":"iw",
-    "country":"IL",
+    "language":"en",
+    "country":"US",
     "errorDialogsActive":true,
     "showTutorialLink":false,
     "showLogging":false,
     "useBrowserForJS":true,
     "preventFocus":true,
-    "perspective":"AG"
+    "perspective":"AG",
+    "appName":"graphing"
 };
 
 
-var applet = new GGBApplet(parameters, '5.0', 'applet_container');
+var applet = new GGBApplet(parameters, true, 'applet_container');
 
 window.onload = function() {
     applet.inject('applet_container');

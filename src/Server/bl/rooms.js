@@ -11,4 +11,4 @@ module.exports.addRoom = function (id, isLocked, name, desc, isTimeLimit, timeLi
     room = new Room(id, isLocked, name, desc, isTimeLimit, timeLimit);
     rooms.push(room);
     return room;
-}
+};
