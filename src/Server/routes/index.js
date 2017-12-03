@@ -1,8 +1,9 @@
+var bl = require('../bl');
+
 function checkAuth(req, res, next) {
-    next();
-    return;
-    if (!req.session || !req.session.user_id) {
-        res.send('You are not authorized to view this page');
+    if (!req.session || !req.session.userHash || !req.session.username ||
+        bl.users.isHashMatch(req.session.username, req.session.userHash)) {
+        res.redirect('/login');
     } else {
         next();
     }
@@ -11,20 +12,28 @@ function checkAuth(req, res, next) {
 module.exports = function(app, data) {
     app.post('/login', function (req, res) {
         var post = req.body;
-        if (post.user === 'john' && post.password === 'johnspassword') {
-            req.session.user_id = johns_user_id_here;
-            res.redirect('/room/1234');
+        if ((post && post.username && post.password )
+            && (bl.users.isPassMatch(post.username, post.password))) {
+            req.session.userHash = bl.users.createUserHash(post.username);
+            req.session.username = post.username;
+            res.redirect('/');
         } else {
-            res.send('Bad user/pass');
+            req.flash("message","bad");
+            res.redirect('/login');
         }
     });
 
     app.get('/logout', function (req, res) {
-        delete req.session.user_id;
+        delete req.session.username;
+        delete req.session.userHash;
         res.redirect('/');
     });
 
-    app.get('/room/:roomId*', checkAuth, function(req, res) {
+    app.get('/login', function (req, res) {
+        res.render('pages/login', {page: "login" , strings: data.strings, message: req.flash('message')});
+    });
+
+    app.get('/room/:roomId*', function(req, res) {
         var roomId = req.params.roomId;
         var room = data.rooms.getRoomById(roomId);
         //TODO: remove later and return a error
@@ -39,7 +48,7 @@ module.exports = function(app, data) {
         res.render('pages/home', {page:"home", strings: data.strings});
     });
 
-    app.get('/myRooms', function(req, res) {
+    app.get('/myRooms', checkAuth,  function(req, res) {
         res.render('pages/myRooms', {page:"room", strings: data.strings});
     });
 }
