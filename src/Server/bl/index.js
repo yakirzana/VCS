@@ -1,3 +1,8 @@
-module.exports.strings = require('../lang/heb.json');
-module.exports.rooms = require('./rooms');
-module.exports.users = require('./users');
+var Users = require('./users');
+
+module.exports = function (dl) {
+    this.strings = require('../lang/heb.json');
+    this.rooms = require('./rooms');
+    this.users = new Users(dl);
+};
+

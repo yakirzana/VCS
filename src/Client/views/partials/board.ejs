@@ -2,10 +2,10 @@
 <script>
     var strings = <%-JSON.stringify(strings)%>;
     var room = <%-JSON.stringify(room)%>;
+    var user = "<%- logged %>";
 </script>
 <script src="/scripts/board.js"></script>
 <div class="toolBar">
-    <input id="name" type="text" placeholder="הכנס את שמך">
     <button id="btnControl" type="button" onclick="lockBoard(_isLocked)" class="btn btn-success"><%- strings.takeControl %></button>
     <span id="userInControl" style="width: 150px;" class="alert alert-info"><%- strings.noOneInControl %></span>
 </div>

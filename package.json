@@ -15,10 +15,12 @@
   },
   "dependencies": {
     "connect-flash": "^0.1.1",
-    "ejs": "^1.0.0",
+    "ejs": "^2.5.7",
     "express": "^4.16.2",
     "socket.io": "^2.0.4",
     "express-session": "latest",
-    "body-parser": "latest"
+    "body-parser": "latest",
+    "mongoose": "latest",
+    "mongodb": "latest"
   }
 }

@@ -1,15 +1,29 @@
-var bl = require('../bl');
+module.exports = function (app, bl) {
+    this.loggedUser = null;
 
-function checkAuth(req, res, next) {
-    if (!req.session || !req.session.userHash || !req.session.username ||
-        bl.users.isHashMatch(req.session.username, req.session.userHash)) {
-        res.redirect('/login');
-    } else {
+    function checkAuthRestricted(req, res, next) {
+        if (!isLogged(req, res, next))
+            res.redirect('/login');
+        else
+            next();
+    }
+
+    function checkAuth(req, res, next) {
+        isLogged(req);
         next();
     }
-}
 
-module.exports = function(app, data) {
+    function isLogged(req) {
+        if (!req.session || !req.session.userHash || !req.session.username ||
+            bl.users.isHashMatch(req.session.username, req.session.userHash)) {
+            this.loggedUser = null;
+            return false;
+        } else {
+            this.loggedUser = req.session.username;
+            return true;
+        }
+    }
+
     app.post('/login', function (req, res) {
         var post = req.body;
         if ((post && post.username && post.password )
@@ -29,26 +43,31 @@ module.exports = function(app, data) {
         res.redirect('/');
     });
 
-    app.get('/login', function (req, res) {
-        res.render('pages/login', {page: "login" , strings: data.strings, message: req.flash('message')});
+    app.get('/login', checkAuth, function (req, res) {
+        res.render('pages/login', {
+            page: "login",
+            strings: bl.strings,
+            message: req.flash('message'),
+            logged: this.loggedUser
+        });
     });
 
-    app.get('/room/:roomId*', function(req, res) {
+    app.get('/room/:roomId*', checkAuthRestricted, function (req, res) {
         var roomId = req.params.roomId;
-        var room = data.rooms.getRoomById(roomId);
+        var room = bl.rooms.getRoomById(roomId);
         //TODO: remove later and return a error
         if (room === undefined) {
-            room = data.rooms.addRoom(roomId, true, "name", "desc", false, true, null);
+            room = bl.rooms.addRoom(roomId, true, "name", "desc", false, true, null);
         }
         //
-        res.render('pages/room', {page: "room" , strings: data.strings, room});
+        res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser});
     });
 
-    app.get('/', function(req, res) {
-        res.render('pages/home', {page:"home", strings: data.strings});
+    app.get('/', checkAuth, function (req, res) {
+        res.render('pages/home', {page: "home", strings: bl.strings, logged: this.loggedUser});
     });
 
-    app.get('/myRooms', checkAuth,  function(req, res) {
-        res.render('pages/myRooms', {page:"room", strings: data.strings});
+    app.get('/myRooms', checkAuthRestricted, function (req, res) {
+        res.render('pages/myRooms', {page: "room", strings: bl.strings, logged: this.loggedUser});
     });
 }

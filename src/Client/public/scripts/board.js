@@ -1,4 +1,4 @@
-var _user;
+var _user = user;
 var _isLocked = true;
 var _firstTime = true;
 var refreshIntervalId = undefined;
@@ -134,7 +134,6 @@ function lockBoard(lock) {
         $("#btnControl").html(strings.takeControl);
     }
     else { // _user take control
-        _user = $("#name").val();
         socket.emit('lockFromClient', _user);
         putUserInControl(_user);
         $("#applet_container").removeClass("disabled");
