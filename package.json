@@ -14,13 +14,12 @@
     "url": "https://github.com/yakirzana/VMT"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "socket.io": "^2.0.4",
     "express-session": "latest",
-    "body-parser": "latest",
-    "mongoose": "latest",
-    "mongodb": "latest"
+    "mongodb": "^2.2.33",
+    "socket.io": "^2.0.4"
   }
 }

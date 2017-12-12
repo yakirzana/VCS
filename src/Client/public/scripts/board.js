@@ -52,8 +52,8 @@ var parameters = {
     "showLogging":false,
     "useBrowserForJS":true,
     "preventFocus":true,
-    "perspective":"AG",
-    "appName":"graphing"
+    "perspective":"AG"//,
+    // "appName":"graphing"
 };
 
 

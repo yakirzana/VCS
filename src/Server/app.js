@@ -46,7 +46,8 @@ function run(db) {
 
 
     //bl.users.addUser("teac1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
-    bl.users.getUserByUserName("teac1");
+    var user = bl.users.getUserByUserName("teac1");
+    //bl.users.deleteUser("teac1");
 
     http.listen(80, function() {
         console.log('listening on port 80');

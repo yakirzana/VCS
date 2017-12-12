@@ -10,10 +10,15 @@ module.exports = function (db) {
         });
     };
 
-    this.getUserByUserName = async function (username) {
-        let user = await db.collection('users').find({_username: username}).next();
-        user = Object.assign(new User, user);
-        return user;
+    this.getUserByUserName = async function(username) {
+        try {
+            let user = await db.collection('users').findOne({_username: username});
+            user = Object.assign(new User, user);
+            return user;
+        } catch (err) {
+            console.log("Error: ", err);
+            return null;
+        }
     };
 
     this.deleteUser = function (user) {

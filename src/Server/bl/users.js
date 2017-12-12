@@ -4,6 +4,8 @@ var User = require('../classes/User.js');
 module.exports = function (dl) {
     this.getUserByUserName = async function (username) {
         var user = await dl.users.getUserByUserName(username);
+        if(user == null)
+            throw new Error("User wont find");
         return user;
     };
 
@@ -15,6 +17,7 @@ module.exports = function (dl) {
 
     this.isPassMatch = async function (username, password) {
         var user = await this.getUserByUserName(username);
+        console.log(user);
         return user != undefined && user.password == password;
     };
 
@@ -25,17 +28,14 @@ module.exports = function (dl) {
     };
 
     this.createUserHash = function (username) {
-        var user = this.getUserByUserName(username);
+        var user =  this.getUserByUserName(username);
         return crypto.createHash('sha256').update(username + user.password);
     };
 
 
-    this.deleteUser = function (username) {
-        var user = this.getUserByUserName(username);
+    this.deleteUser = async function (username) {
+        var user = await this.getUserByUserName(username);
         dl.users.deleteUser(user);
     };
 };
-
-
-
 
