@@ -5,7 +5,7 @@ module.exports = function (dl) {
     this.getUserByUserName = async function (username) {
         var user = await dl.users.getUserByUserName(username);
         if(user == null)
-            throw new Error("User wont find");
+            throw new Error("cannot find user");
         return user;
     };
 
