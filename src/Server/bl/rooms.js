@@ -1,14 +1,20 @@
 var Room = require('../classes/Room.js');
 
-var rooms = [];
+module.exports = function (dl) {
+    this.getRoomById = async function (id) {
+        var room = await dl.rooms.getRoomById(id);
+        if(room == null)
+            throw new Error("cannot find room");
+        return room;
+    };
 
-module.exports.getRoomById = function(roomId) {
-    var room = rooms.find (o => o.id === roomId);
-    return room;
-};
+    this.addRoom = function (id, isLocked, name, desc, isTimeLimit, timeLimit) {
+        room = new Room(id, isLocked, name, desc, isTimeLimit, timeLimit);
+        dl.rooms.addRoom(room);
+        return room;
+    };
 
-module.exports.addRoom = function (id, isLocked, name, desc, isTimeLimit, timeLimit) {
-    room = new Room(id, isLocked, name, desc, isTimeLimit, timeLimit);
-    rooms.push(room);
-    return room;
-};
+    this.deleteRoom = async function (id) {
+        dl.rooms.deleteRoom(id);
+    };
+}
