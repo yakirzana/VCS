@@ -3,6 +3,7 @@
 <head>
     <title>VCS Demo</title>
     <% include ../partials/head %>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/chat.css">
 </head>
 <body>
 <header>
@@ -10,7 +11,12 @@
 </header>
 
     <main>
-        <% include ../partials/board.ejs %>
+        <div style="width: 80%;">
+            <% include ../partials/board.ejs %>
+        </div>
+        <div style="width: 20%;">
+            <% include ../partials/chat.ejs %>
+        </div>
     </main>
 
 <footer>

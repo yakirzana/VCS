@@ -1,0 +1,55 @@
+<script>
+    var strings = <%-JSON.stringify(strings)%>;
+    var room = <%-JSON.stringify(room)%>;
+    var user = "<%- logged %>";
+</script>
+<script src="/scripts/chat.js"></script>
+
+<div class="chat">
+    <div class="title">Chat</div>
+    <div class="content">
+        <li class="self">
+            <div class="msg">
+                <span class="username">יקיר</span>
+                <p>מה קןרה אח <emoji class="pizza"/></p>
+                <time>20:17</time>
+            </div>
+        </li>
+        <li class="other">
+            <div class="msg">
+                <span class="username">אחיעד</span>
+                <p>סבבה מה איתך</p>
+                <p>נשמה</p>
+                <time>20:18</time>
+            </div>
+        </li>
+        <li class="other">
+            <div class="msg">
+                <span class="username">אחיעד</span>
+                <p>כוסעמק ערס <emoji class="suffocated"/></p>
+                <time>20:18</time>
+            </div>
+        </li>
+        <li class="self">
+            <div class="msg">
+                <span class="username">יקיר</span>
+                <p>חח דבר נקי</p>
+                <p>ישמן</p>
+                <time>20:18</time>
+            </div>
+        </li>
+        <li class="other">
+            <div class="msg">
+                <span class="username">אחיעד</span>
+                <p>בא לי להתאבד כוסעמק</p>
+                <time>20:18</time>
+            </div>
+        </li>
+    </div>
+    <div class="input">
+        <form id="msgForm" action="#">
+            <input id="msg" class="textarea" type="text" placeholder="כתוב כאן" style="width: 78%"/>
+            <input type="submit" value="שלח" onclick="sendMsg();" style="width: 20%">
+        </form>
+    </div>
+</div>
