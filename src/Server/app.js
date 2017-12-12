@@ -55,7 +55,7 @@ function run(db) {
     //
     // test();
 
-    bl.rooms.deleteRoom(1);
+    //bl.rooms.deleteRoom(1);
 
 
     http.listen(80, function() {
