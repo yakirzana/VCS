@@ -4,7 +4,7 @@
 .chat {
     width: 18%;
     position: absolute;
-    height: 87%;
+    height: calc(100% - 90px);
     background-color: #e5e5e5;
     border: medium #7f7f7f;
     list-style: none;

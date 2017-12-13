@@ -34,25 +34,13 @@ function setSocketListeners() {
 
 var parameters = {
     "id":"ggbApplet",
-    "width":$(document).width() * 0.8,
-    "height": $(document).height() * 0.85,
+    "width": $(document).width() * 0.8,
+    "height": $(document).height() - 125,
     "showToolBar":true,
-    // "borderColor":null,
-    // "showMenuBar":false,
-    // "allowStyleBar":true,
     "showAlgebraInput":true,
-    // "enableLabelDrags":false,
-    // "enableShiftDragZoom":true,
-    // "capturingThreshold":null,
-    // "showToolBarHelp":true,
     "language":"eb",
-    // "country":"US",
-    // "errorDialogsActive":true,
-    // "showTutorialLink":false,
-    // "showLogging":false,
     "useBrowserForJS":true,
     "preventFocus":true,
-    // "perspective":"AG"//,
     //"appName":"graphing"
 };
 
