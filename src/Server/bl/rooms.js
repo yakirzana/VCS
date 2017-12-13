@@ -17,4 +17,8 @@ module.exports = function (dl) {
     this.deleteRoom = async function (id) {
         dl.rooms.deleteRoom(id);
     };
+
+    this.saveRoom = function(room) {
+        dl.rooms.saveRoom(room);
+    }
 }

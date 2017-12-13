@@ -52,12 +52,16 @@ module.exports = function (app, bl) {
         });
     });
 
-    app.get('/room/:roomId*', checkAuthRestricted, function (req, res) {
+    app.get('/room/:roomId*', checkAuthRestricted, async function (req, res) {
         var roomId = req.params.roomId;
-        var room = bl.rooms.getRoomById(roomId);
-        //TODO: remove later and return a error
-        if (room === undefined) {
+        var room;
+        try {
+            room = await bl.rooms.getRoomById(roomId);
+        }
+        catch (err) {
+            //TODO replace with error msg to user
             room = bl.rooms.addRoom(roomId, true, "name", "desc", false, true, null);
+            console.log("Create new room ", roomId);
         }
         //
         res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser});

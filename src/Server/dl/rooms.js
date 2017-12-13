@@ -13,6 +13,8 @@ module.exports = function (db) {
     this.getRoomById = async function(id) {
         try {
             let room = await db.collection('rooms').findOne({_id: id});
+            if(room == null)
+                throw new Error("cant find room");
             room = Object.assign(new Room, room);
             return room;
         } catch (err) {
@@ -24,5 +26,24 @@ module.exports = function (db) {
     this.deleteRoom = function (id) {
         db.collection('rooms').deleteOne({_id: id}, function (err, r) {
         });
+    }
+
+    this.saveRoom = async function (room) {
+        var room = await room;
+        var myquery = { _id: room.id };
+        var newvalues = { $set: {
+                _isLocked: room.isLocked,
+                _userInControl: room.userInControl,
+                _name: room.name,
+                _desc: room.desc,
+                _isTimeLimit: room.isTimeLimit,
+                _timeLimit: room.timeLimit,
+                _base64: room.base64
+            }};
+
+        db.collection("rooms").updateOne(myquery, newvalues, function(err, res) {
+            if (err) throw err;
+        });
+
     }
 };

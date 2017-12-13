@@ -17,7 +17,6 @@ module.exports = function (dl) {
 
     this.isPassMatch = async function (username, password) {
         var user = await this.getUserByUserName(username);
-        console.log(user);
         return user != undefined && user.password == password;
     };
 

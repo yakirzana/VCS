@@ -7,7 +7,7 @@ var strings = strings;
 var room = room;
 
 
-function setListenerToUpdate() {
+function setSocketListeners() {
     socket.emit('init', "");
     socket.on('init',function (userInControl) {
         if (userInControl != null)
@@ -28,40 +28,42 @@ function setListenerToUpdate() {
 
     socket.on('releaseFromServer',function(user) {
         releaseUserControl(user);
-    });       socket.emit('ready', "ok");
+    });
 }
 
 
 var parameters = {
     "id":"ggbApplet",
     "width":$(document).width() * 0.8,
-    "height": $(document).height() * 0.78,
+    "height": $(document).height() * 0.85,
     "showToolBar":true,
-    "borderColor":null,
-    "showMenuBar":false,
-    "allowStyleBar":true,
+    // "borderColor":null,
+    // "showMenuBar":false,
+    // "allowStyleBar":true,
     "showAlgebraInput":true,
-    "enableLabelDrags":false,
-    "enableShiftDragZoom":true,
-    "capturingThreshold":null,
-    "showToolBarHelp":true,
-    "language":"en",
-    "country":"US",
-    "errorDialogsActive":true,
-    "showTutorialLink":false,
-    "showLogging":false,
+    // "enableLabelDrags":false,
+    // "enableShiftDragZoom":true,
+    // "capturingThreshold":null,
+    // "showToolBarHelp":true,
+    "language":"eb",
+    // "country":"US",
+    // "errorDialogsActive":true,
+    // "showTutorialLink":false,
+    // "showLogging":false,
     "useBrowserForJS":true,
     "preventFocus":true,
-    "perspective":"AG"//,
-    // "appName":"graphing"
+    // "perspective":"AG"//,
+    //"appName":"graphing"
 };
 
 
-var applet = new GGBApplet(parameters, true, 'applet_container');
+var applet = new GGBApplet(parameters, true);
 
-window.onload = function() {
+
+window.addEventListener("load", function() {
     applet.inject('applet_container');
-}
+});
+
 
 function ggbOnInit(){
     if(!_firstTime) return;
@@ -76,7 +78,7 @@ function initBoard() {
         applet.setBase64(room._base64);
     $(".loading").addClass("hidden");
     $("#applet_container").removeClass("hidden");
-    setListenerToUpdate();
+    setSocketListeners();
 }
 
 function event() {
@@ -109,11 +111,11 @@ function putUserInControl(userInControl) {
 }
 
 function fixVisiblityOnRefresh(value) {
+    return;
     var cols = document.getElementsByClassName('algebraPanel');
     for(i=0; i<cols.length; i++) {
         cols[i].style.visibility = value;
     }
-
 }
 
 function releaseUserControl(user) {
