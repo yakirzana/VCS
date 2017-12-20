@@ -67,11 +67,20 @@ module.exports = function (app, bl) {
         res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser});
     });
 
+    app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
+        var classId = req.params.classId;
+        res.render('pages/class', {page: "class", strings: bl.strings, classId, logged: this.loggedUser});
+    });
+
     app.get('/', checkAuth, function (req, res) {
         res.render('pages/home', {page: "home", strings: bl.strings, logged: this.loggedUser});
     });
 
     app.get('/myRooms', checkAuthRestricted, function (req, res) {
         res.render('pages/myRooms', {page: "room", strings: bl.strings, logged: this.loggedUser});
+    });
+
+    app.get('/myClasses', checkAuthRestricted, function (req, res) {
+        res.render('pages/myClasses', {page: "class", strings: bl.strings, logged: this.loggedUser});
     });
 }
