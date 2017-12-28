@@ -6,5 +6,6 @@
   "home" : "בית",
   "rooms" : "חדרים",
   "classes" : "כיתות",
-  "name" : "VCS"
+  "name" : "VCS",
+  "key": "מקרא"
 }

@@ -2,51 +2,32 @@
     var strings = <%-JSON.stringify(strings)%>;
     var room = <%-JSON.stringify(room)%>;
     var user = "<%- logged %>";
+    var chats = "<%- chats %>";
 </script>
 <script src="/scripts/chat.js"></script>
+<script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
+<script>
+    moment.locale('he');
+</script>
+
 
 <div class="chat">
     <div class="title">Chat</div>
     <div class="content">
-        <li class="self">
-            <div class="msg">
-                <span class="username">יקיר</span>
-                <p>מה קןרה אח <emoji class="pizza"/></p>
-                <time>20:17</time>
-            </div>
-        </li>
-        <li class="other">
-            <div class="msg">
-                <span class="username">אחיעד</span>
-                <p>סבבה מה איתך</p>
-                <p>נשמה</p>
-                <time>20:18</time>
-            </div>
-        </li>
-        <li class="other">
-            <div class="msg">
-                <span class="username">אחיעד</span>
-                <p>אני אוהב תפוחים
-                    <emoji class="suffocated"/>
-                </p>
-                <time>20:18</time>
-            </div>
-        </li>
-        <li class="self">
-            <div class="msg">
-                <span class="username">יקיר</span>
-                <p>ואת השחקן מספר אחת:</p>
-                <p>יוסי בניון?</p>
-                <time>20:18</time>
-            </div>
-        </li>
-        <li class="other">
-            <div class="msg">
-                <span class="username">אחיעד</span>
-                <p>כן אני מת עליו!!</p>
-                <time>20:18</time>
-            </div>
-        </li>
+        <% for(var chat of chats) { %>
+                <% if(chat._username == logged){ %>
+                    <li class="self">
+                <%} else { %>
+                    <li class="other">
+                <% } %>
+                <div class="msg">
+                    <span class="username"><%=chat._username%></span>
+                    <p><%=chat._msg%></p>
+                    <time><script>document.write(moment("<%=chat._date%>", "DD/MM/YYYY h:mm:ss").fromNow());</script></time>
+                </div>
+            </li>
+        <% } %>
+
     </div>
     <div class="input">
         <form id="msgForm" onsubmit="return false;">

@@ -44,3 +44,10 @@
 .card-text {
     font-size: 85%;
 }
+
+#key {
+    float: right;
+    text-align: center;
+    padding-right: 5%;
+    padding-top: 10%;
+}

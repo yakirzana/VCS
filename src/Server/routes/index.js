@@ -57,6 +57,8 @@ module.exports = function (app, bl) {
         var room;
         try {
             room = await bl.rooms.getRoomById(roomId);
+            res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser, chats: [{_username:"stud2", _msg: "a", _date: "31/03/1991 20:31:43"},
+                    {_username:"stud1", _msg: "b", _date: "31/03/1991 20:31:43"},{_username:"stud3", _msg: "c", _date: "31/03/2017 20:31:43"}]});
         }
         catch (err) {
             //TODO replace with error msg to user
@@ -64,12 +66,13 @@ module.exports = function (app, bl) {
             console.log("Create new room ", roomId);
         }
         //
-        res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser});
+
     });
 
     app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
         var classId = req.params.classId;
-        res.render('pages/class', {page: "class", strings: bl.strings, classId, logged: this.loggedUser});
+        var user = await bl.users.getUserByUserName(this.loggedUser);
+        res.render('pages/class', {page: "class", strings: bl.strings, classId, logged: this.loggedUser, isTeacher: user.isTeacher});
     });
 
     app.get('/', checkAuth, function (req, res) {

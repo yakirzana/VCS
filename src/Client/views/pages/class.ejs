@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>VCS My Rooms</title>
+    <title>VCS Class <%= classId %></title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="/stylesheets/myRooms.css">
 </head>
@@ -9,15 +9,32 @@
 <header>
     <% include ../partials/header %>
 </header>
-
-
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Class 1</h1>
+        <h1 class="jumbotron-heading">Class <%= classId %></h1>
         <p class="lead text-muted">Here you can see class description</p>
         <p class="lead text-muted">Here you can see rooms that you can join</p>
     </div>
 </section>
+
+<%if (isTeacher == true) { %>
+<div id="key">
+    <%- strings.key %>:
+    <br><br>
+    <div class="alert alert-primary" role="alert">
+        type1
+    </div>
+
+    <div class="alert alert-danger" role="alert">
+        type2
+    </div>
+
+    <div class="alert alert-success" role="alert">
+        type3
+    </div>
+
+</div>
+<% } %>
 
 <div class="album text-muted">
     <div class="container">
