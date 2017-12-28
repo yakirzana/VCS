@@ -1,9 +1,13 @@
 var Users = require('./users');
 var Rooms = require('./rooms');
+var Chats = require('./chats');
+var Classes = require('./classes');
 
 module.exports = function (dl) {
     this.strings = require('../lang/heb.json');
     this.rooms = new Rooms(dl);
     this.users = new Users(dl);
+    this.chats = new Chats(dl);
+    this.classes = new Classes(dl);
 };
 
