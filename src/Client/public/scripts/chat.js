@@ -3,16 +3,35 @@ var socketChat = io('/chat');
 var msgs = [];
 var msgIndex = 0;
 
-setInterval(function(){
-    for(var i = 0; i < msgIndex; i++) {
-        var momentTime = moment(msgs[i], "DD/MM/YYYY H:mm:ss").fromNow();
-        $( "#chat" + i ).html("<time>" + momentTime + "</time>");
+function initChat() {
+    for(var chat of chats) {
+        addMsg(chat._username == user, chat._username, chat._date, chat._msg, false,false);
     }
-}, 5000);
+    $(".content").animate({ scrollTop: $('.content').prop("scrollHeight")}, 1);
+}
 
-socketChat.on('addMsg',function (msg) {
-    addMsg(msg._username == user, msg._username, msg._date, msg._msg,false);
+function initSocket() {
+    socketChat.on('addMsg',function (msg) {
+        addMsg(msg._username == user, msg._username, msg._date, msg._msg,false,true);
+    });
+}
+
+function initChatTimeUpdate() {
+    setInterval(function(){
+        for(var i = 0; i < msgIndex; i++) {
+            var momentTime = moment(msgs[i], "DD/MM/YYYY H:mm:ss").fromNow();
+            $( "#chat" + i ).html("<time>" + momentTime + "</time>");
+        }
+    }, 5000);
+}
+
+$( document ).ready(function() {
+    initChat();
+    initSocket();
+    initChatTimeUpdate();
 });
+
+
 
 
 function getMsgHtml(isUser, username, time, msg) {
@@ -35,10 +54,16 @@ function getMsgHtml(isUser, username, time, msg) {
     return msgToAdd;
 }
 
-function addMsg(isUser, username, time, msg, fromClient) {
+function addMsg(isUser, username, time, msg, fromClient, animate) {
     var msgToAdd = getMsgHtml(isUser, username, time, msg);
-    $(msgToAdd).hide().appendTo(".content").show("slow");
-    $(".content").animate({ scrollTop: $('.content').prop("scrollHeight")}, 1000);
+    if(animate) {
+        $(msgToAdd).hide().appendTo(".content").show("slow");
+        $(".content").animate({ scrollTop: $('.content').prop("scrollHeight")}, 1000);
+    }
+    else {
+        $(msgToAdd).appendTo(".content");
+    }
+
     if(fromClient)
         socketChat.emit('addMsg',{_username: username, _date: time, _msg: msg, _roomID: room._id});
 }
@@ -47,7 +72,7 @@ function sendMsg() {
     var msg = $("#msg").val().trim();
     $("#msg").val("");
     if(msg == "") return;
-    addMsg(true, user, moment().format('DD/MM/YYYY H:mm:ss'), msg, true);
+    addMsg(true, user, moment().format('DD/MM/YYYY H:mm:ss'), msg, true, true);
 }
 
 

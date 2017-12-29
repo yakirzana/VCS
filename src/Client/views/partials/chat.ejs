@@ -2,34 +2,19 @@
     var strings = <%-JSON.stringify(strings)%>;
     var room = <%-JSON.stringify(room)%>;
     var user = "<%- logged %>";
-    var chats = "<%- chats %>";
+    var chats = <%-JSON.stringify(chats)%>;
 </script>
 
-<script src="/scripts/chat.js"></script>
 <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 <script>
     moment.locale('he');
 </script>
+<script src="/scripts/chat.js"></script>
 
 
 <div class="chat">
     <div class="title">Chat</div>
     <div class="content">
-        <% for(var chat of chats) { %>
-                <% if(chat._username == logged){ %>
-                    <li class="self">
-                <%} else { %>
-                    <li class="other">
-                <% } %>
-                <div class="msg">
-                    <span class="username"><%=chat._username%></span>
-                    <p><%=chat._msg%></p>
-                    <time><%= chat.date %></time>
-                </div>
-            </li>
-        <% } %>
-
-
     </div>
     <div class="input">
         <form id="msgForm" onsubmit="return false;">
