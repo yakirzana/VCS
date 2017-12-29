@@ -9,7 +9,7 @@ module.exports = function (dl) {
     };
 
     this.addNewMessage = function (username, date , msg, roomID) {
-        msg = new Message(username, date , msg, roomID);
+        msg = new Message(username, date , msg, parseInt(roomID));
         dl.chats.addNewMessage(msg);
         return msg;
     };

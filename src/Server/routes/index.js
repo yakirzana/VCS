@@ -57,8 +57,8 @@ module.exports = function (app, bl) {
         var room;
         try {
             room = await bl.rooms.getRoomById(roomId);
-            res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser, chats: [{_username:"stud2", _msg: "a", _date: "31/03/1991 20:31:43"},
-                    {_username:"stud1", _msg: "b", _date: "31/03/1991 20:31:43"},{_username:"stud3", _msg: "c", _date: "31/03/2017 20:31:43"}]});
+            var chats = await bl.chats.getMessagesByRoom(parseInt(roomId));
+            res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser, chats: chats});
         }
         catch (err) {
             //TODO replace with error msg to user

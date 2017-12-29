@@ -1,4 +1,22 @@
+var socketChat = io('/chat');
+
+var msgs = [];
+var msgIndex = 0;
+
+setInterval(function(){
+    for(var i = 0; i < msgIndex; i++) {
+        var momentTime = moment(msgs[i], "DD/MM/YYYY H:mm:ss").fromNow();
+        $( "#chat" + i ).html("<time>" + momentTime + "</time>");
+    }
+}, 5000);
+
+socketChat.on('addMsg',function (msg) {
+    addMsg(msg._username == user, msg._username, msg._date, msg._msg,false);
+});
+
+
 function getMsgHtml(isUser, username, time, msg) {
+    var momentTime = moment(time, "DD/MM/YYYY H:mm:ss").fromNow();
     var msgToAdd = "<li class=\"";
     if(isUser)
         msgToAdd += "self";
@@ -8,56 +26,28 @@ function getMsgHtml(isUser, username, time, msg) {
     msgToAdd += "<div class=\"msg\">";
     msgToAdd += "<span class=\"username\">" + username + "</span>";
     msgToAdd += "<p>" + msg + "</p>";
-    msgToAdd += "<time>" + time + "</time>";
+    msgToAdd += "<span id='chat" + msgIndex + "'><time>" + momentTime + "</time></span>";
     msgToAdd += "</div>";
     msgToAdd += "</li>";
+    msgs[msgIndex] = time;
+    msgIndex++;
+
     return msgToAdd;
 }
 
-function addMsg(isUser, username, time, msg) {
+function addMsg(isUser, username, time, msg, fromClient) {
     var msgToAdd = getMsgHtml(isUser, username, time, msg);
     $(msgToAdd).hide().appendTo(".content").show("slow");
     $(".content").animate({ scrollTop: $('.content').prop("scrollHeight")}, 1000);
+    if(fromClient)
+        socketChat.emit('addMsg',{_username: username, _date: time, _msg: msg, _roomID: room._id});
 }
 
 function sendMsg() {
     var msg = $("#msg").val().trim();
     $("#msg").val("");
     if(msg == "") return;
-    addMsg(true, user, "21:03", msg);
+    addMsg(true, user, moment().format('DD/MM/YYYY H:mm:ss'), msg, true);
 }
 
-
-function talk() {
-    setTimeout(function(){
-        addMsg(true, "יקיר", "20:58", "ימניאק");
-        setTimeout(function(){
-            addMsg(false, "אחיעד", "20:59", "נמאס לי");
-            setTimeout(function(){
-                addMsg(false, "אחיעד", "20:59", "כוסעמק");
-                setTimeout(function(){
-                    addMsg(false, "אחיעד", "20:59", "בא לי המבורגר");
-                    setTimeout(function(){
-                        addMsg(true, "יקיר", "21:00", "תאכל המבורגר ישמן");
-                        setTimeout(function(){
-                            addMsg(true, "יקיר", "21:00", "או שתאכל סלט עדיף");
-                        }, 3000);
-                    }, 3000);
-                }, 3000);
-            }, 3000);
-        }, 3000);
-    }, 3000);
-}
-
-$( document ).ready(function() {
-    setTimeout(function(){
-        talk();
-        setTimeout(function(){
-            talk();
-            setTimeout(function(){
-                talk();
-            } , 18000);
-        } , 18000);
-    } , 5000);
-});
 

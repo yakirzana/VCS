@@ -4,6 +4,7 @@
     var user = "<%- logged %>";
     var chats = "<%- chats %>";
 </script>
+
 <script src="/scripts/chat.js"></script>
 <script src="https://momentjs.com/downloads/moment-with-locales.js"></script>
 <script>
@@ -23,10 +24,11 @@
                 <div class="msg">
                     <span class="username"><%=chat._username%></span>
                     <p><%=chat._msg%></p>
-                    <time><script>document.write(moment("<%=chat._date%>", "DD/MM/YYYY h:mm:ss").fromNow());</script></time>
+                    <time><%= chat.date %></time>
                 </div>
             </li>
         <% } %>
+
 
     </div>
     <div class="input">
