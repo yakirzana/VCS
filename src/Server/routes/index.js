@@ -1,5 +1,8 @@
+var SL = require('../sl');
+
 module.exports = function (app, bl) {
     this.loggedUser = null;
+    this.sl = new SL(bl);
 
     function checkAuthRestricted(req, res, next) {
         if (!isLogged(req, res, next))
@@ -25,6 +28,7 @@ module.exports = function (app, bl) {
     }
 
     app.post('/login', function (req, res) {
+        //sl.users.login
         var post = req.body;
         if ((post && post.username && post.password )
             && (bl.users.isPassMatch(post.username, post.password))) {
