@@ -1,4 +1,4 @@
-module.exports = function(io, bl) {
-    require('./roomSocket')(io, bl);
-    require('./chatSocket')(io, bl);
+module.exports = function (io, sl) {
+    require('./roomSocket')(io, sl);
+    require('./chatSocket')(io, sl);
 }

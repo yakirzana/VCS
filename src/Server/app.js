@@ -67,7 +67,6 @@ async function run(db) {
     // test();
 
     //bl.rooms.deleteRoom(1);
- //   bl.users.deleteUser("teacTest");
 
 
     http.listen(80, function() {
