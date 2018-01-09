@@ -19,8 +19,8 @@
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
-    "mongodb": "^2.2.33",
-    "nodeunit-async": "^1.2.1",
+    "mongodb": "^2.2.34",
+    "nodeunit": "^0.11.2",
     "socket.io": "^2.0.4"
   }
 }
