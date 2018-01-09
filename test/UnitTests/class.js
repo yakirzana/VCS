@@ -76,7 +76,7 @@ exports.group = {
         }
         test.done();
     }
-}
+};
 
 
 exports.setUp = function (done) {
