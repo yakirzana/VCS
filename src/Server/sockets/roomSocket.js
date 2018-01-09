@@ -1,8 +1,8 @@
-module.exports = function(io, bl) {
+module.exports = function (io, sl) {
     var io = io.of('/rooms');
     io.on('connection', async function(socket) {
         var roomId = socket.handshake.headers.referer.split("/").pop();
-        var room = await bl.rooms.getRoomById(roomId);
+        var room = await sl.rooms.getRoomById(roomId);
         if(room == undefined)
             socket.disconnect();
         socket.join(roomId);
@@ -19,14 +19,14 @@ module.exports = function(io, bl) {
         socket.on('update', function (update) {
             socket.broadcast.to(roomId).emit('update', update);
             room.base64 = update;
-            bl.rooms.saveRoom(room);
+            sl.rooms.saveRoom(room);
         });
 
         socket.on('lockFromClient', function (user) {
             socket.user = user;
             room.isLocked = true;
             room.userInControl = user;
-            bl.rooms.saveRoom(room);
+            sl.rooms.saveRoom(room);
             socket.broadcast.to(roomId).emit('lockFromServer', user);
         });
 
@@ -38,7 +38,7 @@ module.exports = function(io, bl) {
             if(room == undefined || user != room.userInControl) return;
             room.isLocked = false;
             room.userInControl = undefined;
-            bl.rooms.saveRoom(room);
+            sl.rooms.saveRoom(room);
             socket.broadcast.to(roomId).emit('releaseFromServer', user);
         }
     });
