@@ -16,7 +16,12 @@ module.exports = function (dl) {
     };
 
     this.isPassMatch = async function (username, password) {
-        var user = await this.getUserByUserName(username);
+        try {
+            var user = await this.getUserByUserName(username);
+        }
+        catch (err) {
+            return false;
+        }
         return user != undefined && user.password == password;
     };
 
@@ -34,7 +39,7 @@ module.exports = function (dl) {
 
     this.deleteUser = async function (username) {
         var user = await this.getUserByUserName(username);
-        dl.users.deleteUser(user);
+        await dl.users.deleteUser(user);
     };
 };
 

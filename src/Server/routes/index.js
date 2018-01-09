@@ -1,8 +1,7 @@
 var SL = require('../sl');
 
-module.exports = function (app, bl) {
+module.exports = function (app, sl) {
     this.loggedUser = null;
-    this.sl = new SL(bl);
 
     function checkAuthRestricted(req, res, next) {
         if (!isLogged(req, res, next))
@@ -18,7 +17,7 @@ module.exports = function (app, bl) {
 
     function isLogged(req) {
         if (!req.session || !req.session.userHash || !req.session.username ||
-            bl.users.isHashMatch(req.session.username, req.session.userHash)) {
+            sl.users.isHashMatch(req.session.username, req.session.userHash)) {
             this.loggedUser = null;
             return false;
         } else {
@@ -28,11 +27,10 @@ module.exports = function (app, bl) {
     }
 
     app.post('/login', function (req, res) {
-        //sl.users.login
         var post = req.body;
         if ((post && post.username && post.password )
-            && (bl.users.isPassMatch(post.username, post.password))) {
-            req.session.userHash = bl.users.createUserHash(post.username);
+            && (sl.users.login(post.username, post.password))) {
+            req.session.userHash = sl.users.createUserHash(post.username);
             req.session.username = post.username;
             res.redirect('/');
         } else {
@@ -42,6 +40,7 @@ module.exports = function (app, bl) {
     });
 
     app.get('/logout', function (req, res) {
+        sl.users.logout(req.session.username);
         delete req.session.username;
         delete req.session.userHash;
         res.redirect('/');
@@ -50,7 +49,7 @@ module.exports = function (app, bl) {
     app.get('/login', checkAuth, function (req, res) {
         res.render('pages/login', {
             page: "login",
-            strings: bl.strings,
+            strings: sl.strings,
             message: req.flash('message'),
             logged: this.loggedUser
         });
@@ -60,14 +59,13 @@ module.exports = function (app, bl) {
         var roomId = req.params.roomId;
         var room;
         try {
-            room = await bl.rooms.getRoomById(roomId);
-            var chats = await bl.chats.getMessagesByRoom(parseInt(roomId));
-            res.render('pages/room', {page: "room", strings: bl.strings, room, logged: this.loggedUser, chats: chats});
+            room = await sl.rooms.getRoomById(roomId);
+            var chats = await sl.chats.getMessagesByRoom(parseInt(roomId));
+            res.render('pages/room', {page: "room", strings: sl.strings, room, logged: this.loggedUser, chats: chats});
         }
         catch (err) {
             //TODO replace with error msg to user
-            room = bl.rooms.addRoom(roomId, true, "name", "desc", false, true, null);
-            console.log("Create new room ", roomId);
+            res.render('pages/home', {page: "home", strings: sl.strings, logged: this.loggedUser});
         }
         //
 
@@ -75,19 +73,25 @@ module.exports = function (app, bl) {
 
     app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
         var classId = req.params.classId;
-        var user = await bl.users.getUserByUserName(this.loggedUser);
-        res.render('pages/class', {page: "class", strings: bl.strings, classId, logged: this.loggedUser, isTeacher: user.isTeacher});
+        var user = await sl.users.getUserByUserName(this.loggedUser);
+        res.render('pages/class', {
+            page: "class",
+            strings: sl.strings,
+            classId,
+            logged: this.loggedUser,
+            isTeacher: user.isTeacher
+        });
     });
 
     app.get('/', checkAuth, function (req, res) {
-        res.render('pages/home', {page: "home", strings: bl.strings, logged: this.loggedUser});
+        res.render('pages/home', {page: "home", strings: sl.strings, logged: this.loggedUser});
     });
 
     app.get('/myRooms', checkAuthRestricted, function (req, res) {
-        res.render('pages/myRooms', {page: "room", strings: bl.strings, logged: this.loggedUser});
+        res.render('pages/myRooms', {page: "room", strings: sl.strings, logged: this.loggedUser});
     });
 
     app.get('/myClasses', checkAuthRestricted, function (req, res) {
-        res.render('pages/myClasses', {page: "class", strings: bl.strings, logged: this.loggedUser});
+        res.render('pages/myClasses', {page: "class", strings: sl.strings, logged: this.loggedUser});
     });
 }

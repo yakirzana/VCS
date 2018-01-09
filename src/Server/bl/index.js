@@ -5,7 +5,6 @@ var Classes = require('./classes');
 var Alerts = require('./alerts');
 
 module.exports = function (dl) {
-    this.strings = require('../lang/heb.json');
     this.rooms = new Rooms(dl);
     this.users = new Users(dl);
     this.chats = new Chats(dl);
