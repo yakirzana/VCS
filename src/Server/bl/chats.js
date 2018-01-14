@@ -14,4 +14,8 @@ module.exports = function (dl) {
         return msg;
     };
 
-}
+    this.removeMessage = function (msg) {
+        dl.chats.removeMessage(msg);
+    }
+
+};

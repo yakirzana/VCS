@@ -26,7 +26,7 @@ module.exports = function (db) {
     this.deleteRoom = function (id) {
         db.collection('rooms').deleteOne({_id: id}, function (err, r) {
         });
-    }
+    };
 
     this.saveRoom = async function (room) {
         var room = await room;
