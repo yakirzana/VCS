@@ -41,5 +41,9 @@ module.exports = function (dl) {
         var user = await this.getUserByUserName(username);
         await dl.users.deleteUser(user);
     };
+
+    this.saveUser = function (user) {
+        dl.users.saveUser(user);
+    };
 };
 
