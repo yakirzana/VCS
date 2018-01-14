@@ -27,4 +27,15 @@ module.exports = function (db) {
         }
     };
 
-}
+    this.removeMessage = function (msg) {
+        db.collection('messages').deleteOne({
+                _username: msg.username,
+                _date: msg.data,
+                _msg: msg.msg,
+                _roomID: msg.roomID
+            }
+            , function (err, r) {
+            });
+    };
+
+};
