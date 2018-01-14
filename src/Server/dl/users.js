@@ -22,5 +22,25 @@ module.exports = function (db) {
     this.deleteUser = function (user) {
         db.collection('users').deleteOne({_username: user.username}, function (err, r) {
         });
-    }
+    };
+
+    this.saveUser = async function (user) {
+        var user = await user;
+        var myquery = {_id: user._username};
+        var newvalues = {
+            $set: {
+                _password: user.password,
+                _firstName: user.firstName,
+                _lastName: user.lastName,
+                _sex: user.sex,
+                _email: user.email,
+                _isTeacher: user.isTeacher
+            }
+        };
+
+        db.collection("users").updateOne(myquery, newvalues, function (err, res) {
+            if (err) throw err;
+        });
+
+    };
 };
