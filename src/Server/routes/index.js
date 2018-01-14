@@ -28,13 +28,16 @@ module.exports = function (app, sl) {
 
     app.post('/login', async function (req, res) {
         var post = req.body;
-        if ((post && post.username && post.password )
-            && (sl.users.login(post.username, post.password))) {
+        try {
+            if (!(post && post.username && post.password))
+                throw new Error("Missing info");
+            await sl.users.login(post.username, post.password);
             req.session.userHash = await sl.users.createUserHash(post.username);
             req.session.username = post.username;
             res.redirect('/');
-        } else {
-            req.flash("message","bad");
+        }
+        catch (err) {
+            req.flash("message", err.message);
             res.redirect('/login');
         }
     });
