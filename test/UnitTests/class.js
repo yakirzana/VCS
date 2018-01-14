@@ -81,10 +81,46 @@ exports.group = {
         await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
         var clss = await bl.classes.getClassByID(1234);
         clss.name = "rotem class";
-        await bl.saveClass.saveRoom(room);
+        await bl.classes.saveClass(clss);
         await sleep(1000);
         var clss1 = await bl.classes.getClassByID(1234);
         test.ok(clss1.name == "rotem class");
+        await bl.classes.removeClass(1234);
+        test.done();
+    },
+
+    testSaveClassDescription: async function (test) {
+        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
+        var clss = await bl.classes.getClassByID(1234);
+        clss.descriptions = "This is new class";
+        await bl.classes.saveClass(clss);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(1234);
+        test.ok(clss1.descriptions == "This is new class");
+        await bl.classes.removeClass(1234);
+        test.done();
+    },
+
+    testSaveClassTeacherUserName: async function (test) {
+        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
+        var clss = await bl.classes.getClassByID(1234);
+        clss.teacherUserName = "maria";
+        await bl.classes.saveClass(clss);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(1234);
+        test.ok(clss1.teacherUserName == "maria");
+        await bl.classes.removeClass(1234);
+        test.done();
+    },
+
+    testSaveClassRoomList: async function (test) {
+        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
+        var clss = await bl.classes.getClassByID(1234);
+        clss.roomList = [1,12,7];
+        await bl.classes.saveClass(clss);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(1234);
+        test.ok(arraysEqual(clss1.roomList,[ 1, 12, 7 ]));
         await bl.classes.removeClass(1234);
         test.done();
     }
