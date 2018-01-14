@@ -65,7 +65,7 @@ exports.group = {
         user.password = "123456";
         await bl.users.saveUser(user);
         await sleep(1000);
-        var user1 = await bl.users.getUserByUserName("1234");
+        var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.password == "123456");
         await bl.users.deleteUser("teacTest1");
         test.done();
@@ -77,7 +77,7 @@ exports.group = {
         user.firstName = "achiad";
         await bl.users.saveUser(user);
         await sleep(1000);
-        var user1 = await bl.users.getUserByUserName("1234");
+        var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.firstName == "achiad");
         await bl.users.deleteUser("teacTest1");
         test.done();
@@ -89,7 +89,7 @@ exports.group = {
         user.lastName = "Gelerenter";
         await bl.users.saveUser(user);
         await sleep(1000);
-        var user1 = await bl.users.getUserByUserName("1234");
+        var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.lastName == "Gelerenter");
         await bl.users.deleteUser("teacTest1");
         test.done();
@@ -101,7 +101,7 @@ exports.group = {
         user.sex = "FeMale";
         await bl.users.saveUser(user);
         await sleep(1000);
-        var user1 = await bl.users.getUserByUserName("1234");
+        var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.sex == "FeMale");
         await bl.users.deleteUser("teacTest1");
         test.done();
@@ -113,7 +113,7 @@ exports.group = {
         user.email = "teacher@gmail.com";
         await bl.users.saveUser(user);
         await sleep(1000);
-        var user1 = await bl.users.getUserByUserName("1234");
+        var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.email == "teacher@gmail.com");
         await bl.users.deleteUser("teacTest1");
         test.done();
@@ -125,7 +125,7 @@ exports.group = {
         user.isTeacher = false;
         await bl.users.saveUser(user);
         await sleep(1000);
-        var user1 = await bl.users.getUserByUserName("1234");
+        var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.isTeacher == false);
         await bl.users.deleteUser("teacTest1");
         test.done();

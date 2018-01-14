@@ -26,7 +26,7 @@ module.exports = function (db) {
 
     this.saveUser = async function (user) {
         var user = await user;
-        var myquery = {_id: user._username};
+        var myquery = {_username: user.username};
         var newvalues = {
             $set: {
                 _password: user.password,
