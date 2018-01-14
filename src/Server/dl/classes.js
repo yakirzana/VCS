@@ -45,7 +45,6 @@ module.exports = function (db) {
         var myquery = { _classID: clss.classID };
         var newvalues = { $set: {
             _name: clss.name,
-            _classID: clss.classID,
             _descriptions: clss.descriptions,
             _teacherUserName: clss.teacherUserName,
             _roomList: clss.roomList
