@@ -17,9 +17,13 @@ exports.group = {
     },
 
     testGetUserByUserNameUndefined: async function (test) {
-        var usr = await bl.users.getUserByUserName("ach@@iad");
-        test.ok(usr.username == undefined);
-        test.ok(usr.password == undefined);
+        try {
+            var usr = await bl.users.getUserByUserName("ach@@iad");
+            test.ok(false);
+        }
+        catch(err){
+            test.ok(true);
+        }
         test.done();
     },
 
@@ -31,8 +35,13 @@ exports.group = {
         test.ok(usr.password == "1234");
         await bl.users.deleteUser("teacTest");
         await sleep(1000);
-        var usr1 = await bl.users.getUserByUserName("teacTest");
-        test.ok(usr1.username == undefined);
+        try {
+            var usr = await bl.users.getUserByUserName("teacTest");
+            test.ok(false);
+        }
+        catch(err){
+            test.ok(true);
+        }
         test.done();
     },
 
@@ -40,8 +49,13 @@ exports.group = {
         await bl.users.addUser("teacTest1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
         await bl.users.deleteUser("teacTest1");
         await sleep(1000);
-        var usr = await bl.users.getUserByUserName("teacTest1");
-        await test.ok(await usr.username == undefined);
+        try {
+            var usr = await bl.users.getUserByUserName("teacTest1");
+            test.ok(false);
+        }
+        catch(err){
+            test.ok(true);
+        }
         test.done();
     }
 }
