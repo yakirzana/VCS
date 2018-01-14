@@ -1,3 +1,4 @@
+const crypto = require('crypto');
 var MongoClient = require('mongodb').MongoClient;
 var DL = require('../../src/Server/dl');
 var BL = require('../../src/Server/bl');
@@ -127,6 +128,44 @@ exports.group = {
         await sleep(1000);
         var user1 = await bl.users.getUserByUserName("teacTest1");
         test.ok(user1.isTeacher == false);
+        await bl.users.deleteUser("teacTest1");
+        test.done();
+    },
+
+    testIsPassMatch: async function (test) {
+        await bl.users.addUser("teacTest1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+        var user = await bl.users.getUserByUserName("teacTest1");
+
+        test.ok(await bl.users.isPassMatch("teacTest1", "1234"));
+        test.ok(!(await bl.users.isPassMatch("teacTest1", "12345")));
+
+        await bl.users.deleteUser("teacTest1");
+        test.done();
+    },
+
+    testIsHashMatch: async function (test) {
+        await bl.users.addUser("teacTest1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+        await sleep(1000);
+
+        var hash1 = await bl.users.createUserHash("teacTest1");
+        var hash2 = await bl.users.createUserHash("teac1");
+
+        test.ok(await bl.users.isHashMatch("teacTest1", hash1));
+        test.ok(!(await bl.users.isHashMatch("teacTest1", hash2)));
+        test.ok(!(await bl.users.isHashMatch("teacTest1", "hash")));
+
+        await bl.users.deleteUser("teacTest1");
+        test.done();
+    },
+
+    testCreateUserHash: async function (test) {
+        await bl.users.addUser("teacTest1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+        await sleep(1000);
+
+        var hash1 = await bl.users.createUserHash("teacTest1");
+        var hash2 = crypto.createHash('sha256').update("teacTest1" + "1234").digest('hex');
+        test.equals(hash1, hash2);
+
         await bl.users.deleteUser("teacTest1");
         test.done();
     }

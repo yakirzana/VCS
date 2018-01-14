@@ -3,21 +3,21 @@ var SL = require('../sl');
 module.exports = function (app, sl) {
     this.loggedUser = null;
 
-    function checkAuthRestricted(req, res, next) {
-        if (!isLogged(req, res, next))
+    async function checkAuthRestricted(req, res, next) {
+        if (!await isLogged(req, res, next))
             res.redirect('/login');
         else
             next();
     }
 
-    function checkAuth(req, res, next) {
-        isLogged(req);
+    async function checkAuth(req, res, next) {
+        await isLogged(req);
         next();
     }
 
-    function isLogged(req) {
+    async function isLogged(req) {
         if (!req.session || !req.session.userHash || !req.session.username ||
-            sl.users.isHashMatch(req.session.username, req.session.userHash)) {
+            await !sl.users.isHashMatch(req.session.username, req.session.userHash)) {
             this.loggedUser = null;
             return false;
         } else {
@@ -26,11 +26,11 @@ module.exports = function (app, sl) {
         }
     }
 
-    app.post('/login', function (req, res) {
+    app.post('/login', async function (req, res) {
         var post = req.body;
         if ((post && post.username && post.password )
             && (sl.users.login(post.username, post.password))) {
-            req.session.userHash = sl.users.createUserHash(post.username);
+            req.session.userHash = await sl.users.createUserHash(post.username);
             req.session.username = post.username;
             res.redirect('/');
         } else {

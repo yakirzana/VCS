@@ -45,7 +45,6 @@ async function run(db) {
     var sl = new SL(bl);
     require('./routes')(app, sl);
     require('./sockets')(io, sl);
-
     http.listen(80, function() {
         console.log('listening on port 80');
     });

@@ -16,24 +16,25 @@ module.exports = function (dl) {
     };
 
     this.isPassMatch = async function (username, password) {
+        var user;
         try {
-            var user = await this.getUserByUserName(username);
+            user = await this.getUserByUserName(username);
         }
         catch (err) {
             return false;
         }
-        return user != undefined && user.password == password;
+        return (user != undefined && user.password == password);
     };
 
-    this.isHashMatch = function (username, hash) {
-        var user = this.getUserByUserName(username);
-        var userHash = crypto.createHash('sha256').update(username + user.password);
+    this.isHashMatch = async function (username, hash) {
+        var user = await this.getUserByUserName(username);
+        var userHash = crypto.createHash('sha256').update(username + user.password).digest('hex');
         return userHash == hash;
     };
 
-    this.createUserHash = function (username) {
-        var user =  this.getUserByUserName(username);
-        return crypto.createHash('sha256').update(username + user.password);
+    this.createUserHash = async function (username) {
+        var user = await this.getUserByUserName(username);
+        return crypto.createHash('sha256').update(username + user.password).digest('hex');
     };
 
 

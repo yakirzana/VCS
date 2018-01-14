@@ -31,12 +31,12 @@ module.exports = function (bl) {
         return await bl.users.getUserByUserName(username);
     };
 
-    this.createUserHash = function (username) {
-        return bl.users.createUserHash(username);
+    this.createUserHash = async function (username) {
+        return await bl.users.createUserHash(username);
     };
 
-    this.isHashMatch = function (username, hash) {
-        return bl.users.isHashMatch(username, hash);
+    this.isHashMatch = async function (username, hash) {
+        return await bl.users.isHashMatch(username, hash);
     };
 
 };
