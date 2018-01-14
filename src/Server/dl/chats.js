@@ -3,10 +3,6 @@ var Message = require('../classes/Message.js');
 module.exports = function (db) {
     this.addNewMessage = function (msg) {
         db.collection('messages').insertOne(msg, function (err, r) {
-            if (err == null)
-                console.log("added msg to db");
-            else
-                console.log(err);
         });
     };
 
@@ -22,7 +18,6 @@ module.exports = function (db) {
             }
             return msgList;
         } catch (err) {
-            console.log("Error: ", err);
             return null;
         }
     };
@@ -35,7 +30,6 @@ module.exports = function (db) {
                 _roomID: msg.roomID
             }
             , function (err, r) {
-                console.log("acc");
             });
     };
 

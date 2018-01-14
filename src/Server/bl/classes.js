@@ -28,4 +28,4 @@ module.exports = function (dl) {
     this.saveClass = function(clss) {
         dl.classes.saveClass(clss);
     }
-}
+};

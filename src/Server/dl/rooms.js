@@ -3,10 +3,6 @@ var Room = require('../classes/Room.js');
 module.exports = function (db) {
     this.addRoom = function (room) {
         db.collection('rooms').insertOne(room, function (err, r) {
-            if (err == null)
-                console.log("added room to db");
-            else
-                console.log(err);
         });
     };
 
@@ -18,7 +14,6 @@ module.exports = function (db) {
             room = Object.assign(new Room, room);
             return room;
         } catch (err) {
-            console.log("Error: ", err);
             return null;
         }
     };

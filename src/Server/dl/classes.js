@@ -9,7 +9,6 @@ module.exports = function (db) {
             clss = Object.assign(new Class, clss);
             return clss.roomList;
         } catch (err) {
-            console.log("Error: ", err);
             return null;
         }
     };
@@ -22,17 +21,12 @@ module.exports = function (db) {
             clss = Object.assign(new Class, clss);
             return clss;
         } catch (err) {
-            console.log("Error: ", err);
             return null;
         }
     };
 
     this.addNewClass = function (clss) {
         db.collection('classes').insertOne(clss, function (err, r) {
-            if (err == null)
-                console.log("added class to db");
-            else
-                console.log(err);
         });
     };
     this.removeClass = function (classID) {

@@ -3,10 +3,6 @@ var User = require('../classes/User.js');
 module.exports = function (db) {
     this.addUser = function (user) {
         db.collection('users').insertOne(user, function (err, r) {
-            if (err == null)
-                console.log("added user to db");
-            else
-                console.log(err);
         });
     };
 
