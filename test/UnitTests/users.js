@@ -57,8 +57,9 @@ exports.group = {
             test.ok(true);
         }
         test.done();
+
     }
-}
+};
 
 
 exports.setUp = function (done) {
@@ -67,6 +68,8 @@ exports.setUp = function (done) {
         bl = new BL(new DL(db));
         done();
     });
+
+
 };
 
 

@@ -56,8 +56,83 @@ exports.group = {
             test.ok(true);
         }
         test.done();
+    },
+
+    testSaveRoomIsLocked: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        var room = await bl.rooms.getRoomById("1234");
+        room.isLocked = true;
+        await bl.rooms.saveRoom(room);
+        await sleep(1000);
+        var room1 = await bl.rooms.getRoomById("1234");
+        test.ok(room1.isLocked == true);
+        await bl.rooms.deleteRoom("1234");
+        test.done();
+    },
+
+    testSaveRoomUserInControl: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        var room = await bl.rooms.getRoomById("1234");
+        room.userInControl = "stud1";
+        await bl.rooms.saveRoom(room);
+        await sleep(1000);
+        var room1 = await bl.rooms.getRoomById("1234");
+        test.ok(room1.userInControl == "stud1");
+        await bl.rooms.deleteRoom("1234");
+        test.done();
+    },
+
+    testSaveRoomName: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        var room = await bl.rooms.getRoomById("1234");
+        room.name = "rotem-room";
+        await bl.rooms.saveRoom(room);
+        await sleep(1000);
+        var room1 = await bl.rooms.getRoomById("1234");
+        test.ok(room1.name == "rotem-room");
+        await bl.rooms.deleteRoom("1234");
+        test.done();
+    },
+
+    testSaveRoomDescription: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        var room = await bl.rooms.getRoomById("1234");
+        room.desc = "My new room";
+        await bl.rooms.saveRoom(room);
+        await sleep(1000);
+        var room1 = await bl.rooms.getRoomById("1234");
+        test.ok(room1.desc == "My new room");
+        await bl.rooms.deleteRoom("1234");
+        test.done();
+    },
+
+    testSaveRoomIsTimeLimit: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        var room = await bl.rooms.getRoomById("1234");
+        room.isTimeLimit = false;
+        await bl.rooms.saveRoom(room);
+        await sleep(1000);
+        var room1 = await bl.rooms.getRoomById("1234");
+        test.ok(room1.isTimeLimit == false);
+        await bl.rooms.deleteRoom("1234");
+        test.done();
+    },
+
+    testSaveRoomTimeLimit: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        var room = await bl.rooms.getRoomById("1234");
+        room.timeLimit = 6;
+        await bl.rooms.saveRoom(room);
+        await sleep(1000);
+        var room1 = await bl.rooms.getRoomById("1234");
+        test.ok(room1.timeLimit == 6);
+        await bl.rooms.deleteRoom("1234");
+        test.done();
     }
-}
+
+
+
+};
 
 
 exports.setUp = function (done) {

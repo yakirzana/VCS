@@ -75,6 +75,18 @@ exports.group = {
             test.ok(true);
         }
         test.done();
+    },
+
+    testSaveClassName: async function (test) {
+        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
+        var clss = await bl.classes.getClassByID(1234);
+        clss.name = "rotem class";
+        await bl.saveClass.saveRoom(room);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(1234);
+        test.ok(clss1.name == "rotem class");
+        await bl.classes.removeClass(1234);
+        test.done();
     }
 };
 
