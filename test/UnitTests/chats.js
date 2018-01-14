@@ -10,16 +10,17 @@ var bl;
 exports.group = {
 
     testGetMessagesByRoom: async function (test) {
-        await bl.chats.addNewMessage("test-user2" , "31/08/1999 22:33:47" , "test-message" , 5);
+        var msg = await bl.chats.addNewMessage("test-user2", "31/08/1999 22:33:47", "test-message", 5);
 
-        var msg = await bl.chats.getMessagesByRoom(5);
-        if(contains(msg,new Message("test-user2" , "31/08/1999 22:33:47" , "test-message" , 5)))
+        var msgs = await bl.chats.getMessagesByRoom(5);
+        if (contains(msgs, new Message("test-user2", "31/08/1999 22:33:47", "test-message", 5)))
         {
             test.ok(true);
         }
         else {
             test.ok(false);
         }
+        bl.chats.removeMessage(msg);
         test.done();
     },
 
@@ -30,10 +31,11 @@ exports.group = {
     },
 
     testAddNewMessage: async function (test) {
-        await bl.chats.addNewMessage("test-user" , "31/08/1999 22:33:47" , "test-message" , 5);
 
-        var msg = await bl.chats.getMessagesByRoom(5);
-        if(contains(msg, new Message("test-user" , "31/08/1999 22:33:47" , "test-message" , 5)))
+        var msg = await bl.chats.addNewMessage("test-user", "31/08/1999 22:33:47", "test-message", 5);
+
+        var msgs = await bl.chats.getMessagesByRoom(5);
+        if (contains(msgs, new Message("test-user", "31/08/1999 22:33:47", "test-message", 5)))
         {
             test.ok(true);
         }
@@ -41,6 +43,7 @@ exports.group = {
         {
             test.ok(false);
         }
+        bl.chats.removeMessage(msg);
         test.done();
     }
 };
