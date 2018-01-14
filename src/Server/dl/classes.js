@@ -46,7 +46,6 @@ module.exports = function (db) {
 
         db.collection("classes").updateOne(myquery, newvalues, function(err, res) {
             if (err) throw err;
-            console.log(res);
         });
 
     }
