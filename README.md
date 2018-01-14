@@ -1,2 +1,2 @@
-# VMT
+# VCS
 Final project for degree
