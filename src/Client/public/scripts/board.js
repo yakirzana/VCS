@@ -54,6 +54,9 @@ window.addEventListener("load", function() {
 
 
 function ggbOnInit(){
+    document.ggbApplet.registerUpdateListener(updateListener);
+    document.ggbApplet.registerAddListener(AddListener);
+    document.ggbApplet.registerRemoveListener(RemoveListener);
     if(!_firstTime) return;
     _firstTime = false;
     initBoard();
@@ -69,21 +72,25 @@ function initBoard() {
     setSocketListeners();
 }
 
+function updateListener(objName) {
+    console.log("Update " + objName);
+}
+
+function AddListener(objName) {
+    console.log("Add " + objName);
+}
+
+function RemoveListener(objName) {
+    console.log("Remove " + objName);
+}
+
 function event() {
     console.log("send");
     var board = document.ggbApplet;
-    var base64 = board.getBase64()
+    var base64 = board.getBase64();
     socket.emit('update', base64);
 }
 
-function addListener(objName) {
-//        var board = document.ggbApplet;
-//        var changedValue = board.getValue(objName);
-    console.log(objName);
-//        var toExport = applet.getBase64();
-//        socket.emit('update', toExport);
-    //console.log("yakir");
-}
 
 
 function putUserInControl(userInControl) {
