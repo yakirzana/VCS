@@ -5,6 +5,7 @@ var refreshIntervalId = undefined;
 var socket = io('/rooms');
 var strings = strings;
 var room = room;
+var currentBase64 = null;
 
 
 function setSocketListeners() {
@@ -16,8 +17,9 @@ function setSocketListeners() {
 
     socket.on('update',function(data) {
         var applet = document.ggbApplet;
-        if(data !== undefined && data !== null) {
+        if (data !== undefined && data !== null && data != currentBase64) {
             applet.setBase64(data);
+            currentBase64 = data;
         }
     });
 
@@ -52,6 +54,15 @@ window.addEventListener("load", function() {
     applet.inject('applet_container');
 });
 
+function event() {
+    var board = document.ggbApplet;
+    var base64 = board.getBase64();
+    if (base64 == currentBase64)
+        return;
+    socket.emit('update', base64);
+    console.log("send");
+}
+
 
 function ggbOnInit(){
     document.ggbApplet.registerUpdateListener(updateListener);
@@ -84,12 +95,6 @@ function RemoveListener(objName) {
     console.log("Remove " + objName);
 }
 
-function event() {
-    console.log("send");
-    var board = document.ggbApplet;
-    var base64 = board.getBase64();
-    socket.emit('update', base64);
-}
 
 
 
