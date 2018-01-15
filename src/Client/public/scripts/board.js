@@ -6,6 +6,8 @@ var socket = io('/rooms');
 var strings = strings;
 var room = room;
 var currentBase64 = null;
+var isChanged = false;
+var updateVisibleTimeout = null;
 
 
 function setSocketListeners() {
@@ -18,8 +20,18 @@ function setSocketListeners() {
     socket.on('update',function(data) {
         var applet = document.ggbApplet;
         if (data !== undefined && data !== null && data != currentBase64) {
+            fixVisiblityOnRefresh("hidden");
             applet.setBase64(data);
             currentBase64 = data;
+            isChanged = false;
+            if (updateVisibleTimeout != null)
+                clearTimeout(updateVisibleTimeout);
+
+            updateVisibleTimeout = setTimeout(function () {
+                fixVisiblityOnRefresh("visible");
+            }, 1000);
+
+
         }
     });
 
@@ -55,11 +67,14 @@ window.addEventListener("load", function() {
 });
 
 function event() {
+    if (!isChanged)
+        return;
     var board = document.ggbApplet;
     var base64 = board.getBase64();
     if (base64 == currentBase64)
         return;
     socket.emit('update', base64);
+    isChanged = false;
     console.log("send");
 }
 
@@ -85,33 +100,31 @@ function initBoard() {
 
 function updateListener(objName) {
     console.log("Update " + objName);
+    isChanged = true;
 }
 
 function AddListener(objName) {
     console.log("Add " + objName);
+    isChanged = true;
 }
 
 function RemoveListener(objName) {
     console.log("Remove " + objName);
+    isChanged = true;
 }
-
-
-
 
 function putUserInControl(userInControl) {
     if(_user !== userInControl) {
         $('#btnControl').attr("disabled", true);
-        fixVisiblityOnRefresh("hidden");
     }
     else {
-        refreshIntervalId = setInterval(event, 1000);
+        refreshIntervalId = setInterval(event, 500);
     }
     $('#userInControl').html(userInControl + " " + strings.inControl)
 
 }
 
 function fixVisiblityOnRefresh(value) {
-    return;
     var cols = document.getElementsByClassName('algebraPanel');
     for(i=0; i<cols.length; i++) {
         cols[i].style.visibility = value;
@@ -121,7 +134,6 @@ function fixVisiblityOnRefresh(value) {
 function releaseUserControl(user) {
     $('#btnControl').attr("disabled", false);
     $('#userInControl').html(strings.noOneInControl);
-    fixVisiblityOnRefresh("visible");
     if(_user === user) {
         clearInterval(refreshIntervalId);
     }
