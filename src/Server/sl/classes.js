@@ -15,5 +15,5 @@ module.exports = function (bl) {
     this.getClassByRoomID = async function (roomID) {
         var classes = await bl.classes.getClassByRoomID(roomID);
         return classes;
-    }
+    };
 };

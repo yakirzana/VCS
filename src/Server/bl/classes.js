@@ -32,5 +32,5 @@ module.exports = function (dl) {
     this.getClassByRoomID = async function (roomID) {
         var classes = await dl.classes.getClassByRoomID(roomID);
         return classes;
-    }
+    };
 };
