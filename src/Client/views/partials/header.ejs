@@ -14,6 +14,11 @@
             <li class="nav-item <%- (page == "class") ? 'active' : '' %>">
                 <a class="nav-link" href="/myClasses"><%- strings.classes %></a>
             </li>
+            <% if (logged != null && isTech == true) { %>
+            <li class="nav-item <%- (page == "admin") ? 'active' : '' %>">
+                <a class="nav-link" href="/admin"><%- strings.admin %></a>
+            </li>
+            <% } %>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <% if (logged != null) { %>
@@ -24,9 +29,12 @@
 
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="/logout">התנתק</a>
+                    <% if (logged != null) { %>
+                    <a class="dropdown-item" href="/logout"><%- strings.logout %></a>
+                    <% } else { %>
+                    <a class="dropdown-item" href="/register"><%- strings.register %></a>
+                    <a class="dropdown-item" href="/login"><%- strings.login %></a>
+                    <% } %>
                 </div>
             </li>
         </ul>

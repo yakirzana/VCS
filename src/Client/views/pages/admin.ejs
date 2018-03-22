@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <title>VCS Admin Page</title>
+    <% include ../partials/head %>
+</head>
+<body>
+<header>
+    <% include ../partials/header %>
+</header>
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading"><%= strings.admin %></h1>
+        <p class="lead text-muted"><%= strings.adminDesc %></p>
+    </div>
+</section>
+
+
+<div class="album text-muted center">
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#"><%= strings.addRoom %></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><%= strings.addClass %></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><%= strings.addUserToRoom %></a>
+            </li>
+        </ul>
+
+    </div>
+</div>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+</body>
+</html>
