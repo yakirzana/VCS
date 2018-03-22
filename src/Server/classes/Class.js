@@ -50,4 +50,4 @@ module.exports = class Class {
     set roomList(value) {
         this._roomList = value;
     }
-}
+};

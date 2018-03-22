@@ -82,7 +82,9 @@ module.exports = function (app, sl) {
             strings: sl.strings,
             classId,
             logged: this.loggedUser,
-            isTeacher: user.isTeacher
+            isTeacher: user.isTeacher,
+            rooms: sl.classes.getRoomsInClass(classId),
+            alert: sl.aletrs.getAlertsFromClass(classId)
         });
     });
 

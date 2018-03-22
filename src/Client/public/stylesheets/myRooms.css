@@ -46,8 +46,28 @@
 }
 
 #key {
-    float: right;
+    padding-top: 20px;
+    align-items: center;
     text-align: center;
-    padding-right: 5%;
-    padding-top: 10%;
+}
+
+.alert {
+    width: 20%;
+    display: inline-block;
+}
+
+.redBorder {
+    border: 5px solid indianred;
+}
+
+.blueBorder {
+    border: 5px solid dodgerblue;
+}
+
+.greenBorder {
+    border: 5px solid forestgreen;
+}
+
+.orangeBorder {
+    border: 5px solid orange;
 }

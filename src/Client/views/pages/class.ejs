@@ -4,42 +4,51 @@
     <title>VCS Class <%= classId %></title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="/stylesheets/myRooms.css">
+    <script src="/scripts/class.js"></script>
 </head>
 <body>
 <header>
     <% include ../partials/header %>
 </header>
+<script>
+    console.log(<%= rooms %>);
+    console.log(<%= alert %>);
+</script>
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">Class <%= classId %></h1>
         <p class="lead text-muted">Here you can see class description</p>
         <p class="lead text-muted">Here you can see rooms that you can join</p>
     </div>
+
+    <% if (isTeacher) { %>
+    <div id="key">
+        <%- strings.key %>:
+        <br><br>
+        <div class="alert alert-primary" role="alert">
+            type1
+        </div>
+
+        <div class="alert alert-danger" role="alert">
+            type2
+        </div>
+
+        <div class="alert alert-success" role="alert">
+            type3
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+            type4
+        </div>
+    </div>
+    <% } %>
 </section>
 
-<% if (isTeacher) { %>
-<div id="key">
-    <%- strings.key %>:
-    <br><br>
-    <div class="alert alert-primary" role="alert">
-        type1
-    </div>
-
-    <div class="alert alert-danger" role="alert">
-        type2
-    </div>
-
-    <div class="alert alert-success" role="alert">
-        type3
-    </div>
-
-</div>
-<% } %>
 
 <div class="album text-muted">
     <div class="container">
         <div class="row">
-            <div class="card">
+            <div id="room1" class="card">
                 <img class="card-img-top"
                      src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
                      alt="Card image cap">
@@ -51,7 +60,7 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div id="room2" class="card">
                 <img class="card-img-top"
                      src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
                      alt="Card image cap">
@@ -64,7 +73,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="card">
+            <div id="room3" class="card">
                 <img class="card-img-top"
                      src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
                      alt="Card image cap">
@@ -75,7 +84,7 @@
                     <a href="/room/3" class="btn btn-primary">Enter Room</a>
                 </div>
             </div>
-            <div class="card">
+            <div id="room4" class="card">
                 <img class="card-img-top"
                      src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
                      alt="Card image cap">

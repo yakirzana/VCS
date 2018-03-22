@@ -77,4 +77,8 @@ module.exports = class Room {
         this._base64 = value;
     }
 
-}
+    toJson() {
+        return {id: this.id, name: this.name, desc: this.desc};
+    }
+
+};
