@@ -122,10 +122,11 @@ module.exports = function (app, sl, socket) {
     app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
         var classId = req.params.classId;
         var user = await sl.users.getUserByUserName(this.loggedUser);
-        if (this.loggedIsTeacher)
-            var rooms = await sl.classes.getRoomsInClass(classId);
-        else
-            var rooms = await sl.classes.getRoomsAccesible(classId, this.loggedUser);
+        // if (this.loggedIsTeacher)
+        //     var rooms = await sl.classes.getRoomsInClass(classId);
+        // else
+        //     var rooms = await sl.classes.getRoomsAccesible(classId, this.loggedUser);
+        var rooms = await sl.classes.getRoomsInClass(classId);
         var alert = await sl.alerts.getAlertsFromClass(classId);
         var myClass = await sl.classes.getClassByID(classId);
         res.render('pages/class', {
@@ -151,13 +152,12 @@ module.exports = function (app, sl, socket) {
     });
 
     app.get('/myRooms', checkAuthRestricted, async function (req, res) {
-        var rooms = await sl.rooms.getRoomsOfUser(this.loggedUser);
+        //var rooms = await sl.rooms.getRoomsOfUser(this.loggedUser);
         res.render('pages/myRooms', {
             page: "room",
             strings: sl.strings,
             logged: this.loggedUser,
-            isTech: this.loggedIsTeacher,
-            rooms: rooms
+            isTech: this.loggedIsTeacher
         });
     });
 
