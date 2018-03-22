@@ -8,6 +8,22 @@ module.exports = function (dl) {
         return roomList;
     };
 
+
+    this.getClassByUser = async function (username) {
+        var res;
+        var classList;
+        var roomList = await dl.rooms.getRoomsOfUser(username);
+        for (var room of roomList) {
+            classList = this.getClassByRoomID(room);
+            for (var clss of classList) {
+                res.push(clss);
+            }
+        }
+        if (res == null)
+            throw new Error("cannot find classList");
+        return res;
+    };
+
     this.getClassByID = async function (classID) {
         var clss = await dl.classes.getClassByID(classID);
         if(clss == null)

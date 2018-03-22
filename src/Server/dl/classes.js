@@ -55,12 +55,13 @@ module.exports = function (db) {
         var allClasses = await this.getAllClasses();
         for (var clss of allClasses) {
             if (roomID in clss.roomList) {
-                res.push(clss.classID)
+                res.push(clss.classID);
             }
         }
         return res;
 
     };
+
 
     this.getAllClasses = async function () {
         try {

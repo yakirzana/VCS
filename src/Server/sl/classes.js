@@ -21,4 +21,23 @@ module.exports = function (bl) {
         var clss = await bl.classes.getClassByID(classID);
         return clss;
     };
+
+    this.getRoomsAccesible = async function (classID, username) {
+        var res = [];
+        var classList = await bl.classes.getClassByUser(username);
+        if (classID in classList) {
+            var roomList = await bl.classes.getRoomsInClass(classID);
+            for (var room of roomList) {
+                var userList = await bl.rooms.getUsersInRoomById(room);
+                if (username in userList) {
+                    res.push(room);
+                }
+            }
+        }
+        else {
+            throw new Error("cannot find classID");
+        }
+
+        return res;
+    };
 };

@@ -8,7 +8,7 @@ var bl;
 
 exports.group = {
     testGetRoomById: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         test.ok(room.id == "1234");
         await bl.rooms.deleteRoom("1234");
@@ -27,7 +27,7 @@ exports.group = {
     },
 
     testAddRoom: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
 
         var room = await bl.rooms.getRoomById("1234");
         test.ok(room.id == "1234");
@@ -45,7 +45,7 @@ exports.group = {
     },
 
     testDeleteRoom: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         await bl.rooms.deleteRoom("1234");
         await sleep(1000);
         try {
@@ -59,7 +59,7 @@ exports.group = {
     },
 
     testSaveRoomIsLocked: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         room.isLocked = true;
         await bl.rooms.saveRoom(room);
@@ -71,7 +71,7 @@ exports.group = {
     },
 
     testSaveRoomUserInControl: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         room.userInControl = "stud1";
         await bl.rooms.saveRoom(room);
@@ -83,7 +83,7 @@ exports.group = {
     },
 
     testSaveRoomName: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         room.name = "rotem-room";
         await bl.rooms.saveRoom(room);
@@ -95,7 +95,7 @@ exports.group = {
     },
 
     testSaveRoomDescription: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         room.desc = "My new room";
         await bl.rooms.saveRoom(room);
@@ -107,7 +107,7 @@ exports.group = {
     },
 
     testSaveRoomIsTimeLimit: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         room.isTimeLimit = false;
         await bl.rooms.saveRoom(room);
@@ -119,7 +119,7 @@ exports.group = {
     },
 
     testSaveRoomTimeLimit: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5);
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
         var room = await bl.rooms.getRoomById("1234");
         room.timeLimit = 6;
         await bl.rooms.saveRoom(room);
@@ -128,7 +128,20 @@ exports.group = {
         test.ok(room1.timeLimit == 6);
         await bl.rooms.deleteRoom("1234");
         test.done();
-    }
+    },
+
+    testUsersInRoom: async function (test) {
+        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        listUsers = await bl.rooms.getUsersInRoomById("1234");
+        test.ok(arraysEqual(listUsers, ["achiad", "hod"]));
+        await bl.rooms.addUserToRoom("1234", "yakir");
+        listUsers = await bl.rooms.getUsersInRoomById("1234");
+        test.ok(arraysEqual(listUsers, ["achiad", "hod", "yakir"]));
+        await bl.rooms.deleteUserFromRoom("1234", "yakir");
+        listUsers = await bl.rooms.getUsersInRoomById("1234");
+        await bl.rooms.deleteRoom("1234");
+        test.done();
+    },
 
 
 
@@ -151,4 +164,18 @@ exports.tearDown = function (done) {
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }

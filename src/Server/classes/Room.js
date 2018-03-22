@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = class Room {
-    constructor(id, isLocked, name, desc, isTimeLimit, timeLimit, base64) {
+    constructor(id, isLocked, name, desc, isTimeLimit, timeLimit, base64, listUsers) {
         this._id = id;
         this._isLocked = isLocked;
         this._userInControl = undefined;
@@ -10,6 +10,7 @@ module.exports = class Room {
         this._isTimeLimit = isTimeLimit;
         this._timeLimit = timeLimit;
         this._base64 = base64;
+        this._listUsers = listUsers;
     }
 
     get id() {
@@ -75,6 +76,14 @@ module.exports = class Room {
 
     set base64(value) {
         this._base64 = value;
+    }
+
+    get listUsers() {
+        return this._listUsers;
+    }
+
+    set listUsers(value) {
+        this._listUsers = value;
     }
 
     toJson() {
