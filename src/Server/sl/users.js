@@ -17,9 +17,18 @@ module.exports = function (bl) {
         return true;
     };
 
-    this.register = function (username, password, firstName, lastName, sex, email, isTeacher) {
-        var user = bl.users.addUser(username, password, firstName, lastName, sex, email, isTeacher);
-        return user;
+    this.register = async function (username, password, firstName, lastName, sex, email, isTeacher) {
+        if (password == "" || firstName == "" || lastName == "" || sex == "" || email == "")
+            throw new Error("Error in register, please try again");
+        try {
+            await bl.users.getUserByUserName(username);
+        }
+        catch (err) {
+            var user = bl.users.addUser(username, password, firstName, lastName, sex, email, isTeacher);
+            return user;
+        }
+        throw new Error("Error in register, please try again");
+
     };
 
     this.deleteUser = async function (username) {

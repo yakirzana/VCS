@@ -1,5 +1,5 @@
 module.exports = function (io, sl) {
-    var io = io.of('/classes');
+    io = io.of('/classes');
     var socketClass;
     io.on('connection', function (socket) {
         socketClass = socket;
@@ -9,11 +9,11 @@ module.exports = function (io, sl) {
 
     this.addAlert = function (classID, roomID, alertType) {
         var moment = alertType["critical_moment"];
-        // if(moment === "NONE") return;
+        if (moment == "NONE") return;
         var msg = {roomID: roomID, alertType: moment};
         msg = JSON.stringify(msg);
-        if (socketClass !== undefined)
-            socketClass.emit('alert', msg);
+        if (io !== undefined)
+            io.emit('alert', msg);
         console.log("finish send");
         sl.alerts.addAlert(roomID, moment);
     };

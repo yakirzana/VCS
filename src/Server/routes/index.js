@@ -2,6 +2,7 @@ var SL = require('../sl');
 
 module.exports = function (app, sl, socket) {
     this.loggedUser = null;
+    this.loggedIsTeacher = null;
 
     async function checkAuthRestricted(req, res, next) {
         if (!await isLogged(req, res, next))
@@ -19,9 +20,12 @@ module.exports = function (app, sl, socket) {
         if (!req.session || !req.session.userHash || !req.session.username ||
             await !sl.users.isHashMatch(req.session.username, req.session.userHash)) {
             this.loggedUser = null;
+            this.loggedIsTeacher = null;
             return false;
         } else {
             this.loggedUser = req.session.username;
+            var user = await sl.users.getUserByUserName(this.loggedUser);
+            this.loggedIsTeacher = user.isTeacher;
             return true;
         }
     }
@@ -42,6 +46,22 @@ module.exports = function (app, sl, socket) {
         }
     });
 
+    app.post('/signup', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.username && post.password))
+                throw new Error("Missing info");
+            await sl.users.register(post.username, post.password, post.firstName, post.lastName, post.sex, post.email, false);
+            req.session.userHash = await sl.users.createUserHash(post.username);
+            req.session.username = post.username;
+            res.redirect('/');
+        }
+        catch (err) {
+            req.flash("message", err.message);
+            res.redirect('/signup');
+        }
+    });
+
     app.get('/logout', function (req, res) {
         sl.users.logout(req.session.username);
         delete req.session.username;
@@ -54,21 +74,46 @@ module.exports = function (app, sl, socket) {
             page: "login",
             strings: sl.strings,
             message: req.flash('message'),
-            logged: this.loggedUser
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
+    });
+
+    app.get('/signup', checkAuth, function (req, res) {
+        res.render('pages/signup', {
+            page: "signup",
+            strings: sl.strings,
+            message: req.flash('message'),
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
         });
     });
 
     app.get('/room/:roomId*', checkAuthRestricted, async function (req, res) {
         var roomId = req.params.roomId;
+        if (this.loggedUser.isTeacher)
+            sl.alerts.removeAlert(roomId);
         var room;
         try {
             room = await sl.rooms.getRoomById(roomId);
             var chats = await sl.chats.getMessagesByRoom(parseInt(roomId));
-            res.render('pages/room', {page: "room", strings: sl.strings, room, logged: this.loggedUser, chats: chats});
+            res.render('pages/room', {
+                page: "room",
+                strings: sl.strings,
+                room,
+                logged: this.loggedUser,
+                isTech: this.loggedIsTeacher,
+                chats: chats
+            });
         }
         catch (err) {
             //TODO replace with error msg to user
-            res.render('pages/home', {page: "home", strings: sl.strings, logged: this.loggedUser});
+            res.render('pages/home', {
+                page: "home",
+                strings: sl.strings,
+                logged: this.loggedUser,
+                isTech: this.loggedIsTeacher
+            });
         }
         //
 
@@ -85,6 +130,7 @@ module.exports = function (app, sl, socket) {
             strings: sl.strings,
             classId,
             logged: this.loggedUser,
+            isTech: this.loggedIsTeacher,
             isTeacher: user.isTeacher,
             rooms: rooms,
             alert: alert,
@@ -93,14 +139,38 @@ module.exports = function (app, sl, socket) {
     });
 
     app.get('/', checkAuth, function (req, res) {
-        res.render('pages/home', {page: "home", strings: sl.strings, logged: this.loggedUser});
+        res.render('pages/home', {
+            page: "home",
+            strings: sl.strings,
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
     });
 
     app.get('/myRooms', checkAuthRestricted, function (req, res) {
-        res.render('pages/myRooms', {page: "room", strings: sl.strings, logged: this.loggedUser});
+        res.render('pages/myRooms', {
+            page: "room",
+            strings: sl.strings,
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
     });
 
     app.get('/myClasses', checkAuthRestricted, function (req, res) {
-        res.render('pages/myClasses', {page: "class", strings: sl.strings, logged: this.loggedUser});
+        res.render('pages/myClasses', {
+            page: "class",
+            strings: sl.strings,
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
+    });
+
+    app.get('/admin', checkAuthRestricted, function (req, res) {
+        res.render('pages/admin', {
+            page: "admin",
+            strings: sl.strings,
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
     });
 };

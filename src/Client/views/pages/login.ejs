@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>VCS Login</title>
+    <title>VCS <%- strings.login %></title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="/stylesheets/login.css">
 </head>
@@ -14,7 +14,7 @@
 
     <div id="login">
 
-        <h1>Login</h1><br/>
+        <h1><%- strings.login %></h1><br/>
 
         <!-- show any messages that come back with authentication -->
         <% if (message.length > 0) { %>
@@ -24,19 +24,19 @@
         <!-- LOGIN FORM -->
         <form action="/login" method="post">
             <div class="form-group">
-                <label>Username</label>
+                <label><%- strings.Username %></label>
                 <input type="text" class="form-control" name="username">
             </div>
             <div class="form-group">
-                <label>Password</label>
+                <label><%- strings.Password %></label>
                 <input type="password" class="form-control" name="password">
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Login</button>
+            <button type="submit" class="btn btn-warning btn-lg"><%- strings.login %></button>
         </form>
 
-        <p>Need an account? <a href="/signup">Signup</a></p>
-        <p>Or go <a href="/">home</a>.</p>
+        <p><%- strings.NeedAnAccount %> <a href="/signup"><%- strings.register %>.</a></p>
+        <p><%- strings.OrGo %> <a href="/"><%- strings.Home %></a>.</p>
 
     </div>
 

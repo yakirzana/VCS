@@ -15,7 +15,7 @@ function analyzeMsg(classSocket, msg) {
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);
-            classSocket.addAlert("1", msg._roomID, body);
+            classSocket.addAlert(1, msg._roomID, body);
         }
     });
 

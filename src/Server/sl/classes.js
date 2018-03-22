@@ -18,8 +18,8 @@ module.exports = function (bl) {
     };
 
     this.getClassByID = async function (classID) {
-        var clss = await bl.classes.getClassByID(classID);
-        return clss;
+        var classID = parseInt(classID);
+        return await bl.classes.getClassByID(classID);
     };
 
     this.getRoomsAccesible = async function (classID, username) {
