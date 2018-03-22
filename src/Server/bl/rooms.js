@@ -8,6 +8,7 @@ module.exports = function (dl) {
         return room;
     };
 
+
     this.getUsersInRoomById = async function (id) {
         var room = await dl.rooms.getRoomById(id);
         if (room == null)
@@ -34,7 +35,7 @@ module.exports = function (dl) {
     };
 
     this.getRoomsOfUser = async function (username) {
-        await dl.rooms.getRoomsOfUser(username);
+        return await dl.rooms.getRoomsOfUser(username);
     };
 
     this.saveRoom = function(room) {
