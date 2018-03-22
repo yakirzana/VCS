@@ -44,10 +44,11 @@ async function run(db) {
     var bl = new BL(dl);
     var sl = new SL(bl);
 
-    sl.alerts.addAlert("1", "NMD");
-
+    // sl.alerts.addAlert("1", "NMD");
+    // sl.alerts.addAlert("2", "Idleness");
     require('./routes')(app, sl);
     require('./sockets')(io, sl);
+
     http.listen(80, function() {
         console.log('listening on port 80');
     });

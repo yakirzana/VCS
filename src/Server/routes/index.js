@@ -1,6 +1,6 @@
 var SL = require('../sl');
 
-module.exports = function (app, sl) {
+module.exports = function (app, sl, socket) {
     this.loggedUser = null;
 
     async function checkAuthRestricted(req, res, next) {
@@ -78,9 +78,8 @@ module.exports = function (app, sl) {
         var classId = req.params.classId;
         var user = await sl.users.getUserByUserName(this.loggedUser);
         var rooms = await sl.classes.getRoomsInClass(classId);
-        console.log(rooms);
         var alert = await sl.alerts.getAlertsFromClass(classId);
-        console.log(alert);
+        var myClass = await sl.classes.getClassByID(classId);
         res.render('pages/class', {
             page: "class",
             strings: sl.strings,
@@ -88,7 +87,8 @@ module.exports = function (app, sl) {
             logged: this.loggedUser,
             isTeacher: user.isTeacher,
             rooms: rooms,
-            alert: alert
+            alert: alert,
+            myClass: myClass
         });
     });
 
@@ -103,4 +103,4 @@ module.exports = function (app, sl) {
     app.get('/myClasses', checkAuthRestricted, function (req, res) {
         res.render('pages/myClasses', {page: "class", strings: sl.strings, logged: this.loggedUser});
     });
-}
+};
