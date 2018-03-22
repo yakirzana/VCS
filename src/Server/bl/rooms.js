@@ -34,7 +34,22 @@ module.exports = function (dl) {
     };
 
     this.getRoomsOfUser = async function (username) {
-        await dl.rooms.getRoomsOfUser(username);
+        var res;
+        var user = await this.dl.users.getUserByUserName(username);
+        if (user.isTeacher) {
+            var allClasses = await dl.classes.getAllClasses();
+            for (var clss of allClasses) {
+                if (clss.teacherUserName == username) {
+                    for (var room in clss.roomList) {
+                        res.push(room);
+                    }
+                }
+            }
+        }
+        else {
+            return await dl.rooms.getRoomsOfUser(username);
+        }
+        return res;
     };
 
     this.saveRoom = function(room) {
