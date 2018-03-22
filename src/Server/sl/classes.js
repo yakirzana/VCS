@@ -16,4 +16,9 @@ module.exports = function (bl) {
         var classes = await bl.classes.getClassByRoomID(roomID);
         return classes;
     };
+
+    this.getClassByID = async function (classID) {
+        var clss = await bl.classes.getClassByID(classID);
+        return clss;
+    };
 };

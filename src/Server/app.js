@@ -44,11 +44,13 @@ async function run(db) {
     var bl = new BL(dl);
     var sl = new SL(bl);
 
-    sl.alerts.addAlert("1", "NMD");
+    // sl.alerts.addAlert("1", "NMD");
 
-    require('./routes')(app, sl);
-    require('./sockets')(io, sl);
-    http.listen(80, function() {
-        console.log('listening on port 80');
-    });
+    // require('./routes')(app, sl);
+    // require('./sockets')(io, sl);
+    // http.listen(80, function() {
+    //     console.log('listening on port 80');
+    // });
+
+    await bl.classes.addNewClass("Sivan class", 5, "This is Sivan class", "teac1", [1, 2, 3]);
 }
