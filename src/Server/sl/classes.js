@@ -2,9 +2,13 @@ var Class = require('../classes/Class.js');
 
 module.exports = function (bl) {
     this.getRoomsInClass = async function (classID) {
+        classID = parseInt(classID);
         var rooms = await bl.classes.getRoomsInClass(classID);
-        for (var i = 0; i < rooms.length; i++)
-            rooms[i] = rooms[i].toJson();
-        return rooms;
-    }
+        var roomsObj = [];
+        for (var i = 0; i < rooms.length; i++) {
+            var room = await bl.rooms.getRoomById(rooms[i] + "");
+            roomsObj.push(await room.toJson());
+        }
+        return roomsObj;
+    };
 };

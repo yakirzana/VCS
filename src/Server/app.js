@@ -43,6 +43,9 @@ async function run(db) {
     var dl = new DL(db);
     var bl = new BL(dl);
     var sl = new SL(bl);
+
+    sl.alerts.addAlert("1", "NMD");
+
     require('./routes')(app, sl);
     require('./sockets')(io, sl);
     http.listen(80, function() {

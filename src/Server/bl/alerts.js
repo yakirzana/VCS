@@ -9,7 +9,7 @@ module.exports = function (dl) {
         this.roomsAlert[roomID] = undefined;
     };
 
-    this.getAlertForRoom = function (roomID) {
+    this.getAlertFromRoom = function (roomID) {
         return this.roomsAlert[roomID];
     };
 

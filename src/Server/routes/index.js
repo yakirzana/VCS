@@ -77,14 +77,18 @@ module.exports = function (app, sl) {
     app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
         var classId = req.params.classId;
         var user = await sl.users.getUserByUserName(this.loggedUser);
+        var rooms = await sl.classes.getRoomsInClass(classId);
+        console.log(rooms);
+        var alert = await sl.alerts.getAlertsFromClass(classId);
+        console.log(alert);
         res.render('pages/class', {
             page: "class",
             strings: sl.strings,
             classId,
             logged: this.loggedUser,
             isTeacher: user.isTeacher,
-            rooms: sl.classes.getRoomsInClass(classId),
-            alert: sl.aletrs.getAlertsFromClass(classId)
+            rooms: rooms,
+            alert: alert
         });
     });
 

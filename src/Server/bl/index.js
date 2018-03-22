@@ -9,6 +9,6 @@ module.exports = function (dl) {
     this.users = new Users(dl);
     this.chats = new Chats(dl);
     this.classes = new Classes(dl);
-    this.aletrs = new Alerts(dl);
+    this.alerts = new Alerts(dl);
 };
 
