@@ -2,7 +2,6 @@ var socketClass = io('/classes');
 
 $(document).ready(function () {
     initSocket();
-    console.log("ready");
 });
 
 function initSocket() {
@@ -12,12 +11,16 @@ function initSocket() {
         var color = getAlertColor(msg.alertType);
         console.log("got " + msg + " and color is " + color);
         addAlertToRoom(msg.roomID, color);
+        var audio = new Audio('/images/alert.mp3');
+        audio.play();
     });
 }
 
 function addAlertToRoom(roomID, color) {
     cleanRoomBorder(roomID);
-    $("#room" + roomID).addClass(color + "Border");
+    $("#room" + roomID).fadeOut(0, function () {
+        $(this).addClass(color + "Border");
+    }).fadeIn(1000)
 }
 
 function removeAlertFromRoom(roomID, color) {

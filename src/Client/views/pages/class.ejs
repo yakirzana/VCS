@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="rtl">
 <head>
-    <title>VCS Class <%= classId %></title>
+    <title>VCS Class <%= classId %> <%= myClass._name %></title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="/stylesheets/myRooms.css">
     <script>
@@ -17,7 +17,7 @@
 </header>
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Class <%= classId %> <%= myClass._name %></h1>
+        <h1 class="jumbotron-heading"><%= myClass._name %></h1>
         <p class="lead text-muted"><%= myClass._descriptions %></p>
         <p class="lead text-muted">Here you can see rooms that you can join</p>
     </div>
