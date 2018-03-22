@@ -46,6 +46,22 @@ module.exports = function (app, sl, socket) {
         }
     });
 
+    app.post('/signup', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.username && post.password))
+                throw new Error("Missing info");
+            await sl.users.register(post.username, post.password, post.firstName, post.lastName, post.sex, post.email, false);
+            req.session.userHash = await sl.users.createUserHash(post.username);
+            req.session.username = post.username;
+            res.redirect('/');
+        }
+        catch (err) {
+            req.flash("message", err.message);
+            res.redirect('/signup');
+        }
+    });
+
     app.get('/logout', function (req, res) {
         sl.users.logout(req.session.username);
         delete req.session.username;
@@ -56,6 +72,16 @@ module.exports = function (app, sl, socket) {
     app.get('/login', checkAuth, function (req, res) {
         res.render('pages/login', {
             page: "login",
+            strings: sl.strings,
+            message: req.flash('message'),
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
+    });
+
+    app.get('/signup', checkAuth, function (req, res) {
+        res.render('pages/signup', {
+            page: "signup",
             strings: sl.strings,
             message: req.flash('message'),
             logged: this.loggedUser,

@@ -15,6 +15,23 @@
   "adminDesc": "כאן ניתן לנהל את החדרים והכיתות",
   "addRoom": "הוספת חדר",
   "addClass": "הוספת כיתה",
-  "addUserToRoom": "הוספת תלמיד לכיתה"
+  "addUserToRoom": "הוספת תלמיד לכיתה",
+  "VCSDemo": "מערכת דמו VCS !",
+  "WelcomeMSG1": "ברוכים הבאים למערכת הדמו של VCS!",
+  "WelcomeMSG2": "במערכת זאת תוכלו לנסות להשתמש בלוח הוירטואלי בשיתוף פעולה עם שאר הכיתה.",
+  "SeeRooms": "צפה בחדרים שלך",
+  "NotConnected": "מנותק",
+  "Username": "שם משתמש",
+  "Password": "סיסמא",
+  "NeedAnAccount": "צריך חשבון משתמש?",
+  "HaveAnAccount": "יש לך כבר חשבון משתמש?",
+  "OrGo": "או לך אל",
+  "firstName": "שם פרטי",
+  "lastName": "שם משפחה",
+  "gender": "מין",
+  "male": "זכר",
+  "female": "נקבה",
+  "email": "אימייל",
+  "Home": "הבית"
 
 }

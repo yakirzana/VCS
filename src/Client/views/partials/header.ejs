@@ -24,7 +24,7 @@
                     <% if (logged != null) { %>
                     <%- logged %>
                     <% } else { %>
-                    Not connected
+                    <%- strings.NotConnected %>
                     <% } %>
 
                 </a>
@@ -32,7 +32,7 @@
                     <% if (logged != null) { %>
                     <a class="dropdown-item" href="/logout"><%- strings.logout %></a>
                     <% } else { %>
-                    <a class="dropdown-item" href="/register"><%- strings.register %></a>
+                    <a class="dropdown-item" href="/signup"><%- strings.register %></a>
                     <a class="dropdown-item" href="/login"><%- strings.login %></a>
                     <% } %>
                 </div>
