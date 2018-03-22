@@ -42,6 +42,6 @@ module.exports = function (io, sl) {
             socket.broadcast.to(roomId).emit('releaseFromServer', user);
         }
     });
-}
+};
 
 

@@ -4,20 +4,21 @@
     <title>VCS Class <%= classId %></title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="/stylesheets/myRooms.css">
+    <script>
+        var rooms = <%- JSON.stringify(rooms) %>;
+        var alert = <%- JSON.stringify(alert) %>;
+        var isTeacher = <%- JSON.stringify(isTeacher) %>;
+    </script>
     <script src="/scripts/class.js"></script>
 </head>
 <body>
 <header>
     <% include ../partials/header %>
 </header>
-<script>
-    console.log(<%= rooms %>);
-    console.log(<%= alert %>);
-</script>
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Class <%= classId %></h1>
-        <p class="lead text-muted">Here you can see class description</p>
+        <h1 class="jumbotron-heading">Class <%= classId %> <%= myClass._name %></h1>
+        <p class="lead text-muted"><%= myClass._descriptions %></p>
         <p class="lead text-muted">Here you can see rooms that you can join</p>
     </div>
 
@@ -26,19 +27,19 @@
         <%- strings.key %>:
         <br><br>
         <div class="alert alert-primary" role="alert">
-            type1
+            Technical Challenge
         </div>
 
         <div class="alert alert-danger" role="alert">
-            type2
+            Idleness
         </div>
 
         <div class="alert alert-success" role="alert">
-            type3
+            Final Answer
         </div>
 
         <div class="alert alert-warning" role="alert">
-            type4
+            NMD
         </div>
     </div>
     <% } %>
@@ -47,55 +48,9 @@
 
 <div class="album text-muted">
     <div class="container">
-        <div class="row">
-            <div id="room1" class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Room 1</h4>
-                    <p class="card-text">Some quick example text to build on the Room title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/room/1" class="btn btn-primary">Enter Room</a>
-                </div>
-            </div>
-
-            <div id="room2" class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Room 2</h4>
-                    <p class="card-text">Some quick example text to build on the Room title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/room/2" class="btn btn-primary">Enter Room</a>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div id="room3" class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Room 3</h4>
-                    <p class="card-text">Some quick example text to build on the Room title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/room/3" class="btn btn-primary">Enter Room</a>
-                </div>
-            </div>
-            <div id="room4" class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Room 4</h4>
-                    <p class="card-text">Some quick example text to build on the Room title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/room/4" class="btn btn-primary">Enter Room</a>
-                </div>
-            </div>
-        </div>
+        <script>
+            document.write(getRoomsHtml());
+        </script>
 
     </div>
 </div>
