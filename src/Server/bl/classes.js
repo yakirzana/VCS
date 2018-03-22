@@ -27,5 +27,10 @@ module.exports = function (dl) {
 
     this.saveClass = function(clss) {
         dl.classes.saveClass(clss);
+    };
+
+    this.getClassByRoomID = async function (roomID) {
+        var classes = await dl.classes.getClassByRoomID(roomID);
+        return classes;
     }
 };

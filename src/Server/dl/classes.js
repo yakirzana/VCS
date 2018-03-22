@@ -49,4 +49,32 @@ module.exports = function (db) {
         });
 
     }
+
+    this.getClassByRoomID = async function (roomID) {
+        var res = [];
+        var allClasses = await this.getAllClasses();
+        for (var clss of allClasses) {
+            if (roomID in clss.roomList) {
+                res.push(clss.classID)
+            }
+        }
+        return res;
+
+    };
+
+    this.getAllClasses = async function () {
+        try {
+            let clss = await db.collection('classes').find().toArray();
+            if (clss == null)
+                throw new Error("there is a problem to find classes");
+            var clssList = [];
+            for (var cls of clss) {
+                var classInSystem = Object.assign(new Class, cls);
+                clssList.push(classInSystem);
+            }
+            return clssList;
+        } catch (err) {
+            return null;
+        }
+    };
 };
