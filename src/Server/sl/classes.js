@@ -25,18 +25,27 @@ module.exports = function (bl) {
     this.getRoomsAccesible = async function (classID, username) {
         var res = [];
         var classList = await bl.classes.getClassByUser(username);
+        classList = classList.filter(function (item, pos) {
+            return classList.indexOf(item) == pos;
+        })
         if (classID in classList) {
             var roomList = await bl.classes.getRoomsInClass(classID);
             for (var room of roomList) {
-                var userList = await bl.rooms.getUsersInRoomById(room);
-                if (username in userList) {
-                    res.push(room);
+                var userList = await bl.rooms.getUsersInRoomById(room + "");
+                for (var i = 0; i < userList.length; ++i) {
+                    if (userList[i] == username) {
+                        res.push(room);
+                    }
                 }
             }
         }
         else {
-            throw new Error("cannot find classID");
+            return res;
         }
+
+        res = res.filter(function (item, pos) {
+            return res.indexOf(item) == pos;
+        })
 
         return res;
     };

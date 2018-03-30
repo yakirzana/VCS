@@ -10,11 +10,11 @@ module.exports = function (dl) {
 
 
     this.getClassByUser = async function (username) {
-        var res;
+        var res = [];
         var classList;
         var roomList = await dl.rooms.getRoomsOfUser(username);
         for (var room of roomList) {
-            classList = this.getClassByRoomID(room);
+            classList = await this.getClassByRoomID(room);
             for (var clss of classList) {
                 res.push(clss);
             }
