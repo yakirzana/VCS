@@ -38,7 +38,7 @@ module.exports = function (db) {
         var res = [];
         var allRooms = await this.getAllRooms();
         for (var room of allRooms) {
-            if (room.listUsers.includes(username)) {
+            if (room.listUsers.indexOf(username) > -1) {
                 res.push(room.id);
             }
         }

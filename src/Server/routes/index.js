@@ -161,12 +161,17 @@ module.exports = function (app, sl, socket) {
         });
     });
 
-    app.get('/myClasses', checkAuthRestricted, function (req, res) {
+    app.get('/myClasses', checkAuthRestricted, async function (req, res) {
+        if (this.loggedIsTeacher)
+            var classes = await sl.classes.getClassesOfTeach(this.loggedUser);
+        else
+            var classes = await sl.classes.getClassesOfUser(this.loggedUser);
         res.render('pages/myClasses', {
             page: "class",
             strings: sl.strings,
             logged: this.loggedUser,
-            isTech: this.loggedIsTeacher
+            isTech: this.loggedIsTeacher,
+            classes: classes
         });
     });
 

@@ -62,10 +62,25 @@ module.exports = function (db) {
 
     };
 
-
     this.getAllClasses = async function () {
         try {
             let clss = await db.collection('classes').find().toArray();
+            if (clss == null)
+                throw new Error("there is a problem to find classes");
+            var clssList = [];
+            for (var cls of clss) {
+                var classInSystem = Object.assign(new Class, cls);
+                clssList.push(classInSystem);
+            }
+            return clssList;
+        } catch (err) {
+            return null;
+        }
+    };
+
+    this.getAllClassesOfThech = async function (teach) {
+        try {
+            let clss = await db.collection('classes').find({"_teacherUserName": teach}).toArray();
             if (clss == null)
                 throw new Error("there is a problem to find classes");
             var clssList = [];

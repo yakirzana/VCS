@@ -4,10 +4,6 @@
     <title>VCS My Rooms</title>
     <% include ../partials/head %>
     <link rel="stylesheet" type="text/css" href="/stylesheets/myRooms.css">
-    <script>
-        var rooms = <%- JSON.stringify(rooms) %>;
-    </script>
-    <script src="/scripts/myRooms.js"></script>
 </head>
 <body>
 <header>
@@ -23,9 +19,24 @@
 
 <div class="album text-muted">
     <div class="container">
-        <script>
-            document.write(getRoomsHtml());
-        </script>
+        <div class="row">
+            <% for (let i = 0; rooms != undefined && i < rooms.length; i++)  { %>
+            <div class="card">
+                <img class="card-img-top"
+                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
+                     alt="Card image cap">
+                <div class="card-block">
+                    <h4 class="card-title"><%= rooms[i].name %></h4>
+                    <p class="card-text"><%= rooms[i].desc %></p>
+                    <a href="/room/<%= rooms[i].id %>" class="btn btn-primary">Enter Room</a>
+                </div>
+            </div>
+            <% if (i != rooms.length - 1 && i % 2 == 1) { %>
+        </div>
+        <div class="row">
+            <% } %>
+            <% }; %>
+        </div>
     </div>
 </div>
 

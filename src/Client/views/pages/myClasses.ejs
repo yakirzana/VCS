@@ -21,53 +21,22 @@
 <div class="album text-muted">
     <div class="container">
         <div class="row">
+            <% for (let i = 0; classes != undefined && i < classes.length; i++)  { %>
             <div class="card">
                 <img class="card-img-top"
                      src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
                      alt="Card image cap">
                 <div class="card-block">
-                    <h4 class="card-title">Class 1</h4>
-                    <p class="card-text">Some quick example text to build on the Class title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/class/1" class="btn btn-primary">Enter Class</a>
+                    <h4 class="card-title"><%= classes[i]._name %></h4>
+                    <p class="card-text"><%= classes[i]._descriptions %></p>
+                    <a href="/class/<%= classes[i]._classID %>" class="btn btn-primary">Enter Class</a>
                 </div>
-            </div>
-
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Class 2</h4>
-                    <p class="card-text">Some quick example text to build on the Class title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/class/2" class="btn btn-primary">Enter Class</a>
                 </div>
-            </div>
+            <% if (i != classes.length - 1 && i % 2 == 1) { %>
         </div>
         <div class="row">
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Class 3</h4>
-                    <p class="card-text">Some quick example text to build on the Class title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/class/3" class="btn btn-primary">Enter Class</a>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://previews.123rf.com/images/iimages/iimages1301/iimages130101248/17443634-Illustration-of-a-teacher-in-the-classroom-Stock-Vector-cartoon.jpg"
-                     alt="Card image cap">
-                <div class="card-block">
-                    <h4 class="card-title">Class 4</h4>
-                    <p class="card-text">Some quick example text to build on the Class title and make up the bulk of the
-                        card's content.</p>
-                    <a href="/class/4" class="btn btn-primary">Enter Class</a>
-                </div>
-            </div>
+            <% } %>
+            <% }; %>
         </div>
 
     </div>

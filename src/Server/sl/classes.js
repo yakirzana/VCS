@@ -10,6 +10,16 @@ module.exports = function (bl) {
         return roomsObj;
     }
 
+    async function getClassesByID(classes) {
+        var classesObj = [];
+        for (var i = 0; i < classes.length; i++) {
+            var cls = await bl.classes.getClassByID(classes[i]);
+            classesObj.push(await cls);
+        }
+        return classesObj;
+    }
+
+
     this.getRoomsInClass = async function (classID) {
         classID = parseInt(classID);
         var rooms = await bl.classes.getRoomsInClass(classID);
@@ -41,5 +51,14 @@ module.exports = function (bl) {
             }
         }
         return await getRoomsByID(res);
+    };
+
+    this.getClassesOfUser = async function (username) {
+        var classes = await bl.classes.getClassByUser(username);
+        return await getClassesByID(classes);
+    };
+
+    this.getClassesOfTeach = async function (username) {
+        return await bl.classes.getAllClassesOfThech(username);
     };
 };

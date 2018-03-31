@@ -8,7 +8,6 @@ module.exports = function (dl) {
         return roomList;
     };
 
-
     this.getClassByUser = async function (username) {
         var res = [];
         var classList;
@@ -49,5 +48,10 @@ module.exports = function (dl) {
     this.getClassByRoomID = async function (roomID) {
         var classes = await dl.classes.getClassByRoomID(roomID);
         return classes;
+    };
+
+    this.getAllClassesOfThech = async function (teach) {
+        return await dl.classes.getAllClassesOfThech(teach);
+
     };
 };
