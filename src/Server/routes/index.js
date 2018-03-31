@@ -122,11 +122,12 @@ module.exports = function (app, sl, socket) {
     app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
         var classId = req.params.classId;
         var user = await sl.users.getUserByUserName(this.loggedUser);
-        // if (this.loggedIsTeacher)
-        //     var rooms = await sl.classes.getRoomsInClass(classId);
-        // else
-        //     var rooms = await sl.classes.getRoomsAccesible(classId, this.loggedUser);
-        var rooms = await sl.classes.getRoomsInClass(classId);
+        if (this.loggedIsTeacher)
+            var rooms = await sl.classes.getRoomsInClass(classId);
+        else
+            var rooms = await sl.classes.getRoomsAccessible(parseInt(classId), this.loggedUser);
+        console.log(rooms);
+        //var rooms = await sl.classes.getRoomsInClass(classId);
         var alert = await sl.alerts.getAlertsFromClass(classId);
         var myClass = await sl.classes.getClassByID(classId);
         res.render('pages/class', {

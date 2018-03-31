@@ -22,18 +22,18 @@ module.exports = function (bl) {
         return await bl.classes.getClassByID(classID);
     };
 
-    this.getRoomsAccesible = async function (classID, username) {
+    this.getRoomsAccessible = async function (classID, username) {
         var res = [];
         var classList = await bl.classes.getClassByUser(username);
         classList = classList.filter(function (item, pos) {
             return classList.indexOf(item) == pos;
-        })
+        });
         if (classID in classList) {
             var roomList = await bl.classes.getRoomsInClass(classID);
             for (var room of roomList) {
                 var userList = await bl.rooms.getUsersInRoomById(room + "");
                 for (var i = 0; i < userList.length; ++i) {
-                    if (userList[i] == username) {
+                    if (userList[i] == username && res.indexOf(room) <= -1) {
                         res.push(room);
                     }
                 }

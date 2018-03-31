@@ -58,6 +58,6 @@ async function run(db) {
     //await bl.rooms.addRoom("2", false, "rotem-room", "This is Rotem room", true, 5, null, ["stud1"]);
     //await bl.rooms.addRoom("3", false, "hod-room", "This is Hod room", true, 5, null, ["stud2"]);
     // await bl.rooms.addRoom("4", false, "yakir-room", "This is Yakir room", true, 5, null, []);
-    //var rooms = await sl.classes.getRoomsAccesible(1, "");
+    //var rooms = await sl.classes.getRoomsAccessible(1, "");
     //console.log(rooms)
 }

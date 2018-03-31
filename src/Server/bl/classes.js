@@ -16,7 +16,8 @@ module.exports = function (dl) {
         for (var room of roomList) {
             classList = await this.getClassByRoomID(room);
             for (var clss of classList) {
-                res.push(clss);
+                if (res.indexOf(clss) <= -1)
+                    res.push(clss);
             }
         }
         if (res == null)
