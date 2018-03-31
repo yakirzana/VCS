@@ -126,8 +126,6 @@ module.exports = function (app, sl, socket) {
             var rooms = await sl.classes.getRoomsInClass(classId);
         else
             var rooms = await sl.classes.getRoomsAccessible(parseInt(classId), this.loggedUser);
-        console.log(rooms);
-        //var rooms = await sl.classes.getRoomsInClass(classId);
         var alert = await sl.alerts.getAlertsFromClass(classId);
         var myClass = await sl.classes.getClassByID(classId);
         res.render('pages/class', {

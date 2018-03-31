@@ -1,15 +1,19 @@
 var Class = require('../classes/Class.js');
 
 module.exports = function (bl) {
-    this.getRoomsInClass = async function (classID) {
-        classID = parseInt(classID);
-        var rooms = await bl.classes.getRoomsInClass(classID);
+    async function getRoomsByID(rooms) {
         var roomsObj = [];
         for (var i = 0; i < rooms.length; i++) {
             var room = await bl.rooms.getRoomById(rooms[i] + "");
             roomsObj.push(await room.toJson());
         }
         return roomsObj;
+    }
+
+    this.getRoomsInClass = async function (classID) {
+        classID = parseInt(classID);
+        var rooms = await bl.classes.getRoomsInClass(classID);
+        return await getRoomsByID(rooms);
     };
 
     this.getClassByRoomID = async function (roomID) {
@@ -25,9 +29,6 @@ module.exports = function (bl) {
     this.getRoomsAccessible = async function (classID, username) {
         var res = [];
         var classList = await bl.classes.getClassByUser(username);
-        classList = classList.filter(function (item, pos) {
-            return classList.indexOf(item) == pos;
-        });
         if (classID in classList) {
             var roomList = await bl.classes.getRoomsInClass(classID);
             for (var room of roomList) {
@@ -39,14 +40,6 @@ module.exports = function (bl) {
                 }
             }
         }
-        else {
-            return res;
-        }
-
-        res = res.filter(function (item, pos) {
-            return res.indexOf(item) == pos;
-        });
-
-        return res;
+        return await getRoomsByID(res);
     };
 };
