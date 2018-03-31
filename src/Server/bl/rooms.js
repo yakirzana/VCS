@@ -34,14 +34,15 @@ module.exports = function (dl) {
     };
 
     this.getRoomsOfUser = async function (username) {
-        var res;
-        var user = await this.dl.users.getUserByUserName(username);
+        var res = [];
+        var user = await dl.users.getUserByUserName(username);
         if (user.isTeacher) {
             var allClasses = await dl.classes.getAllClasses();
             for (var clss of allClasses) {
                 if (clss.teacherUserName == username) {
-                    for (var room in clss.roomList) {
-                        res.push(room);
+                    for (var room of clss.roomList) {
+                        if (res.indexOf(room) <= -1)
+                            res.push(room);
                     }
                 }
             }

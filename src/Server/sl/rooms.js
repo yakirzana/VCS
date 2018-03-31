@@ -10,7 +10,7 @@ module.exports = function (bl) {
         var roomsIDs = await bl.rooms.getRoomsOfUser(username);
         var rooms = [];
         for (var i = 0; i < roomsIDs.length; i++) {
-            var room = await bl.rooms.getRoomById(roomsIDs[i]);
+            var room = await bl.rooms.getRoomById(roomsIDs[i] + "");
             rooms.push(room.toJson());
         }
         return rooms;

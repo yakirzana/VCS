@@ -45,7 +45,7 @@ module.exports = function (bl) {
 
         res = res.filter(function (item, pos) {
             return res.indexOf(item) == pos;
-        })
+        });
 
         return res;
     };

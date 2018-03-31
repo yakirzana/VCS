@@ -152,12 +152,13 @@ module.exports = function (app, sl, socket) {
     });
 
     app.get('/myRooms', checkAuthRestricted, async function (req, res) {
-        //var rooms = await sl.rooms.getRoomsOfUser(this.loggedUser);
+        var rooms = await sl.rooms.getRoomsOfUser(this.loggedUser);
         res.render('pages/myRooms', {
             page: "room",
             strings: sl.strings,
             logged: this.loggedUser,
-            isTech: this.loggedIsTeacher
+            rooms: rooms,
+            isTech: this.loggedIsTeacher,
         });
     });
 
