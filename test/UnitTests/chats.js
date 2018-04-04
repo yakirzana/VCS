@@ -1,7 +1,7 @@
 var MongoClient = require('mongodb').MongoClient;
 var DL = require('../../src/Server/dl');
 var BL = require('../../src/Server/bl');
-var configDB = require('../../src/Server/config/database');
+var configDB = require('../../src/Server/config/index');
 var Message = require('../../src/Server/classes/Message.js');
 var _db;
 var bl;
@@ -77,7 +77,7 @@ exports.group = {
 
 
 exports.setUp = function (done) {
-    MongoClient.connect(configDB.url, function (err, db) {
+    MongoClient.connect(configDB.urlDB, function (err, db) {
         _db = db;
         bl = new BL(new DL(db));
         done();

@@ -1,8 +1,25 @@
+var config = require('../config');
+
+module.exports = function (io, sl, classSocket) {
+    io = io.of('/chat');
+    io.on('connection', async function(socket) {
+        var roomId = socket.handshake.headers.referer.split("/").pop();
+        socket.join(roomId);
+        socket.on('addMsg', function (msg) {
+            sl.chats.addNewMessage(msg._username, msg._date, msg._msg, msg._roomID);
+            socket.broadcast.to(msg._roomID).emit('addMsg', msg);
+            console.log("add chat msg from socket", msg._roomID);
+            analyzeMsg(classSocket, msg);
+        });
+
+    });
+};
+
 function analyzeMsg(classSocket, msg) {
     var request = require('request');
 
     var options = {
-        uri: 'http://192.168.43.156:5002/text_message',
+        uri: config.urlRestSendMessage,
         method: 'POST',
         json: {
             "message_text": msg._msg,
@@ -20,21 +37,6 @@ function analyzeMsg(classSocket, msg) {
     });
 
 }
-
-module.exports = function (io, sl, classSocket) {
-    var io = io.of('/chat');
-    io.on('connection', async function(socket) {
-        var roomId = socket.handshake.headers.referer.split("/").pop();
-        socket.join(roomId);
-        socket.on('addMsg', function (msg) {
-            sl.chats.addNewMessage(msg._username, msg._date, msg._msg, msg._roomID);
-            socket.broadcast.to(msg._roomID).emit('addMsg', msg);
-            console.log("add chat msg from socket", msg._roomID);
-            analyzeMsg(classSocket, msg);
-        });
-
-    });
-};
 
 
 

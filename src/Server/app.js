@@ -15,7 +15,7 @@ var log = new Log("Error.txt");
 var DL = require('./dl');
 var BL = require('./bl');
 var SL = require('./sl');
-var configDB = require('./config/database');
+var config = require('./config/');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../Client/views'));
@@ -26,9 +26,9 @@ app.use(session({
 }));
 app.use(flash());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-MongoClient.connect(configDB.url, function (err, db) {
+MongoClient.connect(config.urlDB, function (err, db) {
     if (err == null) {
         console.log("Connected successfully to database");
         run(db);
