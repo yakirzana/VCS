@@ -114,8 +114,11 @@ function RemoveListener(objName) {
 }
 
 function putUserInControl(userInControl) {
-    if(_user !== userInControl) {
+    if (!isTech && _user !== userInControl) {
         $('#btnControl').attr("disabled", true);
+        $("#applet_container").addClass("disabled");
+        $("#btnControl").html(strings.takeControl);
+        _isLocked = true;
     }
     else {
         refreshIntervalId = setInterval(event, 500);

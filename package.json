@@ -5,7 +5,7 @@
   "main": "src/Server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/Server/index.js"
+    "start": "node ./src/Server/app.js"
   },
   "author": "Yakir Zana",
   "license": "MIT",
