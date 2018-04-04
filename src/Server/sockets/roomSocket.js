@@ -53,7 +53,6 @@ module.exports = function (io, sl) {
 
 
 function addUser(socket, roomId) {
-    console.log(socket.user + " is connect to room " + roomId);
     if (usersInRooms[roomId] == undefined)
         usersInRooms[roomId] = [];
     usersInRooms[roomId].push(socket.user);
@@ -62,7 +61,6 @@ function addUser(socket, roomId) {
 }
 
 function removeUser(socket, roomId) {
-    console.log(socket.user + " is disconnect from room " + roomId);
     if (usersInRooms[roomId] == undefined) return;
     usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
     socket.emit('listOfUsers', usersInRooms[roomId]);
