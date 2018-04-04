@@ -32,7 +32,13 @@ module.exports = function (db) {
     this.removeClass = function (classID) {
         db.collection('classes').deleteOne({_classID: classID}, function (err, r) {
         });
-    }
+    };
+
+    this.getMaxID = async function () {
+        var cls = await db.collection('classes').find().sort({_classID: -1}).limit(1); // for MAX
+        var id = await cls.toArray();
+        return await id[0]._classID;
+    };
 
     this.saveClass = async function (clss) {
         var clss = await clss;

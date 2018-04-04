@@ -31,10 +31,12 @@ module.exports = function (dl) {
         return clss;
     };
 
-    this.addNewClass = function (name, classID, descriptions, teacherUserName, roomList) {
-        var clss = new Class(name, classID, descriptions, teacherUserName, roomList);
-        dl.classes.addNewClass(clss);
-        return clss;
+    this.addNewClass = async function (name, descriptions, teacherUserName, roomList) {
+        var classID = await this.getNextID();
+        console.log(classID);
+        // var clss = new Class(name, classID, descriptions, teacherUserName, roomList);
+        // dl.classes.addNewClass(clss);
+        // return clss;
     };
 
     this.removeClass = async function (classID) {
@@ -53,5 +55,9 @@ module.exports = function (dl) {
     this.getAllClassesOfThech = async function (teach) {
         return await dl.classes.getAllClassesOfThech(teach);
 
+    };
+
+    this.getNextID = async function () {
+        return await dl.classes.getMaxID() + 1;
     };
 };

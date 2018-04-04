@@ -4,7 +4,6 @@ var flash    = require('connect-flash');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 
-// var mongoose = require('mongoose');
 var MongoClient = require('mongodb').MongoClient;
 
 var app = express();
@@ -42,7 +41,7 @@ MongoClient.connect(config.urlDB, function (err, db) {
 async function run(db) {
     var dl = new DL(db);
     var bl = new BL(dl);
-    var sl = new SL(bl);
+    var sl = new SL(bl, "heb");
 
     // sl.alerts.addAlert("1", "NMD");
     // sl.alerts.addAlert("2", "Idleness");
@@ -53,7 +52,7 @@ async function run(db) {
         console.log('listening on port 80');
     });
 
-
+    await sl.classes.addNewClass("yakir", "hey", "teac1");
     //await bl.rooms.addRoom("1", false, "achiad-room", "This is Achiad room", true, 5, null, ["stud1", "stud2"]);
     //await bl.rooms.addRoom("2", false, "rotem-room", "This is Rotem room", true, 5, null, ["stud1"]);
     //await bl.rooms.addRoom("3", false, "hod-room", "This is Hod room", true, 5, null, ["stud2"]);

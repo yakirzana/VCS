@@ -19,6 +19,9 @@ module.exports = function (bl) {
         return classesObj;
     }
 
+    this.addNewClass = async function (name, descriptions, teacherUserName) {
+        await bl.classes.addNewClass(name, descriptions, teacherUserName, [])
+    };
 
     this.getRoomsInClass = async function (classID) {
         classID = parseInt(classID);
@@ -61,4 +64,6 @@ module.exports = function (bl) {
     this.getClassesOfTeach = async function (username) {
         return await bl.classes.getAllClassesOfThech(username);
     };
+
+
 };

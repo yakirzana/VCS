@@ -33,5 +33,7 @@
   "female": "נקבה",
   "email": "אימייל",
   "Home": "הבית",
-  "activeUsers": "משתמשים פעילים"
+  "activeUsers": "משתמשים פעילים",
+  "description": "תיאור",
+  "className": "שם הכיתה"
 }
