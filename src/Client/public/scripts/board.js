@@ -11,7 +11,7 @@ var updateVisibleTimeout = null;
 
 
 function setSocketListeners() {
-    socket.emit('init', "");
+    socket.emit('init', _user);
     socket.on('init',function (userInControl) {
         if (userInControl != null)
             putUserInControl(userInControl);
@@ -43,6 +43,14 @@ function setSocketListeners() {
     socket.on('releaseFromServer',function(user) {
         releaseUserControl(user);
     });
+
+    socket.on('listOfUsers', function (list) {
+        var listOfUsers = "<b>" + strings.activeUsers + ":</b><br/>";
+        for (var i = 0; i < list.length; i++) {
+            listOfUsers += list[i] + ",";
+        }
+        $("#listOfUsers").html(listOfUsers.slice(0, -1));
+    })
 }
 
 

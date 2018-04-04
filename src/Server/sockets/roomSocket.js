@@ -1,5 +1,7 @@
+var usersInRooms = [];
+
 module.exports = function (io, sl) {
-    var io = io.of('/rooms');
+    io = io.of('/rooms');
     io.on('connection', async function(socket) {
         var roomId = socket.handshake.headers.referer.split("/").pop();
         var room = await sl.rooms.getRoomById(roomId);
@@ -7,13 +9,18 @@ module.exports = function (io, sl) {
             socket.disconnect();
         socket.join(roomId);
 
-        socket.on('init', function () {
+        socket.on('init', function (username) {
             socket.emit('init', room.userInControl);
+            socket.user = username;
+
+            addUser(socket, roomId);
         });
 
         socket.on('disconnect', function () {
             if (socket.user == undefined) return;
             releaseControl(socket.user);
+
+            removeUser(socket, roomId);
         });
 
         socket.on('update', function (update) {
@@ -45,3 +52,19 @@ module.exports = function (io, sl) {
 };
 
 
+function addUser(socket, roomId) {
+    console.log(socket.user + " is connect to room " + roomId);
+    if (usersInRooms[roomId] == undefined)
+        usersInRooms[roomId] = [];
+    usersInRooms[roomId].push(socket.user);
+    socket.emit('listOfUsers', usersInRooms[roomId]);
+    socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
+}
+
+function removeUser(socket, roomId) {
+    console.log(socket.user + " is disconnect from room " + roomId);
+    if (usersInRooms[roomId] == undefined) return;
+    usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
+    socket.emit('listOfUsers', usersInRooms[roomId]);
+    socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
+}

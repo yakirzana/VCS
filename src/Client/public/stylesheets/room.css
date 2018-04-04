@@ -15,12 +15,12 @@
     margin: 0 0 20px;
 }
 
-
 /* Main marketing message and sign up button */
 .jumbotron {
     text-align: center;
     background-color: #f7f7f7;
 }
+
 .jumbotron .btn {
     padding: 14px 24px;
     font-size: 21px;
@@ -34,10 +34,19 @@
     margin: 0 auto;
     width: 500px;
     height: 500px;
-    background: url("../images/ajax-loader.gif") no-repeat center ;
+    background: url("../images/ajax-loader.gif") no-repeat center;
     background-size: 100%;
 }
 
 .hidden {
     display: none;
+}
+
+#listOfUsers {
+    margin-top: -10px;
+    height: 50px;
+    width: 500px;
+    border: 1px solid #ccc;
+    overflow: auto;
+    float: left;
 }
