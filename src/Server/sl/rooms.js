@@ -16,6 +16,19 @@ module.exports = function (bl) {
         return rooms;
     };
 
+    this.deleteRoom = async function (id) {
+        classList = []
+        var classes = await bl.classes.getClassByRoomID(parseInt(id));
+        for (clss of classes) {
+            classList.push(await bl.classes.getClassByID(clss));
+        }
+        for (cls of classList) {
+            await bl.classes.deleteRoomFromClass(parseInt(id), cls.classID);
+        }
+        await bl.rooms.deleteRoom(id);
+        return true;
+    };
+
     this.saveRoom = function (room) {
         bl.rooms.saveRoom(room);
         return true;
