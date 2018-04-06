@@ -55,7 +55,11 @@ async function run(db) {
     //await bl.rooms.addRoom("1", false, "achiad-room", "This is Achiad room", true, 5, null, ["stud1", "stud2"]);
     //await bl.rooms.addRoom("2", false, "rotem-room", "This is Rotem room", true, 5, null, ["stud1"]);
     //await bl.rooms.addRoom("3", false, "hod-room", "This is Hod room", true, 5, null, ["stud2"]);
-    // await bl.rooms.addRoom("4", false, "yakir-room", "This is Yakir room", true, 5, null, []);
+    //await bl.rooms.addRoom("4", false, "yakir-room", "This is Yakir room", true, 5, null, []);
     //var rooms = await sl.classes.getRoomsAccessible(1, "");
     //console.log(rooms)
+    //await bl.users.addUser("stud1", "1234", "teac", "her", "Male", "teacher@gm.com", false);
+    //await bl.users.addUser("stud2", "1234", "teac", "her", "Male", "teacher@gm.com", false);
+    //await bl.users.addUser("teac1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+    //await sl.users.deleteUser("stud1");
 }

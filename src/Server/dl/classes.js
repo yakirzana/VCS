@@ -37,6 +37,8 @@ module.exports = function (db) {
     this.getMaxID = async function () {
         var cls = await db.collection('classes').find().sort({_classID: -1}).limit(1); // for MAX
         var id = await cls.toArray();
+        if (id.length == 0)
+            return 0;
         return await id[0]._classID;
     };
 

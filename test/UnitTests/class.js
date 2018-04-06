@@ -8,9 +8,9 @@ var bl;
 
 exports.group = {
     testGetRoomsInClass: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        var roomsInClass = await bl.classes.getRoomsInClass(1234);
-        await bl.classes.removeClass(1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var roomsInClass = await bl.classes.getRoomsInClass(id);
+        await bl.classes.removeClass(id);
         test.ok(arraysEqual(roomsInClass,[ 1, 12, 6 ]));
         test.done();
     },
@@ -27,16 +27,16 @@ exports.group = {
     },
 
     testGetClassByID: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        var clss = await bl.classes.getClassByID(1234);
-        await bl.classes.removeClass(1234);
-        test.ok(clss.classID == 1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
+        await bl.classes.removeClass(id);
+        test.ok(clss.classID == id);
         test.done();
     },
 
     testGetClassByIDUndefined: async function (test) {
         try {
-            var clss = await bl.classes.getClassByID("achiad-class");
+            var clss = await bl.classes.getClassByID("achiad-class324");
             test.ok(false)
         }
         catch(err){
@@ -46,15 +46,14 @@ exports.group = {
     },
 
     testAddClass: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-
-        var clss = await bl.classes.getClassByID(1234);
-        test.ok(clss.classID == 1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
+        test.ok(clss.classID == id);
         test.ok(clss.name == "yakir class");
-        await bl.classes.removeClass(1234);
+        await bl.classes.removeClass(id);
         await sleep(1000);
         try {
-            var clss1 = await bl.classes.getClassByID("1234");
+            var clss1 = await bl.classes.getClassByID(id);
             test.ok(false)
         }
         catch(err){
@@ -64,11 +63,11 @@ exports.group = {
     },
 
     testRemoveClass: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        await bl.classes.removeClass(1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        await bl.classes.removeClass(id);
         await sleep(1000);
         try {
-            var clss = await bl.classes.getClassByID(1234);
+            var clss = await bl.classes.getClassByID(id);
             test.ok(false);
         }
         catch(err){
@@ -78,50 +77,50 @@ exports.group = {
     },
 
     testSaveClassName: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        var clss = await bl.classes.getClassByID(1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
         clss.name = "rotem class";
         await bl.classes.saveClass(clss);
         await sleep(1000);
-        var clss1 = await bl.classes.getClassByID(1234);
+        var clss1 = await bl.classes.getClassByID(id);
         test.ok(clss1.name == "rotem class");
-        await bl.classes.removeClass(1234);
+        await bl.classes.removeClass(id);
         test.done();
     },
 
     testSaveClassDescription: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        var clss = await bl.classes.getClassByID(1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
         clss.descriptions = "This is new class";
         await bl.classes.saveClass(clss);
         await sleep(1000);
-        var clss1 = await bl.classes.getClassByID(1234);
+        var clss1 = await bl.classes.getClassByID(id);
         test.ok(clss1.descriptions == "This is new class");
-        await bl.classes.removeClass(1234);
+        await bl.classes.removeClass(id);
         test.done();
     },
 
     testSaveClassTeacherUserName: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        var clss = await bl.classes.getClassByID(1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
         clss.teacherUserName = "maria";
         await bl.classes.saveClass(clss);
         await sleep(1000);
-        var clss1 = await bl.classes.getClassByID(1234);
+        var clss1 = await bl.classes.getClassByID(id);
         test.ok(clss1.teacherUserName == "maria");
-        await bl.classes.removeClass(1234);
+        await bl.classes.removeClass(id);
         test.done();
     },
 
     testSaveClassRoomList: async function (test) {
-        await bl.classes.addNewClass("yakir class" , 1234 , "This is Rotem class" , "hod" , [1,12,6]);
-        var clss = await bl.classes.getClassByID(1234);
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
         clss.roomList = [1,12,7];
         await bl.classes.saveClass(clss);
         await sleep(1000);
-        var clss1 = await bl.classes.getClassByID(1234);
+        var clss1 = await bl.classes.getClassByID(id);
         test.ok(arraysEqual(clss1.roomList,[ 1, 12, 7 ]));
-        await bl.classes.removeClass(1234);
+        await bl.classes.removeClass(id);
         test.done();
     }
 };
