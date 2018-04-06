@@ -13,13 +13,17 @@ module.exports = function (bl) {
         return true;
     };
 
-    this.logout = function (username) {
+    this.logout = async function (username) {
         return true;
     };
 
     this.register = async function (username, password, firstName, lastName, sex, email, isTeacher) {
-        if (password == "" || firstName == "" || lastName == "" || sex == "" || email == "")
+        if (username == "" || password == "" || firstName == "" || lastName == "" || sex == "" || email == "")
             throw new Error("Error in register, please try again");
+        if (username.indexOf('\n') > -1 || username.indexOf('\t') > -1 || username.indexOf('@') > -1)
+            throw new Error("Error in register,invalid characters, please try again");
+        if (password.length < 4)
+            throw new Error("Error in register,password too short");
         try {
             await bl.users.getUserByUserName(username);
         }
@@ -28,10 +32,13 @@ module.exports = function (bl) {
             return user;
         }
         throw new Error("Error in register, please try again");
-
     };
 
     this.deleteUser = async function (username) {
+        var rooms = await bl.rooms.getRoomsOfUser(username);
+        for (room of rooms) {
+            await bl.rooms.deleteUserFromRoom(room + "", username);
+        }
         await bl.users.deleteUser(username);
         return true;
     };

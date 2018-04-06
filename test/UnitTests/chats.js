@@ -43,7 +43,7 @@ exports.group = {
         {
             test.ok(false);
         }
-        bl.chats.removeMessage(msg);
+        await bl.chats.removeMessage(msg);
         test.done();
     },
 

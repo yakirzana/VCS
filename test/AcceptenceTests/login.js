@@ -46,8 +46,8 @@ exports.group = {
 exports.setUp = function (done) {
     MongoClient.connect(configDB.urlDB, function (err, db) {
         _db = db;
-        var bl = new BL(new DL(db))
-        sl = new SL(bl);
+        var bl = new BL(new DL(db));
+        sl = new SL(bl, "heb");
         done();
     });
 };

@@ -8,6 +8,7 @@ var room = room;
 var currentBase64 = null;
 var isChanged = false;
 var updateVisibleTimeout = null;
+var timerId = null;
 
 
 function setSocketListeners() {
@@ -157,6 +158,7 @@ function lockBoard(lock) {
         $("#applet_container").addClass("disabled");
         _isLocked = true;
         $("#btnControl").html(strings.takeControl);
+        clearTimeout(timerId);
     }
     else { // _user take control
         socket.emit('lockFromClient', _user);
@@ -164,5 +166,7 @@ function lockBoard(lock) {
         $("#applet_container").removeClass("disabled");
         _isLocked = false;
         $("#btnControl").html(strings.release);
+        if (room._isTimeLimit == true)
+            timerId = setTimeout(lockBoard, 1000 * room._timeLimit, false);
     }
 }
