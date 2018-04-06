@@ -20,7 +20,7 @@ module.exports = function (bl) {
     }
 
     this.addNewClass = async function (name, descriptions, teacherUserName) {
-        await bl.classes.addNewClass(name, descriptions, teacherUserName, [])
+        return await bl.classes.addNewClass(name, descriptions, teacherUserName, [])
     };
 
     this.getRoomsInClass = async function (classID) {

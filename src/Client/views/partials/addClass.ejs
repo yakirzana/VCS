@@ -1,0 +1,52 @@
+<b><%= strings.addClass %>:</b> <br/>
+<div class="result alert" id="resultAddClass">loading...</div>
+<form id="addClassForm" action="/addClass">
+    <div class="form-group">
+        <label for="className"><%= strings.className %></label>
+        <input type="text" class="form-control" name="className" placeholder="<%= strings.className %>">
+
+    </div>
+    <div class="form-group">
+        <label for="desc"><%= strings.description %></label>
+        <input type="text" class="form-control" name="desc" placeholder="<%= strings.description %>">
+    </div>
+    <button type="submit" class="btn btn-primary"><%= strings.addClass %></button>
+</form>
+
+
+<script>
+    // Attach a submit handler to the form
+    $("#addClassForm").submit(function (event) {
+
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $(this),
+            className = $form.find("input[name='className']").val(),
+            desc = $form.find("input[name='desc']").val(),
+            url = $form.attr("action");
+
+        // Send the data using post
+        var posting = $.post(url, {className: className, desc: desc});
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultAddClass").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultAddClass").removeClass("alert-danger");
+                $("#resultAddClass").addClass("alert-success");
+                var url = data.url;
+                $("#resultAddClass").append("<br/>" + "<a href=\"" + url + "\"> <%= strings.openRoom %> </a>");
+            }
+
+            else {
+                $("#resultAddClass").removeClass("alert-success");
+                $("#resultAddClass").addClass("alert-danger");
+            }
+            $("#resultAddClass").css("display", "block");
+        });
+    });
+</script>

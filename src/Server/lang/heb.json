@@ -35,5 +35,8 @@
   "Home": "הבית",
   "activeUsers": "משתמשים פעילים",
   "description": "תיאור",
-  "className": "שם הכיתה"
+  "className": "שם הכיתה",
+  "missingForm": "חסרים פרטים בטופס, נסה שוב",
+  "successesForm": "הפעולה התבצעה בהצלחה!",
+  "openRoom": "פתח את החדר"
 }

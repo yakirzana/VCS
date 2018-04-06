@@ -62,6 +62,20 @@ module.exports = function (app, sl, socket) {
         }
     });
 
+    app.post('/addClass', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.className && post.className != "" && post.desc && post.desc != ""))
+                throw new Error(sl.strings.missingForm);
+            var id = await sl.classes.addNewClass(post.className, post.desc, this.loggedUser);
+            res.end(JSON.stringify({result: sl.strings.successesForm, url: "/class/" + id}));
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
+
     app.get('/logout', function (req, res) {
         sl.users.logout(req.session.username);
         delete req.session.username;

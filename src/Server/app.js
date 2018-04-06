@@ -52,7 +52,6 @@ async function run(db) {
         console.log('listening on port 80');
     });
 
-    await sl.classes.addNewClass("yakir", "hey", "teac1");
     //await bl.rooms.addRoom("1", false, "achiad-room", "This is Achiad room", true, 5, null, ["stud1", "stud2"]);
     //await bl.rooms.addRoom("2", false, "rotem-room", "This is Rotem room", true, 5, null, ["stud1"]);
     //await bl.rooms.addRoom("3", false, "hod-room", "This is Hod room", true, 5, null, ["stud2"]);

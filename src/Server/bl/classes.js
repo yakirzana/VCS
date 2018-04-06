@@ -33,10 +33,10 @@ module.exports = function (dl) {
 
     this.addNewClass = async function (name, descriptions, teacherUserName, roomList) {
         var classID = await this.getNextID();
-        console.log(classID);
-        // var clss = new Class(name, classID, descriptions, teacherUserName, roomList);
-        // dl.classes.addNewClass(clss);
-        // return clss;
+
+        var clss = new Class(name, classID, descriptions, teacherUserName, roomList);
+        dl.classes.addNewClass(clss);
+        return classID;
     };
 
     this.removeClass = async function (classID) {
