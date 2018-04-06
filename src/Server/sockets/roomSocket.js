@@ -1,4 +1,5 @@
 var usersInRooms = [];
+var userCount = new Map();
 
 module.exports = function (io, sl) {
     io = io.of('/rooms');
@@ -55,14 +56,21 @@ module.exports = function (io, sl) {
 function addUser(socket, roomId) {
     if (usersInRooms[roomId] == undefined)
         usersInRooms[roomId] = [];
-    usersInRooms[roomId].push(socket.user);
+    if (!userCount.has(socket.user))
+        userCount.set(socket.user, 0);
+    if (userCount.get(socket.user) == 0)
+        usersInRooms[roomId].push(socket.user);
+    userCount.set(socket.user, userCount.get(socket.user) + 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
 }
 
 function removeUser(socket, roomId) {
     if (usersInRooms[roomId] == undefined) return;
-    usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
+    if (userCount.has(socket.user) && userCount.get(socket.user) == 1) {
+        usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
+    }
+    userCount.set(socket.user, userCount.get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
 }

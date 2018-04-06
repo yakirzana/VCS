@@ -21,10 +21,10 @@ module.exports = function (bl) {
         return true;
     };
 
-    this.addRoom = async function (name, descriptions, teacherUserName, timeLimit, roomID) {
+    this.addRoom = async function (name, descriptions, teacherUserName, timeLimit, classID) {
         var isTimeLimit = timeLimit != 0;
         var id = await  bl.rooms.addRoom(false, name, descriptions, isTimeLimit, timeLimit, null, []);
-        await bl.classes.addRoomToClass(id, roomID);
+        await bl.classes.addRoomToClass(id, classID);
         return id;
     }
 };
