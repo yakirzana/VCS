@@ -1,0 +1,64 @@
+<b><%= strings.addRoom %>:</b> <br/>
+<div class="result alert" id="resultAddRoom">loading...</div>
+<form id="addRoomForm" action="/addRoom">
+    <div class="form-group">
+        <label for="roomName"><%= strings.roomName %></label>
+        <input type="text" class="form-control" name="roomName" placeholder="<%= strings.roomName %>">
+
+    </div>
+    <div class="form-group">
+        <label for="desc"><%= strings.description %></label>
+        <input type="text" class="form-control" name="desc" placeholder="<%= strings.description %>">
+    </div>
+
+    <div class="form-group slider-wrapper">
+        <label for="timeLimit"><%= strings.timeLimitInSeconds %></label><br/>
+        <input type="range" name="timeLimit" min="0" max="300" value="0" step="10"
+               onchange="updateTextInput(this.value);">
+        <input type="text" id="textInput" value="0" style="width: 30px">
+    </div>
+    <button type="submit" class="btn btn-primary"><%= strings.addRoom %></button>
+</form>
+
+
+<script>
+    function updateTextInput(val) {
+        document.getElementById('textInput').value = val;
+    }
+
+    // Attach a submit handler to the form
+    $("#addRoomForm").submit(function (event) {
+
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $(this),
+            roomName = $form.find("input[name='roomName']").val(),
+            desc = $form.find("input[name='desc']").val(),
+            timeLimit = $form.find("input[name='timeLimit']").val(),
+            url = $form.attr("action");
+
+        // Send the data using post
+        var posting = $.post(url, {roomName: roomName, desc: desc, timeLimit: timeLimit});
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultAddRoom").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultAddRoom").removeClass("alert-danger");
+                $("#resultAddRoom").addClass("alert-success");
+                var url = data.url;
+                $("#resultAddRoom").append("<br/>" + "<a href=\"" + url + "\"> <%= strings.openRoom %> </a>");
+            }
+
+            else {
+                $("#resultAddRoom").removeClass("alert-success");
+                $("#resultAddRoom").addClass("alert-danger");
+            }
+            $("#resultAddRoom").css("display", "block");
+        });
+    });
+</script>
