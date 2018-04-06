@@ -31,6 +31,10 @@ module.exports = function (dl) {
         return clss;
     };
 
+    this.deleteRoomFromClass = async function (roomID, classID) {
+        await dl.classes.deleteRoomFromClass(roomID, classID);
+    };
+
     this.addNewClass = async function (name, descriptions, teacherUserName, roomList) {
         var classID = await this.getNextID();
 

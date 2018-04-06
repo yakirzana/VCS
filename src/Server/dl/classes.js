@@ -42,6 +42,15 @@ module.exports = function (db) {
         return await id[0]._classID;
     };
 
+    this.deleteRoomFromClass = async function (roomID, classID) {
+        var clss = await this.getClassByID(classID);
+        var index = clss.roomList.indexOf(roomID);
+        if (index >= 0) {
+            clss.roomList.splice(index, 1);
+        }
+        this.saveClass(clss);
+    };
+
     this.saveClass = async function (clss) {
         var clss = await clss;
         var myquery = { _classID: clss.classID };
