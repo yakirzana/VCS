@@ -62,8 +62,7 @@ module.exports = function (bl) {
     };
 
     this.getClassesOfTeach = async function (username) {
-        return await bl.classes.getAllClassesOfThech(username);
+        return await bl.classes.getAllClassesOfTeach(username);
     };
-
 
 };

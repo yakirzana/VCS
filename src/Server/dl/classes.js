@@ -86,7 +86,7 @@ module.exports = function (db) {
         }
     };
 
-    this.getAllClassesOfThech = async function (teach) {
+    this.getAllClassesOfTeach = async function (teach) {
         try {
             let clss = await db.collection('classes').find({"_teacherUserName": teach}).toArray();
             if (clss == null)

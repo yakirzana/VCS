@@ -30,6 +30,8 @@ module.exports = function (app, sl, socket) {
         }
     }
 
+    // Post From Forms
+
     app.post('/login', async function (req, res) {
         var post = req.body;
         try {
@@ -78,16 +80,21 @@ module.exports = function (app, sl, socket) {
     app.post('/addRoom', async function (req, res) {
         var post = req.body;
         try {
-            if (!(post && post.roomName && post.roomName != "" && post.desc && post.desc != "" && post.timeLimit && post.timeLimit != ""))
+            if (!(post && post.roomName && post.roomName != "" && post.desc && post.desc != "" && post.timeLimit && post.timeLimit != ""
+                && post.selectClass && post.selectClass != ""))
                 throw new Error(sl.strings.missingForm);
-            var id = await sl.rooms.add
-            // var id = await sl.classes.addNewClass(post.className, post.desc, this.loggedUser);
-            // res.end(JSON.stringify({result: sl.strings.successesForm, url: "/class/" + id}));
+            var id = await sl.rooms.addRoom(post.roomName, post.desc, this.loggedUser, post.timeLimit, post.selectClass);
+            res.end(JSON.stringify({result: sl.strings.successesForm, url: "/room/" + id}));
+            res.end();
         }
         catch (err) {
             res.end(JSON.stringify({result: err.message}));
         }
     });
+
+    //
+
+    // Pages
 
     app.get('/logout', function (req, res) {
         sl.users.logout(req.session.username);
@@ -210,4 +217,15 @@ module.exports = function (app, sl, socket) {
             isTech: this.loggedIsTeacher
         });
     });
+
+    //
+
+    // Getters From Forms
+
+    app.get('/getClasses', checkAuthRestricted, async function (req, res) {
+        var classes = await sl.classes.getClassesOfTeach(this.loggedUser);
+        res.end(JSON.stringify(classes));
+    });
+
+    //
 };

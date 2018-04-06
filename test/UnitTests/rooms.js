@@ -8,10 +8,10 @@ var bl;
 
 exports.group = {
     testGetRoomById: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
-        test.ok(room.id == "1234");
-        await bl.rooms.deleteRoom("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
+        test.ok(room.id == id);
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
@@ -27,15 +27,15 @@ exports.group = {
     },
 
     testAddRoom: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
 
-        var room = await bl.rooms.getRoomById("1234");
-        test.ok(room.id == "1234");
+        var room = await bl.rooms.getRoomById(id);
+        test.ok(room.id == id);
         test.ok(room.name == "achiad-room");
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         await sleep(1000);
         try {
-            var room1 = await bl.rooms.getRoomById("1234");
+            var room1 = await bl.rooms.getRoomById(id);
             test.ok(false)
         }
         catch(err){
@@ -45,11 +45,11 @@ exports.group = {
     },
 
     testDeleteRoom: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        await bl.rooms.deleteRoom("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        await bl.rooms.deleteRoom(id);
         await sleep(1000);
         try {
-            var room1 = await bl.rooms.getRoomById("1234");
+            var room1 = await bl.rooms.getRoomById(id);
             test.ok(false)
         }
         catch(err){
@@ -59,87 +59,87 @@ exports.group = {
     },
 
     testSaveRoomIsLocked: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
         room.isLocked = true;
         await bl.rooms.saveRoom(room);
         await sleep(1000);
-        var room1 = await bl.rooms.getRoomById("1234");
+        var room1 = await bl.rooms.getRoomById(id);
         test.ok(room1.isLocked == true);
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
     testSaveRoomUserInControl: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
         room.userInControl = "stud1";
         await bl.rooms.saveRoom(room);
         await sleep(1000);
-        var room1 = await bl.rooms.getRoomById("1234");
+        var room1 = await bl.rooms.getRoomById(id);
         test.ok(room1.userInControl == "stud1");
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
     testSaveRoomName: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
         room.name = "rotem-room";
         await bl.rooms.saveRoom(room);
         await sleep(1000);
-        var room1 = await bl.rooms.getRoomById("1234");
+        var room1 = await bl.rooms.getRoomById(id);
         test.ok(room1.name == "rotem-room");
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
     testSaveRoomDescription: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
         room.desc = "My new room";
         await bl.rooms.saveRoom(room);
         await sleep(1000);
-        var room1 = await bl.rooms.getRoomById("1234");
+        var room1 = await bl.rooms.getRoomById(id);
         test.ok(room1.desc == "My new room");
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
     testSaveRoomIsTimeLimit: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
         room.isTimeLimit = false;
         await bl.rooms.saveRoom(room);
         await sleep(1000);
-        var room1 = await bl.rooms.getRoomById("1234");
+        var room1 = await bl.rooms.getRoomById(id);
         test.ok(room1.isTimeLimit == false);
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
     testSaveRoomTimeLimit: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        var room = await bl.rooms.getRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        var room = await bl.rooms.getRoomById(id);
         room.timeLimit = 6;
         await bl.rooms.saveRoom(room);
         await sleep(1000);
-        var room1 = await bl.rooms.getRoomById("1234");
+        var room1 = await bl.rooms.getRoomById(id);
         test.ok(room1.timeLimit == 6);
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
     testUsersInRoom: async function (test) {
-        await bl.rooms.addRoom("1234", false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
-        listUsers = await bl.rooms.getUsersInRoomById("1234");
+        var id = await bl.rooms.addRoom(false, "achiad-room", "My room", true, 5, null, ["achiad", "hod"]);
+        listUsers = await bl.rooms.getUsersInRoomById(id);
         test.ok(arraysEqual(listUsers, ["achiad", "hod"]));
-        await bl.rooms.addUserToRoom("1234", "yakir");
-        listUsers = await bl.rooms.getUsersInRoomById("1234");
+        await bl.rooms.addUserToRoom(id, "yakir");
+        listUsers = await bl.rooms.getUsersInRoomById(id);
         test.ok(true);
-        await bl.rooms.deleteUserFromRoom("1234", "yakir");
-        listUsers = await bl.rooms.getUsersInRoomById("1234");
-        await bl.rooms.deleteRoom("1234");
+        await bl.rooms.deleteUserFromRoom(id, "yakir");
+        listUsers = await bl.rooms.getUsersInRoomById(id);
+        await bl.rooms.deleteRoom(id);
         test.done();
     },
 
