@@ -22,7 +22,7 @@
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link active" id="addRoom-tab" data-toggle="tab" href="#addRoom" role="tab"
-                   aria-controls="home" aria-selected="true">
+                   aria-controls="home" aria-selected="true" onclick="getClasses()">
                     <%= strings.addRoom %></a>
             </li>
             <li class="nav-item">
@@ -39,7 +39,7 @@
 
         <div class="tab-content" id="myTabContent" align="center" style="padding-top: 10px">
             <div class="tab-pane fade show active" id="addRoom" role="tabpanel" aria-labelledby="addRoom-tab">
-                <b><%= strings.addRoom %>:</b> <br/>
+                <% include ../partials/addRoom.ejs %>
             </div>
             <div class="tab-pane fade" id="addClass" role="tabpanel" aria-labelledby="addClass-tab">
                 <% include ../partials/addClass.ejs %>

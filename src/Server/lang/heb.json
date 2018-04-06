@@ -36,7 +36,12 @@
   "activeUsers": "משתמשים פעילים",
   "description": "תיאור",
   "className": "שם הכיתה",
+  "roomName": "שם החדר",
   "missingForm": "חסרים פרטים בטופס, נסה שוב",
   "successesForm": "הפעולה התבצעה בהצלחה!",
-  "openRoom": "פתח את החדר"
+  "openRoom": "פתח את החדר",
+  "openClass": "פתח את הכיתה",
+  "timeLimitInSeconds": "זמן מקסימאלי לשליטה (בשניות) - 0 אומר ללא הגבלה",
+  "youMustHaveClass": "אין אפשרות ליצור חדר ללא כיתות, אנא צור כיתות קודם",
+  "chooseClass": "בחירת כיתה"
 }

@@ -2,6 +2,7 @@ var Room = require('../classes/Room.js');
 
 module.exports = function (dl) {
     this.getRoomById = async function (id) {
+        id = parseInt(id);
         var room = await dl.rooms.getRoomById(id);
         if(room == null)
             throw new Error("cannot find room");
@@ -23,10 +24,11 @@ module.exports = function (dl) {
         await dl.rooms.deleteUserFromRoom(id, username);
     };
 
-    this.addRoom = function (id, isLocked, name, desc, isTimeLimit, timeLimit, base64, listUser) {
-        room = new Room(id, isLocked, name, desc, isTimeLimit, timeLimit, base64, listUser);
+    this.addRoom = async function (isLocked, name, desc, isTimeLimit, timeLimit, base64, listUser) {
+        var roomID = await this.getNextID();
+        var room = new Room(roomID, isLocked, name, desc, isTimeLimit, timeLimit, base64, listUser);
         dl.rooms.addRoom(room);
-        return room;
+        return roomID;
     };
 
     this.deleteRoom = async function (id) {
@@ -55,6 +57,10 @@ module.exports = function (dl) {
 
     this.saveRoom = function(room) {
         dl.rooms.saveRoom(room);
+    };
+
+    this.getNextID = async function () {
+        return await dl.rooms.getMaxID() + 1;
     };
 
 };

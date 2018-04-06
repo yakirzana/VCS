@@ -33,4 +33,11 @@ module.exports = function (bl) {
         bl.rooms.saveRoom(room);
         return true;
     };
+
+    this.addRoom = async function (name, descriptions, teacherUserName, timeLimit, roomID) {
+        var isTimeLimit = timeLimit != 0;
+        var id = await  bl.rooms.addRoom(false, name, descriptions, isTimeLimit, timeLimit, null, []);
+        await bl.classes.addRoomToClass(id, roomID);
+        return id;
+    }
 };

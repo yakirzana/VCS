@@ -43,6 +43,14 @@ module.exports = function (dl) {
         return classID;
     };
 
+    this.addRoomToClass = async function (roomID, classID) {
+        classID = parseInt(classID);
+        var cls = await this.getClassByID(classID);
+        var roomList = cls.roomList;
+        roomList.indexOf(classID) === -1 ? roomList.push(classID) : console.log("This room " + roomID + " is already exists in class " + classID);
+        await this.saveClass(cls);
+    };
+
     this.removeClass = async function (classID) {
         dl.classes.removeClass(classID);
     };
@@ -56,9 +64,8 @@ module.exports = function (dl) {
         return classes;
     };
 
-    this.getAllClassesOfThech = async function (teach) {
-        return await dl.classes.getAllClassesOfThech(teach);
-
+    this.getAllClassesOfTeach = async function (teach) {
+        return await dl.classes.getAllClassesOfTeach(teach);
     };
 
     this.getNextID = async function () {

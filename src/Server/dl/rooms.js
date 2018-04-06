@@ -34,6 +34,14 @@ module.exports = function (db) {
         }
     };
 
+    this.getMaxID = async function () {
+        var room = await db.collection('rooms').find().sort({_id: -1}).limit(1); // for MAX
+        var id = await room.toArray();
+        if (id.length == 0)
+            return 0;
+        return await id[0]._id;
+    };
+
     this.getRoomsOfUser = async function (username) {
         var res = [];
         var allRooms = await this.getAllRooms();
