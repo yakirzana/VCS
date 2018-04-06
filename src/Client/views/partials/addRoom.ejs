@@ -13,9 +13,9 @@
 
     <div class="form-group slider-wrapper">
         <label for="timeLimit"><%= strings.timeLimitInSeconds %></label><br/>
-        <input type="range" name="timeLimit" min="0" max="300" value="0" step="10"
+        <input type="range" id="selectInput" name="timeLimit" min="0" max="300" value="0" step="10"
                onchange="updateTextInput(this.value);">
-        <input type="text" id="textInput" value="0" style="width: 30px">
+        <input type="text" id="textInput" value="0" onchange="updateTextInput(this.value);" style="width: 30px">
     </div>
 
     <div class="form-group">
@@ -54,7 +54,11 @@
     }
 
     function updateTextInput(val) {
+        console.log(val);
+        if (!Number.isInteger(parseInt(val)) || val > 300 || val < 0)
+            val = 0;
         document.getElementById('textInput').value = val;
+        document.getElementById('selectInput').value = val;
     }
 
     getClasses();
