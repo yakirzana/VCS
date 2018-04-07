@@ -34,6 +34,8 @@ function analyzeMsg(classSocket, msg) {
             console.log(body);
             classSocket.addAlert(1, msg._roomID, body);
         }
+        if (error)
+            console.log("error on ChatSocket " + error);
     });
 
 }

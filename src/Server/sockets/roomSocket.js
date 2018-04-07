@@ -97,9 +97,14 @@ function sendPost(url, roomID, username) {
             "timestamp": date
         }
     };
-    console.log("send post to " + url + " with param: " + roomID + " " + username);
+    console.log("send post to " + url + " with param: " + roomID + " " + username + " " + date;
 
     request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        }
+        if (error)
+            console.log("error on roomSocket " + error);
     });
 
 }
