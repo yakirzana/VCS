@@ -1,6 +1,6 @@
 var config = require('../config');
 var usersInRooms = [];
-var userCount = new Map();
+var userCount = [];
 
 module.exports = function (io, sl) {
     io = io.of('/rooms');
@@ -62,11 +62,13 @@ module.exports = function (io, sl) {
 function addUser(socket, roomId) {
     if (usersInRooms[roomId] == undefined)
         usersInRooms[roomId] = [];
-    if (!userCount.has(socket.user))
-        userCount.set(socket.user, 0);
-    if (userCount.get(socket.user) == 0)
+    if (userCount[roomId] == undefined)
+        userCount[roomId] = new Map();
+    if (!userCount[roomId].has(socket.user))
+        userCount[roomId].set(socket.user, 0);
+    if (userCount[roomId].get(socket.user) == 0)
         usersInRooms[roomId].push(socket.user);
-    userCount.set(socket.user, userCount.get(socket.user) + 1);
+    userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) + 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
     sendPost(config.urlRestConnect, roomId, socket.user);
@@ -74,10 +76,10 @@ function addUser(socket, roomId) {
 
 function removeUser(socket, roomId) {
     if (usersInRooms[roomId] == undefined) return;
-    if (userCount.has(socket.user) && userCount.get(socket.user) == 1) {
+    if (userCount[roomId].has(socket.user) && userCount[roomId].get(socket.user) == 1) {
         usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
     }
-    userCount.set(socket.user, userCount.get(socket.user) - 1);
+    userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
     sendPost(config.urlRestDisconnect, roomId, socket.user);
