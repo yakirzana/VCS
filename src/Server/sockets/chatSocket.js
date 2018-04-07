@@ -8,7 +8,7 @@ module.exports = function (io, sl, classSocket) {
         socket.on('addMsg', function (msg) {
             sl.chats.addNewMessage(msg._username, msg._date, msg._msg, msg._roomID);
             socket.broadcast.to(msg._roomID).emit('addMsg', msg);
-            console.log("add chat msg from socket", msg._roomID);
+
             analyzeMsg(classSocket, msg);
         });
 
@@ -28,7 +28,7 @@ function analyzeMsg(classSocket, msg) {
             "timestamp": msg._date
         }
     };
-
+    console.log("add chat msg from room ", msg._roomID + " at time " + msg._date);
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log(body);
