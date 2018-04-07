@@ -63,6 +63,10 @@ module.exports = function (dl) {
         var classes = await dl.classes.getClassByRoomID(roomID);
         return classes;
     };
+    this.getAllClasses = async function () {
+        var classes = await dl.classes.getAllClasses();
+        return classes;
+    };
 
     this.getAllClassesOfTeach = async function (teach) {
         return await dl.classes.getAllClassesOfTeach(teach);

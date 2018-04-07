@@ -23,6 +23,10 @@ module.exports = function (bl) {
         return await bl.classes.addNewClass(name, descriptions, teacherUserName, [])
     };
 
+    this.removeClass = async function (classID) {
+        await bl.classes.removeClass(classID);
+    };
+
     this.getRoomsInClass = async function (classID) {
         classID = parseInt(classID);
         var rooms = await bl.classes.getRoomsInClass(classID);

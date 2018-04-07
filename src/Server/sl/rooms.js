@@ -17,13 +17,13 @@ module.exports = function (bl) {
     };
 
     this.deleteRoom = async function (id) {
-        classList = []
-        var classes = await bl.classes.getClassByRoomID(parseInt(id));
+        classList = [];
+        var classes = await bl.classes.getClassByRoomID(id);
         for (clss of classes) {
             classList.push(await bl.classes.getClassByID(clss));
         }
         for (cls of classList) {
-            await bl.classes.deleteRoomFromClass(parseInt(id), cls.classID);
+            await bl.classes.deleteRoomFromClass(id, cls.classID);
         }
         await bl.rooms.deleteRoom(id);
         return true;
@@ -35,9 +35,22 @@ module.exports = function (bl) {
     };
 
     this.addRoom = async function (name, descriptions, teacherUserName, timeLimit, classID) {
-        var isTimeLimit = timeLimit != 0;
-        var id = await  bl.rooms.addRoom(false, name, descriptions, isTimeLimit, timeLimit, null, []);
-        await bl.classes.addRoomToClass(id, classID);
-        return id;
+        if (name == "" || descriptions == "" || teacherUserName == "")
+            throw new Error("Error in add room, invalid parameters");
+        if (name.indexOf('\n') > -1 || name.indexOf('\t') > -1 || name.indexOf('@') > -1)
+            throw new Error("Error in add room,invalid characters, please try again");
+        var found = false;
+        var allClasses = await bl.classes.getAllClasses();
+        for (clss of allClasses) {
+            if (clss.classID == classID && teacherUserName == clss.teacherUserName)
+                found = true;
+        }
+        if (found) {
+            var isTimeLimit = timeLimit != 0;
+            var id = await  bl.rooms.addRoom(false, name, descriptions, isTimeLimit, timeLimit, null, []);
+            await bl.classes.addRoomToClass(id, classID);
+            return id;
+        }
+        throw new Error("Error in add room, invalid class ID or teachername");
     }
 };

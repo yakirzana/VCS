@@ -71,7 +71,7 @@ module.exports = function (db) {
         var res = [];
         var allClasses = await this.getAllClasses();
         for (var clss of allClasses) {
-            if (roomID in clss.roomList) {
+            if (clss.roomList.indexOf(roomID) >= 0) {
                 res.push(clss.classID);
             }
         }
