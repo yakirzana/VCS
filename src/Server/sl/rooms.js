@@ -25,6 +25,12 @@ module.exports = function (bl) {
         for (cls of classList) {
             await bl.classes.deleteRoomFromClass(id, cls.classID);
         }
+        try {
+            await bl.rooms.getRoomById(id);
+        }
+        catch (err) {
+            throw new Error("Error in delete room, invalid roomID");
+        }
         await bl.rooms.deleteRoom(id);
         return true;
     };

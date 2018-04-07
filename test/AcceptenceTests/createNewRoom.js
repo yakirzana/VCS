@@ -162,7 +162,7 @@ exports.group = {
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
-            await sl.rooms.addRoom("teacTest3 room", "This is teacTest3 room", "teacTest3", 0, 9999);
+            await sl.rooms.addRoom("teacTest3 room", "This is teacTest3 room", "teacTest3", 0, -3);
             test.ok(false);
             test.done();
             return;

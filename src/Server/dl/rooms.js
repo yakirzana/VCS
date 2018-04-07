@@ -55,8 +55,14 @@ module.exports = function (db) {
     };
 
     this.deleteRoom = function (id) {
-        db.collection('rooms').deleteOne({_id: id}, function (err, r) {
-        });
+        try {
+            db.collection('rooms').deleteOne({_id: id}, function (err, r) {
+                if (err) throw err;
+            });
+        }
+        catch (err) {
+            throw err;
+        }
     };
 
     this.saveRoom = async function (room) {
