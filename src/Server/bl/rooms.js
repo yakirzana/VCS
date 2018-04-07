@@ -32,7 +32,11 @@ module.exports = function (dl) {
     };
 
     this.deleteRoom = async function (id) {
-        dl.rooms.deleteRoom(id);
+        try {
+            await dl.rooms.deleteRoom(id);
+        } catch (err) {
+            throw err;
+        }
     };
 
     this.getRoomsOfUser = async function (username) {

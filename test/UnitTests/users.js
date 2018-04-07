@@ -12,7 +12,7 @@ exports.group = {
         await bl.users.addUser("teacTest", "1234", "teac", "her", "Male", "teacher@gm.com", true);
         var usr = await bl.users.getUserByUserName("teacTest");
         test.ok(usr.username == "teacTest");
-        test.ok(usr.password == "1234");
+        test.ok(usr.password == bl.users.getHashPassword("1234"));
         await bl.users.deleteUser("teacTest");
         test.done();
     },
@@ -33,7 +33,7 @@ exports.group = {
 
         var usr = await bl.users.getUserByUserName("teacTest");
         test.ok(usr.username == "teacTest");
-        test.ok(usr.password == "1234");
+        test.ok(usr.password == bl.users.getHashPassword("1234"));
         await bl.users.deleteUser("teacTest");
         await sleep(1000);
         try {
@@ -145,16 +145,18 @@ exports.group = {
 
     testIsHashMatch: async function (test) {
         await bl.users.addUser("teacTest1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+        await bl.users.addUser("teacTest2", "1234", "teac", "her", "Male", "teacher@gm.com", true);
         await sleep(1000);
 
         var hash1 = await bl.users.createUserHash("teacTest1");
-        var hash2 = await bl.users.createUserHash("teac1");
+        var hash2 = await bl.users.createUserHash("teacTest2");
 
         test.ok(await bl.users.isHashMatch("teacTest1", hash1));
-        test.ok(!(await bl.users.isHashMatch("teacTest1", hash2)));
+        test.ok(await bl.users.isHashMatch("teacTest2", hash2));
         test.ok(!(await bl.users.isHashMatch("teacTest1", "hash")));
 
         await bl.users.deleteUser("teacTest1");
+        await bl.users.deleteUser("teacTest2");
         test.done();
     },
 
@@ -163,7 +165,7 @@ exports.group = {
         await sleep(1000);
 
         var hash1 = await bl.users.createUserHash("teacTest1");
-        var hash2 = crypto.createHash('sha256').update("teacTest1" + "1234").digest('hex');
+        var hash2 = crypto.createHash('sha256').update("teacTest1" + bl.users.getHashPassword("1234")).digest('hex');
         test.equals(hash1, hash2);
 
         await bl.users.deleteUser("teacTest1");
