@@ -67,4 +67,4 @@ module.exports = class User {
     set isTeacher(value) {
         this._isTeacher = value;
     }
-}
+};

@@ -30,6 +30,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <% if (logged != null) { %>
+                    <a class="dropdown-item" href="/profile"><%- strings.profile %></a>
                     <a class="dropdown-item" href="/logout"><%- strings.logout %></a>
                     <% } else { %>
                     <a class="dropdown-item" href="/signup"><%- strings.register %></a>

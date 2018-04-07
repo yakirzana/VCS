@@ -22,7 +22,8 @@
   "SeeRooms": "צפה בחדרים שלך",
   "NotConnected": "מנותק",
   "Username": "שם משתמש",
-  "Password": "סיסמא",
+  "Password": "סיסמה",
+  "PasswordEdit": "סיסמה (הכנס ערך כדי לעדכן את הסיסמה)",
   "NeedAnAccount": "צריך חשבון משתמש?",
   "HaveAnAccount": "יש לך כבר חשבון משתמש?",
   "OrGo": "או לך אל",
@@ -43,5 +44,15 @@
   "openClass": "פתח את הכיתה",
   "timeLimitInSeconds": "זמן מקסימאלי לשליטה (בשניות) - 0 אומר ללא הגבלה",
   "youMustHaveClass": "אין אפשרות ליצור חדר ללא כיתות, אנא צור כיתות קודם",
-  "chooseClass": "בחירת כיתה"
+  "chooseClass": "בחירת כיתה",
+  "profile": "פרופיל משתמש",
+  "editProfile": "עמוד עריכת פרטי משתמש",
+  "editProfileText": "בעמוד זה תוכל לצפות ולערוך את פרטי המשתמש שלך",
+  "update": "עדכן!",
+  "myRooms": "החדרים שלי",
+  "Here_you_can_see_Classes_that_you_can_join": "כאן תוכלו לראות כיתות שתוכלו להצטרף אליהם",
+  "EnterClass": "כניסה לכיתה",
+  "myClasses": "הכיתות שלי",
+  "EnterRoom": "כניסה לחדר",
+  "Here_you_can_see_Rooms_that_you_can_join": "כאן תוכלו לראות חדרים שתוכלו להצטרף אליהם"
 }
