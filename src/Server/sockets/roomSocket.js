@@ -1,3 +1,4 @@
+var config = require('../config');
 var usersInRooms = [];
 var userCount = new Map();
 
