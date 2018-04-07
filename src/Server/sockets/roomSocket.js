@@ -85,9 +85,8 @@ function removeUser(socket, roomId) {
 
 function sendPost(url, roomID, username) {
     var request = require('request');
-    var dateTime = require('node-datetime');
-    var dt = dateTime.create();
-    var date = dt.format('DD/MM/YYYY H:mm:ss');
+    var moment = require('moment');
+    var date = moment().format('DD/MM/YYYY H:mm:ss');
     var options = {
         uri: url,
         method: 'POST',
