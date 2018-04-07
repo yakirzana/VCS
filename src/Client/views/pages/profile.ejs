@@ -43,13 +43,13 @@
                 <label class="control-label" for="gender"><%- strings.gender %></label>
                 <div class="controls">
                     <label class="radio inline" for="gender-0">
-                        <input name="gender" id="gender-0" value="Male"
-                               checked="<%= user._sex == "Male" ? "checked" : "" %>" type="radio">
+                        <input name="gender" id="gender-0" value="Male" <%= user._sex == 'Male' ? 'checked' : '' %>
+                               type="radio">
                         <%- strings.male %>
                     </label>
                     <label class="radio inline" for="gender-1">
-                        <input name="gender" id="gender-1" value="Female"
-                               checked="<%= user._sex == "Female" ? "checked" : "" %>" type="radio">
+                        <input name="gender" id="gender-1" value="Female" <%= user._sex == 'Female' ? 'checked' : '' %>
+                               type="radio">
                         <%- strings.female %>
                     </label>
                 </div>
