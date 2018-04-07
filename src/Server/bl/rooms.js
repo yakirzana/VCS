@@ -5,14 +5,14 @@ module.exports = function (dl) {
         id = parseInt(id);
         var room = await dl.rooms.getRoomById(id);
         if(room == null)
-            throw new Error("cannot find room");
+            throw new Error("cannot find room in bl.getRoomById");
         return room;
     };
 
     this.getUsersInRoomById = async function (id) {
         var room = await dl.rooms.getRoomById(id);
         if (room == null)
-            throw new Error("cannot find room");
+            throw new Error("cannot find room in bl.getUsersInRoomById");
         return room.listUsers;
     };
 
@@ -60,7 +60,7 @@ module.exports = function (dl) {
     };
 
     this.getNextID = async function () {
-        return await dl.rooms.getMaxID() + 1;
+        return await dl.rooms.getMaxID() + Math.floor((Math.random() * 1000) + 1);
     };
 
 };
