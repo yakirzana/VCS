@@ -1,3 +1,4 @@
+var config = require('../config');
 var usersInRooms = [];
 var userCount = new Map();
 
@@ -28,6 +29,11 @@ module.exports = function (io, sl) {
             socket.broadcast.to(roomId).emit('update', update);
             room.base64 = update;
             sl.rooms.saveRoom(room);
+            sendPost(config.urlRestDrag, roomId, socket.user);
+        });
+
+        socket.on('ans', function () {
+            sendPost(config.urlRestDSxc, roomId, socket.user);
         });
 
         socket.on('lockFromClient', function (user) {
@@ -63,6 +69,7 @@ function addUser(socket, roomId) {
     userCount.set(socket.user, userCount.get(socket.user) + 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
+    sendPost(config.urlRestConnect, roomId, socket.user);
 }
 
 function removeUser(socket, roomId) {
@@ -73,4 +80,30 @@ function removeUser(socket, roomId) {
     userCount.set(socket.user, userCount.get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
+    sendPost(config.urlRestDisconnect, roomId, socket.user);
+}
+
+function sendPost(url, roomID, username) {
+    var request = require('request');
+    var moment = require('moment');
+    var date = moment().format('DD/MM/YYYY H:mm:ss');
+    var options = {
+        uri: url,
+        method: 'POST',
+        json: {
+            "room_id": roomID,
+            "user_id": username,
+            "timestamp": date
+        }
+    };
+    console.log("send post to " + url + " with param: " + roomID + " " + username + " " + date);
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+            console.log(body);
+        }
+        if (error)
+            console.log("error on roomSocket " + error);
+    });
+
 }

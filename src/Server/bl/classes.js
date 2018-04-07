@@ -47,7 +47,7 @@ module.exports = function (dl) {
         classID = parseInt(classID);
         var cls = await this.getClassByID(classID);
         var roomList = cls.roomList;
-        roomList.indexOf(classID) === -1 ? roomList.push(classID) : console.log("This room " + roomID + " is already exists in class " + classID);
+        roomList.indexOf(roomID) === -1 ? roomList.push(roomID) : console.log("This room " + roomID + " is already exists in class " + classID);
         await this.saveClass(cls);
     };
 

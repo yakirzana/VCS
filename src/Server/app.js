@@ -14,6 +14,7 @@ var log = new Log("Error.txt");
 var DL = require('./dl');
 var BL = require('./bl');
 var SL = require('./sl');
+var Socket = require('./sockets');
 var config = require('./config/');
 
 app.set('view engine', 'ejs');
@@ -42,11 +43,10 @@ async function run(db) {
     var dl = new DL(db);
     var bl = new BL(dl);
     var sl = new SL(bl, "heb");
+    var socket = new Socket(io, sl);
 
-    // sl.alerts.addAlert("1", "NMD");
-    // sl.alerts.addAlert("2", "Idleness");
-    require('./routes')(app, sl);
-    require('./sockets')(io, sl);
+    require('./routes')(app, sl, socket);
+
 
     http.listen(80, function() {
         console.log('listening on port 80');
@@ -59,9 +59,9 @@ async function run(db) {
     //await bl.rooms.addRoom("5", false, "avi-room", "This is Avi room", false, 5, null, ["stud1", "stud2"]);
     //var rooms = await sl.classes.getRoomsAccessible(1, "");
     //console.log(rooms)
-    // await bl.users.addUser("stud1", "1234", "teac", "her", "Male", "teacher@gm.com", false);
-    // await bl.users.addUser("stud2", "1234", "teac", "her", "Male", "teacher@gm.com", false);
-    // await bl.users.addUser("teac1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+    await bl.users.addUser("stud1", "1234", "teac", "her", "Male", "teacher@gm.com", false);
+    await bl.users.addUser("stud2", "1234", "teac", "her", "Male", "teacher@gm.com", false);
+    await bl.users.addUser("teac1", "1234", "teac", "her", "Male", "teacher@gm.com", true);
     //await sl.users.deleteUser("stud1");
     //await bl.rooms.addRoom("6", false, "omer-room", "This is Omer room", true, 20, null, ["stud1", "stud2"]);
 }
