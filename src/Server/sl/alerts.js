@@ -1,5 +1,6 @@
 module.exports = function (bl) {
     this.addAlert = function (roomID, alertType) {
+        roomID = parseInt(roomID);
         bl.alerts.addAlert(roomID, alertType);
     };
 

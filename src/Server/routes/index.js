@@ -264,7 +264,8 @@ module.exports = function (app, sl, socket) {
     app.get('/report/:roomId/:alertType', function (req, res) {
         var roomId = req.params.roomId;
         var alertType = req.params.alertType;
-        sl.alerts.addAlert(roomId, alertType);
+        console.log("got alert to " + roomId + " " + alertType);
+        socket.alerts.addAlert(null, roomId, {"critical_moment": alertType});
         res.end("OK");
     });
     //
