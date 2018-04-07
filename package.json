@@ -20,8 +20,9 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "mongodb": "^2.2.34",
+    "node-datetime": "^2.0.6",
     "nodeunit": "^0.11.2",
-    "socket.io": "^2.0.4",
-    "request": "latest"
+    "request": "latest",
+    "socket.io": "^2.0.4"
   }
 }

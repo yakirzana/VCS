@@ -253,5 +253,19 @@ module.exports = function (app, sl, socket) {
         res.end(JSON.stringify(classes));
     });
 
+    app.get('/getRooms', checkAuthRestricted, async function (req, res) {
+        var classes = await sl.rooms.getRoomsOfUser(this.loggedUser);
+        res.end(JSON.stringify(classes));
+    });
+
+    //
+
+    // Rest API with analyzer system
+    app.get('/report/:roomId/:alertType', function (req, res) {
+        var roomId = req.params.roomId;
+        var alertType = req.params.alertType;
+        sl.alerts.addAlert(roomId, alertType);
+        res.end("OK");
+    });
     //
 };
