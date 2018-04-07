@@ -51,7 +51,7 @@ module.exports = function (dl) {
         user.firstName = firstName;
         user.lastName = lastName;
         user.sex = gender;
-        this.saveUser(user);
+        await this.saveUser(user);
     };
 
     this.getHashPassword = function (password) {
@@ -60,8 +60,8 @@ module.exports = function (dl) {
         return hash.digest('hex');
     };
 
-    this.saveUser = function (user) {
-        dl.users.saveUser(user);
+    this.saveUser = async function (user) {
+        await dl.users.saveUser(user);
     };
 };
 

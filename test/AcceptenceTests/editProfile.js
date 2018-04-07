@@ -47,10 +47,12 @@ exports.group = {
             await sl.users.login("sivanm", "1234567");
             await sl.users.login("teacTest1", "1234");
             await sl.users.editUser("elibin", "1234", "Eli", "Bin", "Female");
+            sleep(1000);
             await sl.users.editUser("sivanm", "1234567", "Sivanmed", "Mednik", "Female");
+            sleep(1000);
             await sl.users.editUser("teacTest1", "1234", "teacs", "her", "Male");
+            sleep(1000);
             var user1 = await sl.users.getUserByUserName("elibin");
-            sleep(3000);
             var user2 = await sl.users.getUserByUserName("sivanm");
             sleep(3000);
             var user3 = await sl.users.getUserByUserName("teacTest1");

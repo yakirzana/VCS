@@ -66,7 +66,7 @@ module.exports = function (bl) {
             throw new Error("Error in edit profile,password too short");
         if (password == undefined || password.trim() == "")
             password = null;
-        bl.users.editUser(username, password, firstName, lastName, gender);
+        await bl.users.editUser(username, password, firstName, lastName, gender);
     };
 
     this.isPassMatch = async function (username, password) {
