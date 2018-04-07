@@ -64,7 +64,7 @@ module.exports = function (dl) {
     };
 
     this.getNextID = async function () {
-        return await dl.rooms.getMaxID() + Math.floor((Math.random() * 1000) + 1);
+        return await dl.rooms.getMaxID() + Math.floor((Math.random() * 10) + 1);
     };
 
 };

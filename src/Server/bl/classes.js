@@ -73,6 +73,6 @@ module.exports = function (dl) {
     };
 
     this.getNextID = async function () {
-        return await dl.classes.getMaxID() + Math.floor((Math.random() * 1000) + 1);
+        return await dl.classes.getMaxID() + Math.floor((Math.random() * 10) + 1);
     };
 };
