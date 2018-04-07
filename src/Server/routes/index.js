@@ -53,7 +53,7 @@ module.exports = function (app, sl, socket) {
         try {
             if (!(post && post.username && post.password))
                 throw new Error("Missing info");
-            await sl.users.register(post.username, post.password, post.firstName, post.lastName, post.sex, post.email, false);
+            await sl.users.register(post.username, post.password, post.firstName, post.lastName, post.gender, post.email, false);
             req.session.userHash = await sl.users.createUserHash(post.username);
             req.session.username = post.username;
             res.redirect('/');
@@ -86,6 +86,21 @@ module.exports = function (app, sl, socket) {
             var id = await sl.rooms.addRoom(post.roomName, post.desc, this.loggedUser, post.timeLimit, post.selectClass);
             res.end(JSON.stringify({result: sl.strings.successesForm, url: "/room/" + id}));
             res.end();
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
+    app.post('/editProfile', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.firstName && post.firstName != "" && post.lastName && post.lastName != "" && post.gender && post.gender != ""))
+                throw new Error(sl.strings.missingForm);
+
+            sl.users.editUser(this.loggedUser, post.password, post.firstName, post.lastName, post.gender);
+
+            res.end(JSON.stringify({result: sl.strings.successesForm}));
         }
         catch (err) {
             res.end(JSON.stringify({result: err.message}));
@@ -215,6 +230,17 @@ module.exports = function (app, sl, socket) {
             strings: sl.strings,
             logged: this.loggedUser,
             isTech: this.loggedIsTeacher
+        });
+    });
+
+    app.get('/profile', checkAuthRestricted, async function (req, res) {
+        var user = await sl.users.getUserByUserName(this.loggedUser);
+        res.render('pages/profile', {
+            page: "profile",
+            strings: sl.strings,
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher,
+            user: user
         });
     });
 

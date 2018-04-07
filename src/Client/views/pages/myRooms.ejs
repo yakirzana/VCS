@@ -12,8 +12,8 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">My Rooms</h1>
-        <p class="lead text-muted">Here you can see rooms that you can join</p>
+        <h1 class="jumbotron-heading"><%- strings.myRooms %></h1>
+        <p class="lead text-muted"><%- strings.Here_you_can_see_Rooms_that_you_can_join %></p>
     </div>
 </section>
 
@@ -28,7 +28,7 @@
                 <div class="card-block">
                     <h4 class="card-title"><%= rooms[i].name %></h4>
                     <p class="card-text"><%= rooms[i].desc %></p>
-                    <a href="/room/<%= rooms[i].id %>" class="btn btn-primary">Enter Room</a>
+                    <a href="/room/<%= rooms[i].id %>" class="btn btn-primary"><%- strings.EnterRoom %></a>
                 </div>
             </div>
             <% if (i != rooms.length - 1 && i % 2 == 1) { %>

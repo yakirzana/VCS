@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+    <title>VCS Edit Profile</title>
+    <% include ../partials/head %>
+</head>
+<body>
+<header>
+    <% include ../partials/header %>
+</header>
+
+
+<div class="jumbotron">
+    <h1><%= strings.editProfile %></h1>
+    <p class="lead"><%= strings.editProfileText %>
+        <br/>
+    </p>
+</div>
+<div class="album text-muted center">
+    <div class="container">
+        <form id="editProfileForm" action="/editProfile" align="center">
+            <div class="result alert" id="resultEditProfile" style="display: none">loading...</div>
+            <div class="form-group">
+                <label for="username"><%= strings.Username %></label>
+                <input type="text" value="<%= user._username %>" class="form-control" disabled="disabled"
+                       name="username" placeholder="<%= strings.Username %>">
+            </div>
+            <div class="form-group">
+                <label for="password"><%= strings.Password %></label>
+                <input type="password" class="form-control" name="password" placeholder="<%= strings.PasswordEdit %>">
+            </div>
+            <div class="form-group">
+                <label for="firstName"><%= strings.firstName %></label>
+                <input type="text" value="<%= user._firstName %>" class="form-control" name="firstName"
+                       placeholder="<%= strings.firstName %>">
+            </div>
+            <div class="form-group">
+                <label for="lastName"><%= strings.lastName %></label>
+                <input type="text" value="<%= user._lastName %>" class="form-control" name="lastName"
+                       placeholder="<%= strings.lastName %>">
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="gender"><%- strings.gender %></label>
+                <div class="controls">
+                    <label class="radio inline" for="gender-0">
+                        <input name="gender" id="gender-0" value="Male" <%= user._sex == 'Male' ? 'checked' : '' %>
+                               type="radio">
+                        <%- strings.male %>
+                    </label>
+                    <label class="radio inline" for="gender-1">
+                        <input name="gender" id="gender-1" value="Female" <%= user._sex == 'Female' ? 'checked' : '' %>
+                               type="radio">
+                        <%- strings.female %>
+                    </label>
+                </div>
+            </div>
+
+
+            <button type="submit" class="btn btn-primary"><%= strings.update %></button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+
+<script>
+    // Attach a submit handler to the form
+    $("#editProfileForm").submit(function (event) {
+
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $(this),
+            password = $form.find("input[name='password']").val(),
+            firstName = $form.find("input[name='firstName']").val(),
+            lastName = $form.find("input[name='lastName']").val(),
+            gender = $("input[name=gender]:checked").val();
+        url = $form.attr("action");
+
+        console.log(gender);
+
+        // Send the data using post
+        var posting = $.post(url, {password: password, firstName: firstName, lastName: lastName, gender: gender});
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultEditProfile").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultEditProfile").removeClass("alert-danger");
+                $("#resultEditProfile").addClass("alert-success");
+            }
+
+            else {
+                $("#resultEditProfile").removeClass("alert-success");
+                $("#resultEditProfile").addClass("alert-danger");
+            }
+            $("#resultEditProfile").css("display", "block");
+        });
+    });
+</script>
+
+</body>
+</html>

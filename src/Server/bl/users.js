@@ -10,6 +10,7 @@ module.exports = function (dl) {
     };
 
     this.addUser = function (username, password, firstName, lastName, sex, email, isTeacher) {
+        password = this.getHashPassword(password);
         var user = new User(username, password, firstName, lastName, sex, email, isTeacher);
         dl.users.addUser(user);
         return user;
@@ -23,6 +24,7 @@ module.exports = function (dl) {
         catch (err) {
             return false;
         }
+        password = this.getHashPassword(password);
         return (user != undefined && user.password == password);
     };
 
@@ -37,10 +39,25 @@ module.exports = function (dl) {
         return crypto.createHash('sha256').update(username + user.password).digest('hex');
     };
 
-
     this.deleteUser = async function (username) {
         var user = await this.getUserByUserName(username);
         await dl.users.deleteUser(user);
+    };
+
+    this.editUser = async function (username, password, firstName, lastName, gender) {
+        var user = await this.getUserByUserName(username);
+        if (password != null)
+            user.password = this.getHashPassword(password);
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.sex = gender;
+        this.saveUser(user);
+    };
+
+    this.getHashPassword = function (password) {
+        var hash = crypto.createHash('sha1');
+        hash.update(password);
+        return hash.digest('hex');
     };
 
     this.saveUser = function (user) {

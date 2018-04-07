@@ -44,7 +44,9 @@ module.exports = function (bl) {
     };
 
     this.getUserByUserName = async function (username) {
-        return await bl.users.getUserByUserName(username);
+        var user = await bl.users.getUserByUserName(username);
+        delete user._password;
+        return user;
     };
 
     this.createUserHash = async function (username) {
@@ -55,4 +57,9 @@ module.exports = function (bl) {
         return await bl.users.isHashMatch(username, hash);
     };
 
+    this.editUser = async function (username, password, firstName, lastName, gender) {
+        if (password == undefined || password.trim() == "")
+            password = null;
+        bl.users.editUser(username, password, firstName, lastName, gender);
+    };
 };

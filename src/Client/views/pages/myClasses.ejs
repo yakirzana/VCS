@@ -13,8 +13,8 @@
 
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">My Classes</h1>
-        <p class="lead text-muted">Here you can see Classes that you can join</p>
+        <h1 class="jumbotron-heading"><%- strings.myClasses %></h1>
+        <p class="lead text-muted"><%- strings.Here_you_can_see_Classes_that_you_can_join %></p>
     </div>
 </section>
 
@@ -29,7 +29,7 @@
                 <div class="card-block">
                     <h4 class="card-title"><%= classes[i]._name %></h4>
                     <p class="card-text"><%= classes[i]._descriptions %></p>
-                    <a href="/class/<%= classes[i]._classID %>" class="btn btn-primary">Enter Class</a>
+                    <a href="/class/<%= classes[i]._classID %>" class="btn btn-primary"><%- strings.EnterClass %></a>
                 </div>
                 </div>
             <% if (i != classes.length - 1 && i % 2 == 1) { %>
