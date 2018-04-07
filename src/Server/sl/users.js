@@ -58,8 +58,18 @@ module.exports = function (bl) {
     };
 
     this.editUser = async function (username, password, firstName, lastName, gender) {
+        if (username == "" || password == "" || firstName == "" || lastName == "" || gender == "")
+            throw new Error("Error in edit profile, please try again");
+        if (username.indexOf('\n') > -1 || username.indexOf('\t') > -1 || username.indexOf('@') > -1)
+            throw new Error("Error in edit profile,invalid characters, please try again");
+        if (password.length < 4)
+            throw new Error("Error in edit profile,password too short");
         if (password == undefined || password.trim() == "")
             password = null;
         bl.users.editUser(username, password, firstName, lastName, gender);
+    };
+
+    this.isPassMatch = async function (username, password) {
+        return await bl.users.isPassMatch(username, password);
     };
 };
