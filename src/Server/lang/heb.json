@@ -56,5 +56,8 @@
   "EnterRoom": "כניסה לחדר",
   "Here_you_can_see_Rooms_that_you_can_join": "כאן תוכלו לראות חדרים שתוכלו להצטרף אליהם",
   "editRoom": "עריכת חדר",
-  "editClass": "עריכת כיתה"
+  "editClass": "עריכת כיתה",
+  "deleteClass": "מחיקת כיתה",
+  "deleteRoom": "מחיקת חדר",
+  "areYouSureDelete": "האם אתה בטוח שברצונך למחוק?"
 }

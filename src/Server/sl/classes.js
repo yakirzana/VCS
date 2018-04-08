@@ -24,6 +24,7 @@ module.exports = function (bl) {
     };
 
     this.removeClass = async function (classID) {
+        classID = parseInt(classID);
         await bl.classes.removeClass(classID);
     };
 
