@@ -1,5 +1,5 @@
 {
-  "name": "VMT",
+  "name": "VCS",
   "version": "1.0.0",
   "description": "a wrapper for geogebra with chat and calibration with class rooms and users",
   "main": "src/Server/index.js",
