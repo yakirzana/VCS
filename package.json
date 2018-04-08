@@ -1,7 +1,7 @@
 {
   "name": "VMT",
   "version": "1.0.0",
-  "description": "a wrapper for geogebra with chat and calibration",
+  "description": "a wrapper for geogebra with chat and calibration with class rooms and users",
   "main": "src/Server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yakirzana/VMT"
+    "url": "https://github.com/yakirzana/VCS"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -21,7 +21,6 @@
     "express-session": "^1.15.6",
     "moment": "^2.22.0",
     "mongodb": "^2.2.34",
-    "node-datetime": "^2.0.6",
     "nodeunit": "^0.11.2",
     "request": "latest",
     "socket.io": "^2.0.4"
