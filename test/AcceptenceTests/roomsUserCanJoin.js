@@ -41,11 +41,11 @@ exports.group = {
             return;
         } catch (err) {
             test.equal(err.message, "Error in delete room, invalid roomID");
-            await sl.classes.removeClass(idClass);
-            await sl.users.deleteUser("teacTest3");
             await sl.rooms.deleteRoom(idRoom1);
             await sl.rooms.deleteRoom(idRoom2);
             await sl.rooms.deleteRoom(idRoom3);
+            await sl.classes.removeClass(idClass);
+            await sl.users.deleteUser("teacTest3");
         }
     },
 
@@ -81,12 +81,12 @@ exports.group = {
             test.done();
             return;
         } catch (err) {
-            test.equal(err.message, "Error in delete room, invalid roomID");
-            await sl.classes.removeClass(idClass);
-            await sl.users.deleteUser("teacTest3");
             await sl.rooms.deleteRoom(idRoom1);
             await sl.rooms.deleteRoom(idRoom2);
             await sl.rooms.deleteRoom(idRoom3);
+            test.equal(err.message, "Error in delete room, invalid roomID");
+            await sl.classes.removeClass(idClass);
+            await sl.users.deleteUser("teacTest3");
         }
     },
 
@@ -122,12 +122,12 @@ exports.group = {
             test.done();
             return;
         } catch (err) {
-            test.equal(err.message, "Error in delete room, invalid roomID");
-            await sl.classes.removeClass(idClass);
-            await sl.users.deleteUser("teacTest3");
             await sl.rooms.deleteRoom(idRoom1);
             await sl.rooms.deleteRoom(idRoom2);
             await sl.rooms.deleteRoom(idRoom3);
+            test.equal(err.message, "Error in delete room, invalid roomID");
+            await sl.classes.removeClass(idClass);
+            await sl.users.deleteUser("teacTest3");
         }
     },
 
@@ -176,14 +176,15 @@ exports.group = {
             test.done();
             return;
         } catch (err) {
+            await sl.rooms.deleteRoom(idRoom1);
+            await sl.rooms.deleteRoom(idRoom2);
+            await sl.rooms.deleteRoom(idRoom3);
             test.equal(err.message, "Error in delete room, invalid roomID");
             await sl.classes.removeClass(idClass);
             await sl.users.deleteUser("teacTest3");
             await sl.users.deleteUser("elibin");
             await sl.users.deleteUser("sivanm");
-            await sl.rooms.deleteRoom(idRoom1);
-            await sl.rooms.deleteRoom(idRoom2);
-            await sl.rooms.deleteRoom(idRoom3);
+
         }
     },
 
@@ -226,19 +227,21 @@ exports.group = {
             return;
         } catch (err) {
             test.equal(err.message, "Error in delete room, invalid roomID");
-            await sl.classes.removeClass(idClass);
-            await sl.classes.removeClass(idClass2);
-            await sl.users.deleteUser("teacTest3");
-            await sl.users.deleteUser("teacTest4");
             await sl.rooms.deleteRoom(idRoom1);
             await sl.rooms.deleteRoom(idRoom4);
             await sl.rooms.deleteRoom(idRoom2);
             await sl.rooms.deleteRoom(idRoom3);
+            await sl.classes.removeClass(idClass);
+            await sl.classes.removeClass(idClass2);
+            await sl.users.deleteUser("teacTest3");
+            await sl.users.deleteUser("teacTest4");
+
         }
     },
     testRoomUserCanJoinInvalidUser: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -263,11 +266,12 @@ exports.group = {
             return;
         } catch (err) {
             test.equal(err.message, "Error in getRoomsOfUser,invalid parameter, user dont exist");
-            await sl.classes.removeClass(idClass);
-            await sl.users.deleteUser("teacTest3");
             await sl.rooms.deleteRoom(idRoom1);
             await sl.rooms.deleteRoom(idRoom2);
             await sl.rooms.deleteRoom(idRoom3);
+            await sl.classes.removeClass(idClass);
+            await sl.users.deleteUser("teacTest3");
+
         }
         test.done();
     },
@@ -311,13 +315,14 @@ exports.group = {
             return;
         } catch (err) {
             test.equal(err.message, "Error in delete room, invalid roomID");
+            await sl.rooms.deleteRoom(idRoom1);
+            await sl.rooms.deleteRoom(idRoom2);
+            await sl.rooms.deleteRoom(idRoom3);
             await sl.classes.removeClass(idClass);
             await sl.users.deleteUser("teacTest3");
             await sl.users.deleteUser("elibin");
             await sl.users.deleteUser("sivanm");
-            await sl.rooms.deleteRoom(idRoom1);
-            await sl.rooms.deleteRoom(idRoom2);
-            await sl.rooms.deleteRoom(idRoom3);
+
         }
     }
 

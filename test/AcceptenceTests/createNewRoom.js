@@ -11,6 +11,7 @@ exports.group = {
     testCreateNewRoomSucsses: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -34,9 +35,10 @@ exports.group = {
     testCreateNewRoomSucsses2: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             await sl.users.register("teacTest4", "1234", "teac", "her", "Male", "teacher@gm.com", true);
-            sleep(1000);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest4", "1234"));
             var idClass1 = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -71,6 +73,7 @@ exports.group = {
     testCreateNewRoomUndefinedName: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -89,6 +92,7 @@ exports.group = {
     testCreateNewRoomUndefinedDesc: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -107,6 +111,7 @@ exports.group = {
     testCreateNewRoomUndefinedTeacherName: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -124,6 +129,7 @@ exports.group = {
     testCreateNewRoomInvalidChars1: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -142,6 +148,7 @@ exports.group = {
     testCreateNewRoomInvalidChars2: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -159,6 +166,7 @@ exports.group = {
     testCreateNewRoomInvalidClassID: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -176,6 +184,7 @@ exports.group = {
     testCreateNewRoomInvalidTeacherName: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);

@@ -25,6 +25,14 @@ module.exports = function (bl) {
 
     this.removeClass = async function (classID) {
         classID = parseInt(classID);
+        try {
+            var cls = await bl.classes.getClassByID(classID);
+            for (room of cls.roomList) {
+                await this.rooms.deleteRoom(room);
+            }
+        } catch (err) {
+            throw new Error("cannot find class by id");
+        }
         await bl.classes.removeClass(classID);
     };
 
