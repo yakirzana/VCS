@@ -98,7 +98,7 @@ module.exports = function (app, sl, socket) {
             if (!(post && post.firstName && post.firstName != "" && post.lastName && post.lastName != "" && post.gender && post.gender != ""))
                 throw new Error(sl.strings.missingForm);
 
-            sl.users.editUser(this.loggedUser, post.password, post.firstName, post.lastName, post.gender);
+            await sl.users.editUser(this.loggedUser, post.password, post.firstName, post.lastName, post.gender);
 
             res.end(JSON.stringify({result: sl.strings.successesForm}));
         }

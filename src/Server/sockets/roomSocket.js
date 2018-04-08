@@ -102,10 +102,10 @@ function sendPost(url, roomID, username) {
 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body);
+            console.log("got answer from post : " + body);
         }
         if (error)
-            console.log("error on roomSocket " + error);
+            console.log("roomSocket " + error);
     });
 
 }
