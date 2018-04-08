@@ -7,13 +7,20 @@ module.exports = function (bl) {
     };
 
     this.getRoomsOfUser = async function (username) {
-        var roomsIDs = await bl.rooms.getRoomsOfUser(username);
-        var rooms = [];
-        for (var i = 0; i < roomsIDs.length; i++) {
-            var room = await bl.rooms.getRoomById(roomsIDs[i] + "");
-            rooms.push(room.toJson());
+        try {
+            await bl.users.getUserByUserName(username);
+            var roomsIDs = await bl.rooms.getRoomsOfUser(username);
+            var rooms = [];
+            for (var i = 0; i < roomsIDs.length; i++) {
+                var room = await bl.rooms.getRoomById(roomsIDs[i] + "");
+                rooms.push(room.toJson());
+            }
+            return rooms;
+        } catch (err) {
+            throw new Error("Error in getRoomsOfUser,invalid parameter, user dont exist");
         }
-        return rooms;
+
+
     };
 
     this.deleteRoom = async function (id) {
@@ -38,6 +45,14 @@ module.exports = function (bl) {
     this.saveRoom = function (room) {
         bl.rooms.saveRoom(room);
         return true;
+    };
+
+    this.addUserToRoom = async function (id, username) {
+        await bl.rooms.addUserToRoom(id, username);
+    };
+
+    this.deleteUserFromRoom = async function (id, username) {
+        await bl.rooms.deleteUserFromRoom(id, username);
     };
 
     this.addRoom = async function (name, descriptions, teacherUserName, timeLimit, classID) {

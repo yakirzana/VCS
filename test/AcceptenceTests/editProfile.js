@@ -110,7 +110,7 @@ exports.group = {
         try {
             await sl.users.register("elibin", "1234", "Eli", "Bin", "Male", "elib@gmail.com", false);
             await sl.users.login("elibin", "1234");
-            await sl.users.editUser("elibin", "", "Eli", "Bin", "Male");
+            await sl.users.editUser("", "1234", "Eli", "Bin", "Male");
             test.ok(false);
             test.done();
             return;
