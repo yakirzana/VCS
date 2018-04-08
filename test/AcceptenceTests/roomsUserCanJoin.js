@@ -11,6 +11,7 @@ exports.group = {
     testRoomUserCanJoinSuccess: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -51,6 +52,7 @@ exports.group = {
     testRoomUserCanJoinSuccess5: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -91,6 +93,7 @@ exports.group = {
     testRoomUserCanJoinSuccess4: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -131,10 +134,13 @@ exports.group = {
     testRoomUserCanJoinSuccess2: async function (test) {
         try {
             await sl.users.register("elibin", "1234", "Eli", "Bin", "Male", "elib@gmail.com", false);
+            await sleep(1000);
             await sl.users.register("sivanm", "1234567", "Sivan", "Mednik", "Female", "sivanm@gmail.com", false);
+            await sleep(1000);
             test.ok(await sl.users.login("elibin", "1234"));
             test.ok(await sl.users.login("sivanm", "1234567"));
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("Test class", "This is Test3 class", "teacTest3");
             await sleep(1000);
@@ -160,13 +166,9 @@ exports.group = {
             }
             await sleep(1000);
             await sl.rooms.deleteRoom(idRoom1);
-            await sleep(1000);
             await sl.rooms.deleteRoom(idRoom2);
-            await sleep(1000);
             await sl.rooms.deleteRoom(idRoom3);
-            await sleep(1000);
             await sl.classes.removeClass(idClass);
-            await sleep(1000);
             await sl.users.deleteUser("teacTest3");
             await sl.users.deleteUser("elibin");
             await sl.users.deleteUser("sivanm");
@@ -188,8 +190,10 @@ exports.group = {
     testRoomUserCanJoinSuccess3: async function (test) {
         try {
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             await sl.users.register("teacTest4", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest4", "1234"));
             var idClass = await sl.classes.addNewClass("teacTest3 class", "This is teacTest3 class", "teacTest3");
             await sleep(1000);
@@ -210,17 +214,11 @@ exports.group = {
                     found = false;
             }
             await sl.rooms.deleteRoom(idRoom1);
-            await sleep(1000);
             await sl.rooms.deleteRoom(idRoom2);
-            await sleep(1000);
             await sl.rooms.deleteRoom(idRoom3);
-            await sleep(1000);
             await sl.rooms.deleteRoom(idRoom4);
-            await sleep(1000);
             await sl.classes.removeClass(idClass);
-            await sleep(1000);
             await sl.classes.removeClass(idClass2);
-            await sleep(1000);
             await sl.users.deleteUser("teacTest3");
             await sl.users.deleteUser("teacTest4");
             test.ok(found);
@@ -277,10 +275,13 @@ exports.group = {
     testRoomUserCanJoinSuccessNoRooms: async function (test) {
         try {
             await sl.users.register("elibin", "1234", "Eli", "Bin", "Male", "elib@gmail.com", false);
+            await sleep(1000);
             await sl.users.register("sivanm", "1234567", "Sivan", "Mednik", "Female", "sivanm@gmail.com", false);
+            await sleep(1000);
             test.ok(await sl.users.login("elibin", "1234"));
             test.ok(await sl.users.login("sivanm", "1234567"));
             await sl.users.register("teacTest3", "1234", "teac", "her", "Male", "teacher@gm.com", true);
+            await sleep(1000);
             test.ok(await sl.users.login("teacTest3", "1234"));
             var idClass = await sl.classes.addNewClass("Test class", "This is Test3 class", "teacTest3");
             await sleep(1000);
