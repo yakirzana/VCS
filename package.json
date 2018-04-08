@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/Server/app.js"
   },
-  "author": "Yakir Zana",
+  "author": "Yakir Zana, Achiad",
   "license": "MIT",
   "repository": {
     "type": "git",
