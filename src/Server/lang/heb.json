@@ -54,5 +54,7 @@
   "EnterClass": "כניסה לכיתה",
   "myClasses": "הכיתות שלי",
   "EnterRoom": "כניסה לחדר",
-  "Here_you_can_see_Rooms_that_you_can_join": "כאן תוכלו לראות חדרים שתוכלו להצטרף אליהם"
+  "Here_you_can_see_Rooms_that_you_can_join": "כאן תוכלו לראות חדרים שתוכלו להצטרף אליהם",
+  "editRoom": "עריכת חדר",
+  "editClass": "עריכת כיתה"
 }

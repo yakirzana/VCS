@@ -77,6 +77,19 @@ module.exports = function (app, sl, socket) {
         }
     });
 
+    app.post('/editClass', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.className && post.className != "" && post.desc && post.desc != "" && post.classID && post.classID != ""))
+                throw new Error(sl.strings.missingForm);
+            await sl.classes.editClass(post.classID, post.className, post.desc);
+            res.end(JSON.stringify({result: sl.strings.successesForm}));
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
     app.post('/addRoom', async function (req, res) {
         var post = req.body;
         try {

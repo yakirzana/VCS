@@ -31,9 +31,14 @@
                     <%= strings.addClass %></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="addUserToRoom-tab" data-toggle="tab" href="#addUserToRoom" role="tab"
+                <a class="nav-link" id="editRoom-tab" data-toggle="tab" href="#editRoom" role="tab"
                    aria-controls="profile" aria-selected="false">
-                    <%= strings.addUserToRoom %></a>
+                    <%= strings.editRoom %></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="editClass-tab" data-toggle="tab" href="#editClass" role="tab"
+                   aria-controls="profile" aria-selected="false" onclick="getClassesForEdit()">
+                    <%= strings.editClass %></a>
             </li>
         </ul>
 
@@ -44,8 +49,11 @@
             <div class="tab-pane fade" id="addClass" role="tabpanel" aria-labelledby="addClass-tab">
                 <% include ../partials/addClass.ejs %>
             </div>
-            <div class="tab-pane fade" id="addUserToRoom" role="tabpanel" aria-labelledby="addUserToRoom-tab">
-                <b><%= strings.addUserToRoom %>:</b> <br/>
+            <div class="tab-pane fade" id="editRoom" role="tabpanel" aria-labelledby="editRoom-tab">
+                <b><%= strings.editRoom %>:</b> <br/>
+            </div>
+            <div class="tab-pane fade" id="editClass" role="tabpanel" aria-labelledby="editClass-tab">
+                <% include ../partials/editClass.ejs %>
             </div>
         </div>
 

@@ -69,4 +69,8 @@ module.exports = function (bl) {
         return await bl.classes.getAllClassesOfTeach(username);
     };
 
+    this.editClass = async function (classID, name, desc) {
+        await bl.classes.editClass(classID, name, desc);
+    }
+
 };

@@ -4,7 +4,7 @@ module.exports = function (dl) {
     this.getRoomsInClass = async function (classID) {
         var roomList = await dl.classes.getRoomsInClass(classID);
         if(roomList == null)
-            throw new Error("cannot find roomList");
+            throw new Error("cannot find roomList in getRoomsInClass");
         return roomList;
     };
 
@@ -25,9 +25,10 @@ module.exports = function (dl) {
     };
 
     this.getClassByID = async function (classID) {
+        classID = parseInt(classID);
         var clss = await dl.classes.getClassByID(classID);
         if(clss == null)
-            throw new Error("cannot find roomList");
+            throw new Error("cannot find class by id");
         return clss;
     };
 
@@ -63,6 +64,7 @@ module.exports = function (dl) {
         var classes = await dl.classes.getClassByRoomID(roomID);
         return classes;
     };
+
     this.getAllClasses = async function () {
         var classes = await dl.classes.getAllClasses();
         return classes;
@@ -75,4 +77,11 @@ module.exports = function (dl) {
     this.getNextID = async function () {
         return await dl.classes.getMaxID() + Math.floor((Math.random() * 10) + 1);
     };
+
+    this.editClass = async function (classID, name, desc) {
+        var cls = await  this.getClassByID(classID);
+        cls.name = name;
+        cls.descriptions = desc;
+        await this.saveClass(cls);
+    }
 };
