@@ -90,6 +90,19 @@ module.exports = function (app, sl, socket) {
         }
     });
 
+    app.post('/removeClass', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.classID && post.classID != ""))
+                throw new Error(sl.strings.missingForm);
+            await sl.classes.removeClass(post.classID);
+            res.end(JSON.stringify({result: sl.strings.successesForm}));
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
     app.post('/addRoom', async function (req, res) {
         var post = req.body;
         try {

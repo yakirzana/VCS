@@ -6,6 +6,32 @@
 
 
 <script>
+    function deleteClass(classID) {
+        var r = confirm("<%= strings.areYouSureDelete %>");
+        if (r != true)
+            return;
+        // Send the data using post
+        var posting = $.post("/removeClass/", {classID: classID});
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultEditClass").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultEditClass").removeClass("alert-danger");
+                $("#resultEditClass").addClass("alert-success");
+                $("#card" + classID).remove();
+            }
+            else {
+                $("#resultEditClass").removeClass("alert-success");
+                $("#resultEditClass").addClass("alert-danger");
+            }
+            $("#resultEditClass").css("display", "block");
+
+        });
+    }
+
     function editClassForm(classID) {
         // Get some values from elements on the page:
         var $form = $('#editClassForm' + classID),
@@ -24,7 +50,7 @@
             if (result == "<%= strings.successesForm %>") {
                 $("#resultEditClass").removeClass("alert-danger");
                 $("#resultEditClass").addClass("alert-success");
-                $("#btn" + classID).html(className + " #" + classID + "\n")
+                $("#btn" + classID).html(className + " #" + classID + "\n");
             }
             else {
                 $("#resultEditClass").removeClass("alert-success");
@@ -47,11 +73,12 @@
                 "        <input type=\"text\" value=\"" + cls._descriptions + "\"  class=\"form-control\" name=\"desc\" placeholder=\"<%= strings.description %>\">\n" +
                 "    </div>\n" +
                 "    <button type=\"submit\" class=\"btn btn-primary\"><%= strings.editClass %></button>\n" +
+                "    <button type=\"button\" onclick=\"deleteClass(" + cls._classID + ")\" class=\"btn btn-danger\"><%= strings.deleteClass %></button>" +
                 "</form>";
         }
 
         function getCardOfClass(cls) {
-            return "<div class=\"card\">\n" +
+            return "<div id=\"card" + cls._classID + "\" class=\"card\">\n" +
                 "        <div class=\"card-header\" id=\"heading" + cls._classID + "\">\n" +
                 "            <h5 class=\"mb-0\">\n" +
                 "                <button id=\"btn" + cls._classID + "\" class=\"btn btn-link\" data-toggle=\"collapse\" data-target=\"#collapse" + cls._classID + "\" aria-expanded=\"true\" aria-controls=\"collapse" + cls._classID + "\">\n" +
