@@ -55,10 +55,10 @@ module.exports = function (bl) {
     this.getRoomsAccessible = async function (classID, username) {
         var res = [];
         var classList = await bl.classes.getClassByUser(username);
-        if (classID in classList) {
+        if (classList.indexOf(classID) >= 0) {
             var roomList = await bl.classes.getRoomsInClass(classID);
             for (var room of roomList) {
-                var userList = await bl.rooms.getUsersInRoomById(room + "");
+                var userList = await bl.rooms.getUsersInRoomById(room);
                 for (var i = 0; i < userList.length; ++i) {
                     if (userList[i] == username && res.indexOf(room) <= -1) {
                         res.push(room);
