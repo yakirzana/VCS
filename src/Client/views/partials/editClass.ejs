@@ -1,7 +1,7 @@
 <b><%= strings.editClass %>:</b> <br/>
 <div class="result alert" id="resultEditClass">loading...</div>
 
-<div id="accordion">
+<div id="accordionClasses">
 </div>
 
 
@@ -34,6 +34,7 @@
 
     function editClassForm(classID) {
         // Get some values from elements on the page:
+        $('#loading-indicator').show();
         var $form = $('#editClassForm' + classID),
             className = $form.find("input[name='className']").val(),
             desc = $form.find("input[name='desc']").val(),
@@ -56,7 +57,8 @@
                 $("#resultEditClass").removeClass("alert-success");
                 $("#resultEditClass").addClass("alert-danger");
             }
-            $("#resultEditClass").css("display", "block");
+            $('#loading-indicator').hide();
+            $("#resultEditClass").fadeOut().fadeIn();
         });
     }
 
@@ -95,8 +97,9 @@
                 "    </div>";
         }
 
+        $('#loading-indicator').show();
         $.get("getClasses", function (data) {
-            $('#accordion').empty();
+            $('#accordionClasses').empty();
             var classes = JSON.parse(data);
             if (classes.length == 0) {
                 $("#resultEditClass").empty().append("<%= strings.youMustHaveClass %>");
@@ -106,10 +109,11 @@
             else {
                 $("#resultEditClass").css("display", "none");
                 $.each(classes, function (key, value) {
-                    $('#accordion')
+                    $('#accordionClasses')
                         .append(getCardOfClass(value))
                 });
             }
+            $('#loading-indicator').hide();
         });
     }
 </script>

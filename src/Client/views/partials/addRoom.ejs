@@ -23,12 +23,15 @@
         <select class="form-control" id="selectClass">
         </select>
     </div>
+    <div id="selectUsers"></div>
     <button type="submit" class="btn btn-primary"><%= strings.addRoom %></button>
 </form>
 
 
 <script>
     function getClasses() {
+        $('#loading-indicator').show();
+        getUsers("selectUsers", 0, 0);
         $.get("getClasses", function (data) {
             var classes = JSON.parse(data);
             if (classes.length == 0) {
@@ -50,6 +53,7 @@
                 });
                 $("#addRoomForm").css("display", "block");
             }
+            $('#loading-indicator').hide();
         });
     }
 
@@ -61,11 +65,10 @@
         document.getElementById('selectInput').value = val;
     }
 
-    getClasses();
 
     // Attach a submit handler to the form
     $("#addRoomForm").submit(function (event) {
-
+        $('#loading-indicator').show();
         // Stop form from submitting normally
         event.preventDefault();
 
@@ -75,10 +78,18 @@
             desc = $form.find("input[name='desc']").val(),
             timeLimit = $form.find("input[name='timeLimit']").val(),
             selectClass = $('#selectClass').find(":selected").val(),
+            users = JSON.stringify(getSelectedUsers($(this).find(".list-group")[0].children, true, true)),
             url = $form.attr("action");
 
+
         // Send the data using post
-        var posting = $.post(url, {roomName: roomName, desc: desc, timeLimit: timeLimit, selectClass: selectClass});
+        var posting = $.post(url, {
+            roomName: roomName,
+            desc: desc,
+            timeLimit: timeLimit,
+            selectClass: selectClass,
+            users: users
+        });
 
         // Put the results in a div
         posting.done(function (data) {
@@ -97,7 +108,9 @@
                 $("#resultAddRoom").addClass("alert-danger");
             }
             $('#addRoomForm')[0].reset();
-            $("#resultAddRoom").css("display", "block");
+            $('#loading-indicator').hide();
+            $("#resultAddRoom").fadeOut().fadeIn();
+            getUsers("selectUsers", 0, 0);
         });
     });
 </script>

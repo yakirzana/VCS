@@ -17,7 +17,16 @@ module.exports = function (dl) {
     };
 
     this.addUserToRoom = async function (id, username) {
-        await dl.rooms.addUserToRoom(id, username);
+        return await dl.rooms.addUserToRoom(id, username);
+    };
+
+    this.addUsersToRoom = async function (id, listUsers) {
+        var room = await  this.getRoomById(id);
+        room.listUsers = [];
+        for (user of listUsers)
+            if (room.listUsers.indexOf(user) < 0)
+                room.listUsers.push(user);
+        await this.saveRoom(room);
     };
 
     this.deleteUserFromRoom = async function (id, username) {
@@ -66,5 +75,14 @@ module.exports = function (dl) {
     this.getNextID = async function () {
         return await dl.rooms.getMaxID() + Math.floor((Math.random() * 10) + 1);
     };
+
+    this.editRoom = async function (roomID, name, desc, reset) {
+        var room = await this.getRoomById(roomID);
+        room.name = name;
+        room.desc = desc;
+        if (reset)
+            room.base64 = null;
+        await this.saveRoom(room);
+    }
 
 };

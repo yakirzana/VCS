@@ -1,0 +1,126 @@
+<b><%= strings.editRoom %>:</b> <br/>
+<div class="result alert" id="resultEditRoom">loading...</div>
+
+<div id="accordion">
+</div>
+
+
+<script>
+    function deleteRoom(roomID) {
+        var r = confirm("<%= strings.areYouSureDelete %>");
+        if (r != true)
+            return;
+        // Send the data using post
+        var posting = $.post("/removeRoom/", {roomID: roomID});
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultEditRoom").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultEditRoom").removeClass("alert-danger");
+                $("#resultEditRoom").addClass("alert-success");
+                $("#card" + roomID).remove();
+            }
+            else {
+                $("#resultEditRoom").removeClass("alert-success");
+                $("#resultEditRoom").addClass("alert-danger");
+            }
+            $("#resultEditRoom").css("display", "block");
+
+        });
+    }
+
+    function editRoomForm(roomID) {
+        $('#loading-indicator').show();
+        // Get some values from elements on the page:
+        var $form = $('#editRoomForm' + roomID),
+            roomName = $form.find("input[name='roomName']").val(),
+            desc = $form.find("input[name='desc']").val(),
+            users = JSON.stringify(getSelectedUsers($form.find(".list-group")[0].children, true, true)),
+            reset = ($('#reset' + roomID).is(":checked")),
+            url = $form.attr("action");
+
+        // Send the data using post
+        var posting = $.post(url, {roomID: roomID, roomName: roomName, desc: desc, reset: reset, users: users});
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultEditRoom").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultEditRoom").removeClass("alert-danger");
+                $("#resultEditRoom").addClass("alert-success");
+                $("#btn" + roomID).html(roomName + " #" + roomID + "\n");
+            }
+            else {
+                $("#resultEditRoom").removeClass("alert-success");
+                $("#resultEditRoom").addClass("alert-danger");
+            }
+            $('#loading-indicator').hide();
+            $("#resultEditRoom").fadeOut().fadeIn();
+        });
+    }
+
+    function getRoomsForEdit() {
+        function createRoomForm(room) {
+            return "<form id=\"editRoomForm" + room.id + "\" onsubmit=\"editRoomForm(" + room.id + "); return false;\" action=\"/editRoom\">\n" +
+                "    <div class=\"form-group\">\n" +
+                "        <label for=\"roomName\"><%= strings.roomName %></label>\n" +
+                "        <input type=\"text\" value=\"" + room.name + "\" class=\"form-control\" name=\"roomName\" placeholder=\"<%= strings.roomName %>\">\n" +
+                "\n" +
+                "    </div>\n" +
+                "    <div class=\"form-group\">\n" +
+                "        <label for=\"desc\"><%= strings.description %></label>\n" +
+                "        <input type=\"text\" value=\"" + room.desc + "\"  class=\"form-control\" name=\"desc\" placeholder=\"<%= strings.description %>\">\n" +
+                "    </div>\n" +
+                "    <div class=\"form-group\">\n" +
+                "        <span for=\"reset\"><%= strings.resetBoard %></label>\n" +
+                "        <input id=\"reset" + room.id + "\" type=\"checkbox\" class=\"form-control\" name=\"reset\" placeholder=\"<%= strings.resetBoard %>\">\n" +
+                "    </div>\n" +
+                "   <div id=\"selectUsers" + room.id + "\"></div>" +
+                "    <button type=\"submit\" class=\"btn btn-primary\"><%= strings.editRoom %></button>\n" +
+                "    <button type=\"button\" onclick=\"deleteRoom(" + room.id + ")\" class=\"btn btn-danger\"><%= strings.deleteRoom %></button>" +
+                "</form>";
+        }
+
+        function getCardOfRoom(room) {
+            return "<div id=\"card" + room.id + "\" class=\"card\">\n" +
+                "        <div class=\"card-header\" id=\"heading" + room.id + "\">\n" +
+                "            <h5 class=\"mb-0\">\n" +
+                "                <button id=\"btn" + room.id + "\" class=\"btn btn-link\" data-toggle=\"collapse\" data-target=\"#collapse" + room.id + "\" aria-expanded=\"true\" aria-controls=\"collapse" + room.id + "\">\n" +
+                "                    " + room.name + " #" + room.id + "\n" +
+                "                </button>\n" +
+                "            </h5>\n" +
+                "        </div>\n" +
+                "\n" +
+                "        <div id=\"collapse" + room.id + "\" class=\"collapse\" aria-labelledby=\"heading" + room.id + "\" data-parent=\"#accordion\">\n" +
+                "            <div class=\"card-body\">\n" +
+                "                " + createRoomForm(room) +
+                "            </div>\n" +
+                "        </div>\n" +
+                "    </div>";
+        }
+
+        $('#loading-indicator').show();
+        $.get("getRooms", function (data) {
+            $('#accordion').empty();
+            var rooms = JSON.parse(data);
+            if (rooms.length == 0) {
+                $("#resultEditRoom").empty().append("<%= strings.youMustHaveRoom %>");
+                $("#resultEditRoom").addClass("alert-danger");
+                $("#resultEditRoom").css("display", "block");
+            }
+            else {
+                $("#resultEditRoom").css("display", "none");
+                $.each(rooms, function (key, value) {
+                    $('#accordion').append(getCardOfRoom(value));
+                    getUsers("selectUsers" + value.id, 0, value.id);
+                });
+            }
+            $('#loading-indicator').hide();
+        });
+    }
+</script>

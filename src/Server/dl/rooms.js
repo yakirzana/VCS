@@ -88,7 +88,8 @@ module.exports = function (db) {
     this.addUserToRoom = async function (id, username) {
         var room = await this.getRoomById(id);
         room.listUsers.push(username);
-        this.saveRoom(room);
+        await this.saveRoom(room);
+        return;
     };
 
     this.deleteUserFromRoom = async function (id, username) {

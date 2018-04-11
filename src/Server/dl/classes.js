@@ -29,6 +29,7 @@ module.exports = function (db) {
         db.collection('classes').insertOne(clss, function (err, r) {
         });
     };
+
     this.removeClass = function (classID) {
         db.collection('classes').deleteOne({_classID: classID}, function (err, r) {
         });

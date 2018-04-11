@@ -44,6 +44,7 @@
   "openClass": "פתח את הכיתה",
   "timeLimitInSeconds": "זמן מקסימאלי לשליטה (בשניות) - 0 אומר ללא הגבלה",
   "youMustHaveClass": "אין אפשרות ליצור חדר ללא כיתות, אנא צור כיתות קודם",
+  "youMustHaveRoom": "לא קיימים חדרים במערכת",
   "chooseClass": "בחירת כיתה",
   "profile": "פרופיל משתמש",
   "editProfile": "עמוד עריכת פרטי משתמש",
@@ -59,5 +60,7 @@
   "editClass": "עריכת כיתה",
   "deleteClass": "מחיקת כיתה",
   "deleteRoom": "מחיקת חדר",
-  "areYouSureDelete": "האם אתה בטוח שברצונך למחוק?"
+  "areYouSureDelete": "האם אתה בטוח שברצונך למחוק?",
+  "resetBoard": "איפוס לוח",
+  "selectUsersForRoom": "בחירת משתמשים לכיתה"
 }

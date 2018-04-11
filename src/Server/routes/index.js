@@ -107,11 +107,41 @@ module.exports = function (app, sl, socket) {
         var post = req.body;
         try {
             if (!(post && post.roomName && post.roomName != "" && post.desc && post.desc != "" && post.timeLimit && post.timeLimit != ""
-                && post.selectClass && post.selectClass != ""))
+                && post.selectClass && post.selectClass != "" && post.users))
                 throw new Error(sl.strings.missingForm);
             var id = await sl.rooms.addRoom(post.roomName, post.desc, this.loggedUser, post.timeLimit, post.selectClass);
+            var users = JSON.parse(post.users);
+            await sl.rooms.addUsersToRoom(id, users);
             res.end(JSON.stringify({result: sl.strings.successesForm, url: "/room/" + id}));
             res.end();
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
+    app.post('/editRoom', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.roomName && post.roomName != "" && post.desc && post.desc != "" && post.roomID && post.roomID != "" && post.users))
+                throw new Error(sl.strings.missingForm);
+            await sl.rooms.editRoom(post.roomID, post.roomName, post.desc, post.reset);
+            var users = JSON.parse(post.users);
+            await sl.rooms.addUsersToRoom(post.roomID, users);
+            res.end(JSON.stringify({result: sl.strings.successesForm}));
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
+    app.post('/removeRoom', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.roomID && post.roomID != ""))
+                throw new Error(sl.strings.missingForm);
+            await sl.rooms.deleteRoom(post.roomID);
+            res.end(JSON.stringify({result: sl.strings.successesForm}));
         }
         catch (err) {
             res.end(JSON.stringify({result: err.message}));
@@ -282,6 +312,14 @@ module.exports = function (app, sl, socket) {
     app.get('/getRooms', checkAuthRestricted, async function (req, res) {
         var classes = await sl.rooms.getRoomsOfUser(this.loggedUser);
         res.end(JSON.stringify(classes));
+    });
+
+    app.get('/getUsers/:roomId/:classId/:search*?', async function (req, res) {
+        var roomId = req.params.roomId;
+        var classId = req.params.classId;
+        var search = req.params.search;
+        var users = await sl.users.getUsersForRoom(roomId, classId, search);
+        res.end(JSON.stringify(users));
     });
 
     //

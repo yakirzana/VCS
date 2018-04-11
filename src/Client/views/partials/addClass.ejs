@@ -17,7 +17,7 @@
 <script>
     // Attach a submit handler to the form
     $("#addClassForm").submit(function (event) {
-
+        $('#loading-indicator').show();
         // Stop form from submitting normally
         event.preventDefault();
 
@@ -47,7 +47,8 @@
                 $("#resultAddClass").addClass("alert-danger");
             }
             $('#addClassForm')[0].reset();
-            $("#resultAddClass").css("display", "block");
+            $('#loading-indicator').hide();
+            $("#resultAddClass").fadeOut().fadeIn();
         });
     });
 </script>

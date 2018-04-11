@@ -32,7 +32,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="editRoom-tab" data-toggle="tab" href="#editRoom" role="tab"
-                   aria-controls="profile" aria-selected="false">
+                   aria-controls="profile" aria-selected="false" onclick="getRoomsForEdit()">
                     <%= strings.editRoom %></a>
             </li>
             <li class="nav-item">
@@ -50,18 +50,102 @@
                 <% include ../partials/addClass.ejs %>
             </div>
             <div class="tab-pane fade" id="editRoom" role="tabpanel" aria-labelledby="editRoom-tab">
-                <b><%= strings.editRoom %>:</b> <br/>
+                <% include ../partials/editRoom.ejs %>
             </div>
             <div class="tab-pane fade" id="editClass" role="tabpanel" aria-labelledby="editClass-tab">
                 <% include ../partials/editClass.ejs %>
             </div>
         </div>
 
+
     </div>
 </div>
+
+<img src="/images/ajax-loader.gif" id="loading-indicator" style="display:none"/>
 
 <footer>
     <% include ../partials/footer %>
 </footer>
+<script>
+    getClasses();
+
+    function getSelectedUsers(item, onlySelected, onlyUsername) {
+        var users = [];
+        for (user of item) {
+            var userText = "";
+            if (!onlySelected || $(user).hasClass("active")) {
+                if (onlyUsername)
+                    userText = user.children[0].textContent.trim();
+                else {
+                    userText = {
+                        username: user.children[0].textContent.trim(),
+                        fullName: user.children[1].textContent.trim()
+                    }
+                }
+                users.push(userText);
+            }
+        }
+        return users;
+    }
+
+    function search(item, divName) {
+        // var usersItem = item.parentNode.parentNode.parentNode.children[1].children;
+        // var users = getSelectedUsers(usersItem, false, false);
+        // console.log(users);
+        getUsers(divName, 0, 0, item.value, true);
+    }
+
+    function clickItem(item) {
+        if (!$(item).hasClass("active"))
+            $(item).addClass("active");
+        else
+            $(item).removeClass("active");
+    }
+
+
+    function createListWithSearch(users, divName, search, fromSearch = false) {
+        var html = "";
+        if (!fromSearch) {
+            html += "<div class='userList'>";
+            html += "<div class=\"row\">";
+            html += "<div class='col font-weight-bold'><%= strings.selectUsersForRoom %> </div>";
+            html += "<div class=\"col\"><input type=\"text\" value='" + search + "'  class=\"form-control\" onchange=\"search(this,'" + divName + "');\" onkeyup=\"search(this,'" + divName + "');\" onpaste=\"search(this,'" + divName + "');\" placeholder=\"Search...\" /></div></div>";
+            html += "<ul class=\"list-group\">";
+        }
+
+        for (user of users.checked) {
+            html += "<a onclick='clickItem(this); return false;' href='' style='text-align: center;' class=\"list-group-item active\"><b>" + user.username + "</b><span> " + user.fullName + "</span></a>";
+        }
+        for (user of users.notChecked) {
+            html += "<a onclick='clickItem(this); return false;' href=''  style='text-align: center;' class=\"list-group-item\"><b>" + user.username + "</b><span> " + user.fullName + "</span></a>";
+        }
+        if (!fromSearch)
+            html += "</ul></div>";
+        return html;
+    }
+
+    function addSelected(users, divName) {
+        var selected = getSelectedUsers($('#' + divName).find(".list-group")[0].children, true, false);
+        for (user of selected) {
+            users.checked = users.checked.filter(e => e.username !== user.username);
+            users.notChecked = users.notChecked.filter(e => e.username !== user.username);
+            console.log(users.notChecked);
+            users.checked.push(user);
+        }
+        return users;
+    }
+
+    function getUsers(divName, classID, roomID, search = "", fromSearch = false) {
+        $.get("getUsers/" + roomID + "/" + classID + "/" + search, function (data) {
+            var users = JSON.parse(data);
+            if (!fromSearch)
+                $('#' + divName).html(createListWithSearch(users, divName, search))
+            else {
+                users = addSelected(users, divName);
+                $('#' + divName).find(".list-group").html(createListWithSearch(users, divName, search, fromSearch));
+            }
+        });
+    }
+</script>
 </body>
 </html>

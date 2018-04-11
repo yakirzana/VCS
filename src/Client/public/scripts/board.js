@@ -102,7 +102,7 @@ function initBoard() {
     //initial state of board if available
     if(room._base64 != null && room._base64 != undefined)
         applet.setBase64(room._base64);
-    $(".loading").addClass("hidden");
+    $('#loading-indicator').hide();
     $("#applet_container").removeClass("hidden");
     setSocketListeners();
 }

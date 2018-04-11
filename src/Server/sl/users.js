@@ -72,4 +72,32 @@ module.exports = function (bl) {
     this.isPassMatch = async function (username, password) {
         return await bl.users.isPassMatch(username, password);
     };
+
+    this.getUsersForRoom = async function (roomId, classId, search) {
+        var allUsers = await bl.users.getAllRegularUsers();
+        var users = {};
+        users.checked = [];
+        users.notChecked = [];
+
+        if (roomId > 0) {
+            var room = await bl.rooms.getRoomById(roomId);
+            var list = await room.listUsers;
+            for (var i = 0; i < list.length; i++) {
+                var selectedUser = await bl.users.getUserByUserName(list[i]);
+                users.checked.push({
+                    username: selectedUser.username,
+                    fullName: selectedUser.firstName + " " + selectedUser.lastName
+                });
+            }
+        }
+
+        for (user of allUsers) {
+            if (users.checked.findIndex(x => x.username === user.username) >= 0)
+                continue;
+            var userString = user.username + " " + user.firstName + " " + user.lastName;
+            if (search == undefined || userString.includes(search))
+                users.notChecked.push({username: user.username, fullName: user.firstName + " " + user.lastName});
+        }
+        return users;
+    };
 };

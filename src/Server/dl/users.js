@@ -6,7 +6,6 @@ module.exports = function (db) {
         });
     };
 
-
     this.getUserByUserName = async function(username) {
         try {
             let user = await db.collection('users').findOne({_username: username});
@@ -42,5 +41,21 @@ module.exports = function (db) {
             if (err) throw err;
         });
 
+    };
+
+    this.getAllRegularUsers = async function () {
+        try {
+            let users = await db.collection('users').find({_isTeacher: false}).toArray();
+            if (users == null)
+                throw new Error("there is a problem to find users");
+            var userList = [];
+            for (var user of users) {
+                var userInSystem = Object.assign(new User, user);
+                userList.push(userInSystem);
+            }
+            return userList;
+        } catch (err) {
+            return null;
+        }
     };
 };

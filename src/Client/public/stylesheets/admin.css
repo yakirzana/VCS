@@ -1,3 +1,23 @@
 .result {
     display: none;
 }
+
+.list-group {
+    max-height: 300px;
+    margin: 0 auto 10px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.userList {
+    padding: 10px 10px 10px 10px;
+    width: 50%;
+    margin: 0 auto 10px;
+}
+
+#loading-indicator {
+    position: absolute;
+    left: 48%;
+    top: 43%;
+    z-index: 9999;
+}

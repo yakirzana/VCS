@@ -24,6 +24,7 @@ module.exports = function (bl) {
     };
 
     this.deleteRoom = async function (id) {
+        id = parseInt(id);
         classList = [];
         var classes = await bl.classes.getClassByRoomID(id);
         for (clss of classes) {
@@ -48,7 +49,11 @@ module.exports = function (bl) {
     };
 
     this.addUserToRoom = async function (id, username) {
-        await bl.rooms.addUserToRoom(id, username);
+        return await bl.rooms.addUserToRoom(id, username);
+    };
+
+    this.addUsersToRoom = async function (id, listUsers) {
+        await bl.rooms.addUsersToRoom(id, listUsers);
     };
 
     this.deleteUserFromRoom = async function (id, username) {
@@ -73,5 +78,9 @@ module.exports = function (bl) {
             return id;
         }
         throw new Error("Error in add room, invalid class ID or teachername");
+    }
+
+    this.editRoom = async function (roomID, name, desc, reset) {
+        await bl.rooms.editRoom(roomID, name, desc, reset);
     }
 };

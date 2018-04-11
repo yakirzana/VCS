@@ -63,5 +63,9 @@ module.exports = function (dl) {
     this.saveUser = async function (user) {
         await dl.users.saveUser(user);
     };
+
+    this.getAllRegularUsers = async function () {
+        return await dl.users.getAllRegularUsers();
+    };
 };
 
