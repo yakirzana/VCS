@@ -18,9 +18,10 @@ module.exports = function (bl) {
     };
 
     this.register = async function (username, password, firstName, lastName, sex, email, isTeacher) {
+        username = username.trim();
         if (username == "" || password == "" || firstName == "" || lastName == "" || sex == "" || email == "")
             throw new Error("Error in register, please try again");
-        if (username.indexOf('\n') > -1 || username.indexOf('\t') > -1 || username.indexOf('@') > -1)
+        if (username.indexOf('\n') > -1 || username.indexOf('\t') > -1 || username.indexOf('@') > -1 || username.indexOf(' ') > -1)
             throw new Error("Error in register,invalid characters, please try again");
         if (password.length < 4)
             throw new Error("Error in register,password too short");
