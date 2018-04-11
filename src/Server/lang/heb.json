@@ -62,5 +62,6 @@
   "deleteRoom": "מחיקת חדר",
   "areYouSureDelete": "האם אתה בטוח שברצונך למחוק?",
   "resetBoard": "איפוס לוח",
-  "selectUsersForRoom": "בחירת משתמשים לכיתה"
+  "selectUsersForRoom": "בחירת משתמשים לכיתה",
+  "changeUserToTeach": "הפיכת משתמשים למורים"
 }
