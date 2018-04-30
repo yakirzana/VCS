@@ -63,7 +63,7 @@ function getRoomHtml(room) {
         "                    <h4 class=\"card-title\">" + room.name + "</h4>\n" +
         "                    <p class=\"card-text\"> " + room.desc + "\n" +
         "                        </p>\n" +
-        "                    <a href=\"/room/" + room.id + "\" class=\"btn btn-primary\">Enter Room</a>\n" +
+        "                    <a href=\"/room/" + room.id + "\" class=\"btn btn-primary\">" + enterRoom + "</a>\n" +
         "                </div>\n" +
         "            </div>";
 }
