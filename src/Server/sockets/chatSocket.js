@@ -28,14 +28,14 @@ function analyzeMsg(classSocket, msg) {
             "timestamp": msg._date
         }
     };
-    console.log("send post to " + config.urlRestSendMessage + " with chat msg from room ", msg._roomID + " at time " + msg._date);
+    console.log("ChatSocket: send post to " + config.urlRestSendMessage + " with chat msg from room ", msg._roomID + " at time " + msg._date);
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("got answer from post chat : " + body);
+            console.log("ChatSocket: got answer from post : " + JSON.stringify(body));
             classSocket.addAlert(1, msg._roomID, body);
         }
         if (error)
-            console.log("ChatSocket " + error);
+            console.log("ChatSocket: " + error);
     });
 
 }

@@ -98,14 +98,14 @@ function sendPost(url, roomID, username) {
             "timestamp": date
         }
     };
-    console.log("send post to " + url + " with param: " + roomID + " " + username + " " + date);
+    console.log("RoomSocket: send post to " + url + " with param: " + roomID + " " + username + " " + date);
 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log("got answer from post : " + body);
+            console.log("RoomSocket: got answer from post : " + JSON.stringify(body));
         }
         if (error)
-            console.log("roomSocket " + error);
+            console.log("RoomSocket: " + error);
     });
 
 }
