@@ -81,15 +81,15 @@
 
         function getCardOfClass(cls) {
             return "<div id=\"card" + cls._classID + "\" class=\"card\">\n" +
-                "        <div class=\"card-header\" id=\"heading" + cls._classID + "\">\n" +
+                "        <div class=\"card-header\" id=\"headingCLS" + cls._classID + "\">\n" +
                 "            <h5 class=\"mb-0\">\n" +
-                "                <button id=\"btn" + cls._classID + "\" class=\"btn btn-link\" data-toggle=\"collapse\" data-target=\"#collapse" + cls._classID + "\" aria-expanded=\"true\" aria-controls=\"collapse" + cls._classID + "\">\n" +
+                "                <button id=\"btn" + cls._classID + "\" class=\"btn btn-link\" data-toggle=\"collapse\" data-target=\"#collapseCLS" + cls._classID + "\" aria-expanded=\"true\" aria-controls=\"collapseCLS" + cls._classID + "\">\n" +
                 "                    " + cls._name + " #" + cls._classID + "\n" +
                 "                </button>\n" +
                 "            </h5>\n" +
                 "        </div>\n" +
                 "\n" +
-                "        <div id=\"collapse" + cls._classID + "\" class=\"collapse\" aria-labelledby=\"heading" + cls._classID + "\" data-parent=\"#accordion\">\n" +
+                "        <div id=\"collapseCLS" + cls._classID + "\" class=\"collapse\" aria-labelledby=\"headingCLS" + cls._classID + "\" data-parent=\"#accordionClasses\">\n" +
                 "            <div class=\"card-body\">\n" +
                 "                " + createForm(cls) +
                 "            </div>\n" +
