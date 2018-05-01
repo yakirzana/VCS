@@ -49,6 +49,15 @@ function getRoomsHtml() {
     return html;
 }
 
+
+function cleanRoomAlertClick(roomID) {
+    var btn = window.event.which;
+    if (btn === 1 || btn === 2) {
+        cleanRoomBorder(roomID);
+    }
+}
+
+
 function getRoomHtml(room) {
     var alert = "";
     if (isTeacher)
@@ -63,7 +72,7 @@ function getRoomHtml(room) {
         "                    <h4 class=\"card-title\">" + room.name + "</h4>\n" +
         "                    <p class=\"card-text\"> " + room.desc + "\n" +
         "                        </p>\n" +
-        "                    <a href=\"/room/" + room.id + "\" class=\"btn btn-primary\">" + enterRoom + "</a>\n" +
+        "                    <a href=\"/room/" + room.id + "\" class=\"btn btn-primary\" onmousedown='cleanRoomAlertClick(" + room.id + ")'>" + enterRoom + "</a>\n" +
         "                </div>\n" +
         "            </div>";
 }
