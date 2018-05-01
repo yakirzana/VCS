@@ -70,6 +70,11 @@ module.exports = function (bl) {
         await bl.users.editUser(username, password, firstName, lastName, gender);
     };
 
+    this.makeUsersTeacher = async function (users) {
+        for (user of users)
+            await bl.users.makeUserTeacher(user);
+    };
+
     this.isPassMatch = async function (username, password) {
         return await bl.users.isPassMatch(username, password);
     };

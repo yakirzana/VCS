@@ -163,6 +163,21 @@ module.exports = function (app, sl, socket, log) {
         }
     });
 
+    app.post('/EditTeachers', async function (req, res) {
+        var post = req.body;
+        try {
+            if (!(post && post.users))
+                throw new Error(sl.strings.missingForm);
+            var users = JSON.parse(post.users);
+            await sl.users.makeUsersTeacher(users);
+            log.info("users " + post.users + " is changed to be a teacher");
+            res.end(JSON.stringify({result: sl.strings.successesForm}));
+        }
+        catch (err) {
+            res.end(JSON.stringify({result: err.message}));
+        }
+    });
+
     //
 
     // Pages

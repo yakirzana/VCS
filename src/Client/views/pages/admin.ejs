@@ -40,6 +40,11 @@
                    aria-controls="profile" aria-selected="false" onclick="getClassesForEdit()">
                     <%= strings.editClass %></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" id="editTeachers-tab" data-toggle="tab" href="#editTeachers" role="tab"
+                   aria-controls="profile" aria-selected="false" onclick="initTeachers()">
+                    <%= strings.EditTeachers %></a>
+            </li>
         </ul>
 
         <div class="tab-content" id="myTabContent" align="center" style="padding-top: 10px">
@@ -54,6 +59,9 @@
             </div>
             <div class="tab-pane fade" id="editClass" role="tabpanel" aria-labelledby="editClass-tab">
                 <% include ../partials/editClass.ejs %>
+            </div>
+            <div class="tab-pane fade" id="editTeachers" role="tabpanel" aria-labelledby="editTeachers-tab">
+                <% include ../partials/editTeachers.ejs %>
             </div>
         </div>
 

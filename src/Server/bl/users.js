@@ -54,6 +54,12 @@ module.exports = function (dl) {
         await this.saveUser(user);
     };
 
+    this.makeUserTeacher = async function (username) {
+        var user = await this.getUserByUserName(username);
+        user.isTeacher = true;
+        await this.saveUser(user);
+    };
+
     this.getHashPassword = function (password) {
         var hash = crypto.createHash('sha1');
         hash.update(password);

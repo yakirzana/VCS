@@ -1,0 +1,53 @@
+<b><%= strings.EditTeachers %>:</b> <br/>
+<div class="result alert" id="resultEditTeachers">loading...</div>
+<p><%= strings.EditTeachersText %></p>
+<form id="EditTeachersForm" action="/editTeachers">
+    <div id="selectUsersEditTeachers"></div>
+    <button type="submit" class="btn btn-primary"><%= strings.EditTeachers %></button>
+</form>
+
+
+<script>
+
+    function initTeachers() {
+        $('#loading-indicator').show();
+        getUsers("selectUsersEditTeachers", 0, 0);
+        $('#loading-indicator').hide();
+    }
+
+    // Attach a submit handler to the form
+    $("#EditTeachersForm").submit(function (event) {
+        $('#loading-indicator').show();
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Get some values from elements on the page:
+        var $form = $(this),
+            users = JSON.stringify(getSelectedUsers($(this).find(".list-group")[0].children, true, true)),
+            url = $form.attr("action");
+
+        // Send the data using post
+        var posting = $.post(url, {
+            users: users
+        });
+
+        // Put the results in a div
+        posting.done(function (data) {
+            data = JSON.parse(data);
+            var result = data.result;
+            $("#resultEditTeachers").empty().append(result);
+            if (result == "<%= strings.successesForm %>") {
+                $("#resultEditTeachers").removeClass("alert-danger");
+                $("#resultEditTeachers").addClass("alert-success");
+            }
+
+            else {
+                $("#resultEditTeachers").removeClass("alert-success");
+                $("#resultEditTeachers").addClass("alert-danger");
+            }
+            $('#loading-indicator').hide();
+            $("#resultEditTeachers").fadeOut().fadeIn();
+            getUsers("selectUsers", 0, 0);
+        });
+    });
+</script>
