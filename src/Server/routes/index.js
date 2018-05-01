@@ -211,11 +211,13 @@ module.exports = function (app, sl, socket, log) {
 
     app.get('/room/:roomId*', checkAuthRestricted, async function (req, res) {
         var roomId = req.params.roomId;
-        if (this.loggedIsTeacher)
-            sl.alerts.removeAlert(roomId);
         var room;
         try {
+            if (this.loggedIsTeacher)
+                sl.alerts.removeAlert(roomId);
             room = await sl.rooms.getRoomById(roomId);
+            if (!this.loggedIsTeacher && !room.users.contains(this.loggedUser))
+                throw new Error();
             var chats = await sl.chats.getMessagesByRoom(parseInt(roomId));
             res.render('pages/room', {
                 page: "room",
@@ -227,12 +229,11 @@ module.exports = function (app, sl, socket, log) {
             });
         }
         catch (err) {
-            //TODO replace with error msg to user
-            res.render('pages/home', {
-                page: "home",
+            res.render('pages/noAccess', {
+                page: "noAccess",
                 strings: sl.strings,
                 logged: this.loggedUser,
-                isTech: this.loggedIsTeacher
+                isTech: this.loggedIsTeacher,
             });
         }
         //
@@ -240,25 +241,35 @@ module.exports = function (app, sl, socket, log) {
     });
 
     app.get('/class/:classId*', checkAuthRestricted, async function (req, res) {
-        var classId = req.params.classId;
-        var user = await sl.users.getUserByUserName(this.loggedUser);
-        if (this.loggedIsTeacher)
-            var rooms = await sl.classes.getRoomsInClass(classId);
-        else
-            var rooms = await sl.classes.getRoomsAccessible(parseInt(classId), this.loggedUser);
-        var alert = await sl.alerts.getAlertsFromClass(classId);
-        var myClass = await sl.classes.getClassByID(classId);
-        res.render('pages/class', {
-            page: "class",
-            strings: sl.strings,
-            classId,
-            logged: this.loggedUser,
-            isTech: this.loggedIsTeacher,
-            isTeacher: user.isTeacher,
-            rooms: rooms,
-            alert: alert,
-            myClass: myClass
-        });
+        try {
+            var classId = req.params.classId;
+            var user = await sl.users.getUserByUserName(this.loggedUser);
+            if (this.loggedIsTeacher)
+                var rooms = await sl.classes.getRoomsInClass(classId);
+            else
+                var rooms = await sl.classes.getRoomsAccessible(parseInt(classId), this.loggedUser);
+            var alert = await sl.alerts.getAlertsFromClass(classId);
+            var myClass = await sl.classes.getClassByID(classId);
+            res.render('pages/class', {
+                page: "class",
+                strings: sl.strings,
+                classId,
+                logged: this.loggedUser,
+                isTech: this.loggedIsTeacher,
+                isTeacher: user.isTeacher,
+                rooms: rooms,
+                alert: alert,
+                myClass: myClass
+            });
+        }
+        catch (err) {
+            res.render('pages/noAccess', {
+                page: "noAccess",
+                strings: sl.strings,
+                logged: this.loggedUser,
+                isTech: this.loggedIsTeacher,
+            });
+        }
     });
 
     app.get('/', checkAuth, function (req, res) {
