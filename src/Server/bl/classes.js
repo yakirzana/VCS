@@ -80,8 +80,10 @@ module.exports = function (dl) {
 
     this.editClass = async function (classID, name, desc) {
         var cls = await  this.getClassByID(classID);
-        cls.name = name;
-        cls.descriptions = desc;
-        await this.saveClass(cls);
+        if (cls != null) {
+            cls.name = name;
+            cls.descriptions = desc;
+            await this.saveClass(cls);
+        }
     }
 };

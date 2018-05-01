@@ -1,8 +1,11 @@
 var Message = require('../classes/Message.js');
 
-module.exports = function (db) {
+module.exports = function (db, log) {
     this.addNewMessage = function (msg) {
         db.collection('messages').insertOne(msg, function (err, r) {
+            log.info("Add Chat " + msg + " Completed");
+            if (err)
+                log.error("Add Chat " + msg + " Failed " + err.message);
         });
     };
 
@@ -18,6 +21,7 @@ module.exports = function (db) {
             }
             return msgList;
         } catch (err) {
+            log.error("Error on BL getMessagesByRoom " + err.message);
             return null;
         }
     };
@@ -30,6 +34,9 @@ module.exports = function (db) {
                 _roomID: msg.roomID
             }
             , function (err, r) {
+                log.info("Delete Chat " + msg + " Completed");
+                if (err)
+                    log.error("Delete Chat " + msg + " Failed " + err.message);
             });
     };
 

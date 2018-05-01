@@ -1,8 +1,11 @@
 var User = require('../classes/User.js');
 
-module.exports = function (db) {
+module.exports = function (db, log) {
     this.addUser = function (user) {
         db.collection('users').insertOne(user, function (err, r) {
+            log.info("Add user " + user + " Completed");
+            if (err)
+                log.error("Add user " + user + " Failed " + err.message);
         });
     };
 
@@ -14,13 +17,18 @@ module.exports = function (db) {
             user = Object.assign(new User, user);
             return user;
         } catch (err) {
+            log.error("Error on Bl getUserByUserName " + err.message);
             return null;
         }
     };
 
     this.deleteUser = function (user) {
         db.collection('users').deleteOne({_username: user.username}, function (err, r) {
+            log.info("Delete user " + user + " Completed");
+            if (err)
+                log.error("Delete user " + user + " Failed " + err.message);
         });
+
     };
 
     this.saveUser = async function (user) {

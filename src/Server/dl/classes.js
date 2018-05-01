@@ -1,6 +1,6 @@
 var Class = require('../classes/Class.js');
 
-module.exports = function (db) {
+module.exports = function (db, log) {
     this.getRoomsInClass = async function (classID) {
         try {
             let clss = await db.collection('classes').findOne({_classID: classID});
@@ -9,6 +9,7 @@ module.exports = function (db) {
             clss = Object.assign(new Class, clss);
             return clss.roomList;
         } catch (err) {
+            log.error("error on bl getRoomsInClass " + err.message);
             return null;
         }
     };
@@ -21,17 +22,24 @@ module.exports = function (db) {
             clss = Object.assign(new Class, clss);
             return clss;
         } catch (err) {
+            log.error("error on bl getClassByID With classID " + classID + " " + err.message);
             return null;
         }
     };
 
     this.addNewClass = function (clss) {
         db.collection('classes').insertOne(clss, function (err, r) {
+            log.info("Add Class " + clss + " Completed");
+            if (err)
+                log.error("Add Class " + Class + " Failed " + err.message);
         });
     };
 
     this.removeClass = function (classID) {
         db.collection('classes').deleteOne({_classID: classID}, function (err, r) {
+            log.info("Delete Class " + classID + " Completed");
+            if (err)
+                log.error("Delete Class " + classID + " Failed " + err.message);
         });
     };
 
@@ -92,6 +100,7 @@ module.exports = function (db) {
             }
             return clssList;
         } catch (err) {
+            log.error("error on bl getAllClasses " + err.message);
             return null;
         }
     };
@@ -108,6 +117,7 @@ module.exports = function (db) {
             }
             return clssList;
         } catch (err) {
+            log.error("error on bl getAllClassesOfTeach " + err.message);
             return null;
         }
     };

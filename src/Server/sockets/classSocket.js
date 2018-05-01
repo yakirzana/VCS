@@ -1,10 +1,11 @@
-module.exports = function (io, sl) {
+module.exports = function (io, sl, log) {
     io = io.of('/classes');
     var socketClass;
     io.on('connection', function (socket) {
         socketClass = socket;
         var classID = socket.handshake.headers.referer.split("/").pop();
         socket.join("class" + classID);
+        log.info(socket + " joined");
     });
 
     this.addAlert = function (classID, roomID, alertType) {
@@ -14,8 +15,8 @@ module.exports = function (io, sl) {
         msg = JSON.stringify(msg);
         if (io !== undefined)
             io.emit('alert', msg);
-        console.log("finish send");
         sl.alerts.addAlert(roomID, moment);
+        log.info("got alert to class " + classID + " room " + roomID + " alertType " + moment);
     };
 };
 

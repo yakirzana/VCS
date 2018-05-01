@@ -1,6 +1,6 @@
 var SL = require('../sl');
 
-module.exports = function (app, sl, socket) {
+module.exports = function (app, sl, socket, log) {
     this.loggedUser = null;
     this.loggedIsTeacher = null;
 
@@ -329,8 +329,29 @@ module.exports = function (app, sl, socket) {
         var roomId = req.params.roomId;
         var alertType = req.params.alertType;
         console.log("got alert to " + roomId + " " + alertType);
+        log.info("Routs: got alert to " + roomId + " " + alertType);
         socket.alerts.addAlert(null, roomId, {"critical_moment": alertType});
         res.end("OK");
+    });
+    //
+
+
+    // Errors!!
+
+    //The 404 Route (ALWAYS Keep this as the last route)
+    app.get('*', function (req, res) {
+        res.render('pages/404', {
+            page: "404",
+            strings: sl.strings,
+            logged: this.loggedUser,
+            isTech: this.loggedIsTeacher
+        });
+    });
+
+    app.use(function (err, req, res, next) {
+        console.log("Got Error ON Express!! " + err.msg);
+        log.error("Got Error ON Express!! " + err.msg);
+        next();
     });
     //
 };

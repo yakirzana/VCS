@@ -1,8 +1,11 @@
 var Room = require('../classes/Room.js');
 
-module.exports = function (db) {
+module.exports = function (db, log) {
     this.addRoom = function (room) {
         db.collection('rooms').insertOne(room, function (err, r) {
+            log.info("Delete Room  " + room + " Completed");
+            if (err)
+                log.error("Delete Room " + room + " Failed " + err.message);
         });
     };
 
@@ -14,6 +17,7 @@ module.exports = function (db) {
             room = Object.assign(new Room, room);
             return room;
         } catch (err) {
+            log.error("Error on getRoomById BL " + err.message);
             return null;
         }
     };
@@ -30,6 +34,7 @@ module.exports = function (db) {
             }
             return roomList;
         } catch (err) {
+            log.error("Error on getAllRooms BL " + err.message);
             return null;
         }
     };
@@ -58,6 +63,7 @@ module.exports = function (db) {
         try {
             db.collection('rooms').deleteOne({_id: id}, function (err, r) {
                 if (err) throw err;
+                log.info("delete room " + id + " Completed");
             });
         }
         catch (err) {
@@ -89,6 +95,7 @@ module.exports = function (db) {
         var room = await this.getRoomById(id);
         room.listUsers.push(username);
         await this.saveRoom(room);
+        log.info("add user " + username + " to Room " + id + " Completed");
         return;
     };
 

@@ -1,6 +1,6 @@
 var config = require('../config');
 
-module.exports = function (io, sl, classSocket) {
+module.exports = function (io, sl, classSocket, log) {
     io = io.of('/chat');
     io.on('connection', async function(socket) {
         var roomId = socket.handshake.headers.referer.split("/").pop();
@@ -8,14 +8,15 @@ module.exports = function (io, sl, classSocket) {
         socket.on('addMsg', function (msg) {
             sl.chats.addNewMessage(msg._username, msg._date, msg._msg, msg._roomID);
             socket.broadcast.to(msg._roomID).emit('addMsg', msg);
+            log.info("got Chet Message " + msg + " on room " + roomId);
 
-            analyzeMsg(classSocket, msg);
+            analyzeMsg(classSocket, msg, log);
         });
 
     });
 };
 
-function analyzeMsg(classSocket, msg) {
+function analyzeMsg(classSocket, msg, log) {
     var request = require('request');
 
     var options = {
@@ -28,14 +29,20 @@ function analyzeMsg(classSocket, msg) {
             "timestamp": msg._date
         }
     };
+
     console.log("ChatSocket: send post to " + config.urlRestSendMessage + " with chat msg from room ", msg._roomID + " at time " + msg._date);
+    log.info("ChatSocket: send post to " + config.urlRestSendMessage + " with chat msg from room ", msg._roomID + " at time " + msg._date);
+
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("ChatSocket: got answer from post : " + JSON.stringify(body));
+            log.info("ChatSocket: got answer from post : " + JSON.stringify(body));
             classSocket.addAlert(1, msg._roomID, body);
         }
-        if (error)
+        if (error) {
             console.log("ChatSocket: " + error);
+            log.info("ChatSocket: " + error);
+        }
     });
 
 }
