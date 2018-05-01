@@ -170,3 +170,7 @@ function lockBoard(lock) {
             timerId = setTimeout(lockBoard, 1000 * room._timeLimit, false);
     }
 }
+
+function finishTask() {
+    socket.emit('finish', _user);
+}

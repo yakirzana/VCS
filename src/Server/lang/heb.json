@@ -63,5 +63,6 @@
   "areYouSureDelete": "האם אתה בטוח שברצונך למחוק?",
   "resetBoard": "איפוס לוח",
   "selectUsersForRoom": "בחירת משתמשים לכיתה",
-  "changeUserToTeach": "הפיכת משתמשים למורים"
+  "changeUserToTeach": "הפיכת משתמשים למורים",
+  "finish": "סיימתי"
 }

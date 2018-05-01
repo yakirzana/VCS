@@ -48,6 +48,10 @@ module.exports = function (io, sl) {
             releaseControl(user);
         });
 
+        socket.on('finish', function (user) {
+            sendPost(config.urlRestDrag, roomId, user);
+        });
+
         function releaseControl(user) {
             if(room == undefined || user != room.userInControl) return;
             room.isLocked = false;
@@ -82,7 +86,7 @@ function removeUser(socket, roomId) {
     userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
-    sendPost(config.urlRestDisconnect, roomId, socket.user);
+    sendPost(config.urlRestDS, roomId, socket.user);
 }
 
 function sendPost(url, roomID, username) {

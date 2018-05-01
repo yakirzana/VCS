@@ -7,8 +7,11 @@
 </script>
 <script src="/scripts/board.js"></script>
 <div class="toolBar">
-    <button id="btnControl" type="button" onclick="lockBoard(_isLocked)" class="btn btn-success"><%- strings.takeControl %></button>
-    <span id="userInControl" style="width: 150px;" class="alert alert-info"><%- strings.noOneInControl %></span>
+    <button id="btnControl" type="button" onclick="lockBoard(_isLocked)"
+            class="btn btn-primary"><%- strings.takeControl %></button>
+    <span id="userInControl" style="padding-top: 5px; padding-bottom: 10px;"
+          class="alert alert-info"><%- strings.noOneInControl %></span>
+    <button id="btnControl" type="button" onclick="finishTask()" class="btn btn-success"><%- strings.finish %></button>
 
     <div id="listOfUsers">
         <b><%- strings.activeUsers %>:</b><br/>
