@@ -5,7 +5,7 @@ module.exports = function (io, sl, log) {
         socketClass = socket;
         var classID = socket.handshake.headers.referer.split("/").pop();
         socket.join("class" + classID);
-        log.info(socket + " joined");
+        log.info(socket.toString() + " joined");
     });
 
     this.addAlert = function (classID, roomID, alertType) {
