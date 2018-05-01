@@ -46,9 +46,11 @@
 }
 
 #key {
-    padding-top: 20px;
+    background-color: white;
     align-items: center;
     text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
 .alert {

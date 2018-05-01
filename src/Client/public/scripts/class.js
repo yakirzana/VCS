@@ -1,7 +1,9 @@
 var socketClass = io('/classes');
 
+
 $(document).ready(function () {
     initSocket();
+    fixNav();
 });
 
 function initSocket() {
@@ -100,4 +102,17 @@ function getAlertColor(alertType) {
         default :
             return "";
     }
+}
+
+
+function fixNav() {
+    var elementPosition = $('#key').offset();
+
+    $(window).scroll(function () {
+        if ($(window).scrollTop() > elementPosition.top) {
+            $('#key').addClass("fixed-top");
+        } else {
+            $('#key').removeClass("fixed-top");
+        }
+    });
 }

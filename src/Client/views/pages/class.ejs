@@ -11,6 +11,7 @@
         var enterRoom = "<%- strings.EnterRoom %>";
     </script>
     <script src="/scripts/class.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header>
@@ -21,10 +22,11 @@
         <h1 class="jumbotron-heading"><%= myClass._name %></h1>
         <p class="lead text-muted"><%= myClass._descriptions %></p>
         <p class="lead text-muted"><%- strings.Here_you_can_see_Rooms_that_you_can_join %></p>
+        <br>
     </div>
 
     <% if (isTeacher) { %>
-    <div id="key">
+    <nav id="key" class="navbar">
         <%- strings.key %>:
         <br><br>
         <div class="alert alert-primary" role="alert">
@@ -42,7 +44,7 @@
         <div class="alert alert-warning" role="alert">
             NMD
         </div>
-    </div>
+    </nav>
     <% } %>
 </section>
 
