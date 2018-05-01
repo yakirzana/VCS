@@ -5,14 +5,14 @@ var msgIndex = 0;
 
 function initChat() {
     for(var chat of chats) {
-        addMsg(chat._username == user, chat._username, chat._date, chat._msg, false,false);
+        addMsg(chat._username == user, chat._username, chat._date, chat._msg, false, false, chat._isTeacher);
     }
     $(".content").animate({ scrollTop: $('.content').prop("scrollHeight")}, 1);
 }
 
 function initSocket() {
     socketChat.on('addMsg',function (msg) {
-        addMsg(msg._username == user, msg._username, msg._date, msg._msg,false,true);
+        addMsg(msg._username == user, msg._username, msg._date, msg._msg, false, true, msg._isTeacher);
     });
 }
 
@@ -32,9 +32,7 @@ $( document ).ready(function() {
 });
 
 
-
-
-function getMsgHtml(isUser, username, time, msg) {
+function getMsgHtml(isUser, username, time, msg, isTeacher) {
     var momentTime = moment(time, "DD/MM/YYYY H:mm:ss").fromNow();
     var msgToAdd = "<li class=\"";
     if(isUser)
@@ -42,7 +40,10 @@ function getMsgHtml(isUser, username, time, msg) {
     else
         msgToAdd += "other";
     msgToAdd += "\">";
-    msgToAdd += "<div class=\"msg\">";
+    if (isTeacher)
+        msgToAdd += "<div class=\"msg font-weight-bold\">";
+    else
+        msgToAdd += "<div class=\"msg\">";
     msgToAdd += "<span class=\"username\">" + username + "</span>";
     msgToAdd += "<p>" + msg + "</p>";
     msgToAdd += "<span id='chat" + msgIndex + "'><time>" + momentTime + "</time></span>";
@@ -54,8 +55,8 @@ function getMsgHtml(isUser, username, time, msg) {
     return msgToAdd;
 }
 
-function addMsg(isUser, username, time, msg, fromClient, animate) {
-    var msgToAdd = getMsgHtml(isUser, username, time, msg);
+function addMsg(isUser, username, time, msg, fromClient, animate, isTeacher = false) {
+    var msgToAdd = getMsgHtml(isUser, username, time, msg, isTeacher);
     if(animate) {
         $(msgToAdd).hide().appendTo(".content").show("slow");
         $(".content").animate({ scrollTop: $('.content').prop("scrollHeight")}, 1000);
@@ -65,14 +66,20 @@ function addMsg(isUser, username, time, msg, fromClient, animate) {
     }
 
     if(fromClient)
-        socketChat.emit('addMsg',{_username: username, _date: time, _msg: msg, _roomID: room._id});
+        socketChat.emit('addMsg', {
+            _username: username,
+            _date: time,
+            _msg: msg,
+            _roomID: room._id,
+            _isTeacher: isTeacher
+        });
 }
 
 function sendMsg() {
     var msg = $("#msg").val().trim();
     $("#msg").val("");
     if(msg == "") return;
-    addMsg(true, user, moment().format('DD/MM/YYYY H:mm:ss'), msg, true, true);
+    addMsg(true, user, moment().format('DD/MM/YYYY H:mm:ss'), msg, true, true, isTech);
 }
 
 
