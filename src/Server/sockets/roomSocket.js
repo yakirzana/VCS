@@ -2,7 +2,7 @@ var config = require('../config');
 var usersInRooms = [];
 var userCount = [];
 
-module.exports = function (io, sl, log) {
+module.exports = function (io, sl, classSocket, log) {
     io = io.of('/rooms');
     io.on('connection', async function(socket) {
         var roomId = socket.handshake.headers.referer.split("/").pop();
@@ -15,16 +15,14 @@ module.exports = function (io, sl, log) {
             socket.emit('init', room.userInControl);
             socket.user = username;
 
-            addUser(socket, roomId, log);
+            addUser(socket, roomId, log, classSocket);
             log.info("User " + username + " is join to room " + roomId);
         });
 
         socket.on('disconnect', function () {
             if (socket.user == undefined) return;
             releaseControl(socket.user);
-
-            removeUser(socket, roomId, log);
-
+            removeUser(socket, roomId, log, classSocket);
             log.info("User " + socket.user + " is disconnect from room " + roomId);
         });
 
@@ -32,7 +30,7 @@ module.exports = function (io, sl, log) {
             socket.broadcast.to(roomId).emit('update', update);
             room.base64 = update;
             sl.rooms.saveRoom(room);
-            sendPost(config.urlRestDrag, roomId, socket.user, log);
+            sendPost(config.urlRestDrag, roomId, socket.user, log, classSocket);
         });
 
         socket.on('lockFromClient', function (user) {
@@ -48,7 +46,7 @@ module.exports = function (io, sl, log) {
         });
 
         socket.on('finish', function (user) {
-            sendPost(config.urlRestDS, roomId, user, log);
+            sendPost(config.urlRestDS, roomId, user, log, classSocket);
             log.info("got finish task from room " + roomId);
         });
 
@@ -63,7 +61,7 @@ module.exports = function (io, sl, log) {
 };
 
 
-function addUser(socket, roomId, log) {
+function addUser(socket, roomId, log, classSocket) {
     if (usersInRooms[roomId] == undefined)
         usersInRooms[roomId] = [];
     if (userCount[roomId] == undefined)
@@ -75,10 +73,10 @@ function addUser(socket, roomId, log) {
     userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) + 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
-    sendPost(config.urlRestConnect, roomId, socket.user, log);
+    sendPost(config.urlRestConnect, roomId, socket.user, log, classSocket);
 }
 
-function removeUser(socket, roomId, log) {
+function removeUser(socket, roomId, log, classSocket) {
     if (usersInRooms[roomId] == undefined) return;
     if (userCount[roomId].has(socket.user) && userCount[roomId].get(socket.user) == 1) {
         usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
@@ -86,10 +84,10 @@ function removeUser(socket, roomId, log) {
     userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
-    sendPost(config.urlRestDS, roomId, socket.user, log);
+    sendPost(config.urlRestDS, roomId, socket.user, log, classSocket);
 }
 
-function sendPost(url, roomID, username, log) {
+function sendPost(url, roomID, username, log, classSocket) {
     var request = require('request');
     var moment = require('moment');
     var date = moment().format('DD/MM/YYYY H:mm:ss');
@@ -109,6 +107,7 @@ function sendPost(url, roomID, username, log) {
         if (!error && response.statusCode == 200) {
             console.log("RoomSocket: got answer from post : " + JSON.stringify(body));
             log.info("RoomSocket: got answer from post : " + JSON.stringify(body));
+            classSocket.addAlert(1, msg._roomID, body);
         }
         if (error) {
             console.log("RoomSocket: " + error);
