@@ -84,7 +84,7 @@ function removeUser(socket, roomId, log, classSocket) {
     userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
-    sendPost(config.urlRestDS, roomId, socket.user, log, classSocket);
+    sendPost(config.urlRestDisconnect, roomId, socket.user, log, classSocket);
 }
 
 function sendPost(url, roomID, username, log, classSocket) {
