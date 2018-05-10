@@ -216,7 +216,8 @@ module.exports = function (app, sl, socket, log) {
             if (this.loggedIsTeacher)
                 sl.alerts.removeAlert(roomId);
             room = await sl.rooms.getRoomById(roomId);
-            if (!this.loggedIsTeacher && !room.users.contains(this.loggedUser))
+            var listUsers = room.listUsers;
+            if (!this.loggedIsTeacher && !(listUsers.includes(this.loggedUser)))
                 throw new Error();
             var chats = await sl.chats.getMessagesByRoom(parseInt(roomId));
             res.render('pages/room', {
