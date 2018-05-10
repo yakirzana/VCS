@@ -5,11 +5,11 @@ module.exports = function (io, sl, log) {
         socketClass = socket;
         var classID = socket.handshake.headers.referer.split("/").pop();
         socket.join("class" + classID);
-        log.info(socket.toString() + " joined");
     });
 
     this.addAlert = function (classID, roomID, alertType) {
         var moment = alertType["critical_moment"];
+        log.info("got critical_moment: " + JSON.stringify(moment));
         if (moment == "NONE") return;
         var msg = {roomID: roomID, alertType: moment};
         msg = JSON.stringify(msg);
