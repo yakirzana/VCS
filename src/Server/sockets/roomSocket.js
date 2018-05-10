@@ -107,7 +107,7 @@ function sendPost(url, roomID, username, log, classSocket) {
         if (!error && response.statusCode == 200) {
             console.log("RoomSocket: got answer from post : " + JSON.stringify(body));
             log.info("RoomSocket: got answer from post : " + JSON.stringify(body));
-            classSocket.addAlert(1, msg._roomID, body);
+            classSocket.addAlert(1, roomID, body);
         }
         if (error) {
             console.log("RoomSocket: " + error);
