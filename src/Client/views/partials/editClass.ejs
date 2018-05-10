@@ -28,7 +28,7 @@
                 $("#resultEditClass").addClass("alert-danger");
             }
             $("#resultEditClass").css("display", "block");
-
+            $('html,body').scrollTop(0);
         });
     }
 
@@ -59,6 +59,7 @@
             }
             $('#loading-indicator').hide();
             $("#resultEditClass").fadeOut().fadeIn();
+            $('html,body').scrollTop(0);
         });
     }
 
