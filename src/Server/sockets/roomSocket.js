@@ -48,7 +48,7 @@ module.exports = function (io, sl, log) {
         });
 
         socket.on('finish', function (user) {
-            sendPost(config.urlRestDS, roomId, user);
+            sendPost(config.urlRestDS, roomId, user, log);
             log.info("got finish task from room " + roomId);
         });
 
@@ -103,17 +103,17 @@ function sendPost(url, roomID, username, log) {
         }
     };
     console.log("RoomSocket: send post to " + url + " with param: " + roomID + " " + username + " " + date);
-    if (log != undefined)
-        log.info("RoomSocket: send post to " + url + " with param: " + roomID + " " + username + " " + date);
+    log.info("RoomSocket: send post to " + url + " with param: " + roomID + " " + username + " " + date);
 
     request(options, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             console.log("RoomSocket: got answer from post : " + JSON.stringify(body));
             log.info("RoomSocket: got answer from post : " + JSON.stringify(body));
         }
-        if (error)
+        if (error) {
             console.log("RoomSocket: " + error);
-        log.error("RoomSocket: " + error);
+            log.error("RoomSocket: " + error);
+        }
     });
 
 }

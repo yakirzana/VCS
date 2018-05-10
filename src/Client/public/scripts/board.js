@@ -61,7 +61,7 @@ var parameters = {
     "height": $(document).height() - 125,
     "showToolBar":true,
     "showAlgebraInput":true,
-    "language":"eb",
+    "language": "en",
     "useBrowserForJS":true,
     "preventFocus":true,
     //"appName":"graphing"
