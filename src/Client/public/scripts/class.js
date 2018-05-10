@@ -11,7 +11,7 @@ function initSocket() {
     socketClass.on('alert', function (msg) {
         msg = JSON.parse(msg);
         var color = getAlertColor(msg.alertType);
-        console.log("got " + msg + " and color is " + color);
+        console.log("got " + JSON.stringify(msg) + " and color is " + color);
         addAlertToRoom(msg.roomID, color);
         var audio = new Audio('/images/alert.mp3');
         audio.play();
