@@ -54,11 +54,16 @@ function setSocketListeners() {
     })
 }
 
+var width = $(document).width();
+if (width > 1000)
+    width *= 0.8;
+var height = $(document).height() - 125;
 
 var parameters = {
     "id":"ggbApplet",
-    "width": $(document).width() * 0.8,
-    "height": $(document).height() - 125,
+    "width": width,
+    "height": height,
+    "scaleContainerClass": 'applet_container',
     "showToolBar":true,
     "showAlgebraInput":true,
     "language": "en",

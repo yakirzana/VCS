@@ -73,3 +73,16 @@
 .orangeBorder {
     border: 5px solid orange;
 }
+
+.alertType {
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+}
+
+@media only screen and (max-width: 60em) {
+    .alertType {
+        font-size: 70%;
+        padding: 0;
+    }
+}

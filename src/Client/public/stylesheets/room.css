@@ -49,3 +49,35 @@
     overflow: auto;
     float: left;
 }
+
+@media only screen and (max-width: 70em) {
+    #listOfUsers {
+        float: none;
+        margin-top: 5%;
+        width: 100%;
+    }
+}
+
+#boardDiv {
+    width: 80%
+}
+
+#chatDiv {
+    width: 20%;
+}
+
+@media only screen and (max-width: 60em) {
+    #boardDiv {
+        width: auto;
+        float: none;
+        display: block;
+        clear: both;
+    }
+
+    #chatDiv {
+        width: auto;
+        float: none;
+        display: block;
+        clear: both;
+    }
+}
