@@ -3,9 +3,9 @@ var Message = require('../classes/Message.js');
 module.exports = function (db, log) {
     this.addNewMessage = function (msg) {
         db.collection('messages').insertOne(msg, function (err, r) {
-            log.info("Add Chat " + msg + " Completed");
+            log.info("Add Chat " + JSON.stringify(msg) + " Completed");
             if (err)
-                log.error("Add Chat " + msg + " Failed " + err.message);
+                log.error("Add Chat " + JSON.stringify(msg) + " Failed " + err.message);
         });
     };
 

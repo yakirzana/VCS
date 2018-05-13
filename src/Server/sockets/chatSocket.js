@@ -8,9 +8,9 @@ module.exports = function (io, sl, classSocket, log) {
         socket.on('addMsg', function (msg) {
             sl.chats.addNewMessage(msg._username, msg._date, msg._msg, msg._roomID);
             socket.broadcast.to(msg._roomID).emit('addMsg', msg);
-            log.info("got Chet Message " + msg + " on room " + roomId);
-
-            analyzeMsg(classSocket, msg, log);
+            log.info("got Chet Message " + JSON.stringify(msg) + " on room " + roomId);
+            if (!msg._isTeacher)
+                analyzeMsg(classSocket, msg, log);
         });
 
     });

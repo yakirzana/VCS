@@ -16,7 +16,7 @@ module.exports = function (io, sl, log) {
         if (io !== undefined)
             io.emit('alert', msg);
         sl.alerts.addAlert(roomID, moment);
-        log.info("got alert to class " + classID + " room " + roomID + " alertType " + moment);
+        log.info("got alert to room " + roomID + " alertType " + moment);
     };
 };
 
