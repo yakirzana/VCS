@@ -2,6 +2,10 @@ const crypto = require('crypto');
 var MongoClient = require('mongodb').MongoClient;
 var DL = require('../../src/Server/dl');
 var BL = require('../../src/Server/bl');
+// Log File
+var Log = require('../../src/Server/logs/log');
+var log = new Log("TESTError.txt", "TESTInfo.txt");
+//
 var configDB = require('../../src/Server/config/index');
 var _db;
 var bl;
@@ -178,7 +182,9 @@ exports.group = {
 exports.setUp = function (done) {
     MongoClient.connect(configDB.urlDB, function (err, db) {
         _db = db;
-        bl = new BL(new DL(db));
+        var dl = new DL(db, log);
+        bl = new BL(dl);
+
         done();
     });
 

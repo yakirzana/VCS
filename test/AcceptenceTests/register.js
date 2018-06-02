@@ -2,6 +2,10 @@ var MongoClient = require('mongodb').MongoClient;
 var DL = require('../../src/Server/dl');
 var BL = require('../../src/Server/bl');
 var SL = require('../../src/Server/sl');
+// Log File
+var Log = require('../../src/Server/logs/log');
+var log = new Log("TESTError.txt", "TESTInfo.txt");
+//
 var configDB = require('../../src/Server/config/');
 var _db;
 var sl;
@@ -103,7 +107,7 @@ exports.group = {
 exports.setUp = function (done) {
     MongoClient.connect(configDB.urlDB, function (err, db) {
         _db = db;
-        var bl = new BL(new DL(db));
+        var bl = new BL(new DL(db, log));
         sl = new SL(bl, "heb");
         done();
     });

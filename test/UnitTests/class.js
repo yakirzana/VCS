@@ -1,6 +1,10 @@
 var MongoClient = require('mongodb').MongoClient;
 var DL = require('../../src/Server/dl');
 var BL = require('../../src/Server/bl');
+// Log File
+var Log = require('../../src/Server/logs/log');
+var log = new Log("TESTError.txt", "TESTInfo.txt");
+//
 var configDB = require('../../src/Server/config/index');
 var _db;
 var bl;
@@ -112,6 +116,42 @@ exports.group = {
         test.done();
     },
 
+    testSaveClassTeacherUserName2: async function (test) {
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
+        clss.teacherUserName = "maria";
+        await bl.classes.saveClass(clss);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(id);
+        test.ok(clss1.teacherUserName == "maria");
+        await bl.classes.removeClass(id);
+        test.done();
+    },
+
+    testSaveClassTeacherUserName3: async function (test) {
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
+        clss.teacherUserName = "maria";
+        await bl.classes.saveClass(clss);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(id);
+        test.ok(clss1.teacherUserName == "maria");
+        await bl.classes.removeClass(id);
+        test.done();
+    },
+
+    testSaveClassTeacherUserName4: async function (test) {
+        var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
+        var clss = await bl.classes.getClassByID(id);
+        clss.teacherUserName = "maria";
+        await bl.classes.saveClass(clss);
+        await sleep(1000);
+        var clss1 = await bl.classes.getClassByID(id);
+        test.ok(clss1.teacherUserName == "maria");
+        await bl.classes.removeClass(id);
+        test.done();
+    },
+
     testSaveClassRoomList: async function (test) {
         var id = await bl.classes.addNewClass("yakir class", "This is Rotem class", "hod", [1, 12, 6]);
         var clss = await bl.classes.getClassByID(id);
@@ -129,7 +169,7 @@ exports.group = {
 exports.setUp = function (done) {
     MongoClient.connect(configDB.urlDB, function (err, db) {
         _db = db;
-        bl = new BL(new DL(db));
+        bl = new BL(new DL(db, log));
         done();
     });
 };
