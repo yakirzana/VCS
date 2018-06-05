@@ -164,7 +164,7 @@ function putUserInControl(userInControl) {
         $("#btnControl").html(strings.takeControl);
         _isLocked = true;
     }
-    else {
+    else if (_user === userInControl) {
         refreshIntervalId = setInterval(event, INTERVAL_UPDATE_BOARD);
         refreshIntervalIdPic = setInterval(eventPic, INTERVAL_UPDATE_PIC);
     }
