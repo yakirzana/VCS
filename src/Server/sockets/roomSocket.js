@@ -3,7 +3,9 @@ var usersInRooms = [];
 var userCount = [];
 
 module.exports = function (io, sl, classSocket, log) {
+    var ioPic = io.of('/pic');
     io = io.of('/rooms');
+
     io.on('connection', async function(socket) {
         var roomId = socket.handshake.headers.referer.split("/").pop();
         var room = await sl.rooms.getRoomById(roomId);
@@ -57,6 +59,12 @@ module.exports = function (io, sl, classSocket, log) {
             sl.rooms.saveRoom(room);
             socket.broadcast.to(roomId).emit('releaseFromServer', user);
         }
+    });
+
+    ioPic.on('connection', async function (socket) {
+        socket.on('pic', function (pic) {
+            classSocket.updatePic(pic);
+        });
     });
 };
 

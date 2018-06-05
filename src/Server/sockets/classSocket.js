@@ -18,6 +18,11 @@ module.exports = function (io, sl, log) {
         sl.alerts.addAlert(roomID, moment);
         log.info("got alert to room " + roomID + " alertType " + moment);
     };
+
+    this.updatePic = function (pic) {
+        if (io !== undefined)
+            io.emit('picUpdate', pic);
+    }
 };
 
 

@@ -2,13 +2,22 @@ var _user = user;
 var _isLocked = true;
 var _firstTime = true;
 var refreshIntervalId = undefined;
+var refreshIntervalIdPic = undefined;
 var socket = io('/rooms');
+var socketForPic = io('/pic');
 var strings = strings;
 var room = room;
 var currentBase64 = null;
 var isChanged = false;
 var updateVisibleTimeout = null;
 var timerId = null;
+
+// parameters
+
+const INTERVAL_UPDATE_BOARD = 500;
+const INTERVAL_UPDATE_PIC = 2000;
+
+//
 
 
 function setSocketListeners() {
@@ -40,7 +49,6 @@ function setSocketListeners() {
         putUserInControl(user);
     });
 
-
     socket.on('releaseFromServer',function(user) {
         releaseUserControl(user);
     });
@@ -65,6 +73,7 @@ var parameters = {
     "height": height,
     "scaleContainerClass": 'applet_container',
     "showToolBar":true,
+    "showMenuBar": true,
     "showAlgebraInput":true,
     "language": "en",
     "useBrowserForJS":true,
@@ -92,11 +101,20 @@ function event() {
     console.log("send");
 }
 
+function eventPic() {
+    var board = document.ggbApplet;
+    var pic = board.getPNGBase64(1, false, undefined);
+    var json = JSON.stringify({room: room._id, src: pic});
+    socketForPic.emit('pic', json);
+}
+
 
 function ggbOnInit(){
     document.ggbApplet.registerUpdateListener(updateListener);
-    document.ggbApplet.registerAddListener(AddListener);
-    document.ggbApplet.registerRemoveListener(RemoveListener);
+    document.ggbApplet.registerAddListener(addListener);
+    document.ggbApplet.registerRemoveListener(removeListener);
+    document.ggbApplet.registerStoreUndoListener(undoListener);
+    document.ggbApplet.registerClearListener(clearListener);
     if(!_firstTime) return;
     _firstTime = false;
     initBoard();
@@ -113,18 +131,30 @@ function initBoard() {
 }
 
 function updateListener(objName) {
+    var applet = document.ggbApplet;
     console.log("Update " + objName);
     isChanged = true;
 }
 
-function AddListener(objName) {
+function addListener(objName) {
     console.log("Add " + objName);
     isChanged = true;
 }
 
-function RemoveListener(objName) {
+function undoListener() {
+    console.log("undo");
+    isChanged = true;
+}
+
+function removeListener(objName) {
     console.log("Remove " + objName);
     isChanged = true;
+}
+
+function clearListener() {
+    console.log("clear");
+    isChanged = true;
+    ggbOnInit();
 }
 
 function putUserInControl(userInControl) {
@@ -135,7 +165,8 @@ function putUserInControl(userInControl) {
         _isLocked = true;
     }
     else {
-        refreshIntervalId = setInterval(event, 500);
+        refreshIntervalId = setInterval(event, INTERVAL_UPDATE_BOARD);
+        refreshIntervalIdPic = setInterval(eventPic, INTERVAL_UPDATE_PIC);
     }
     $('#userInControl').html(userInControl + " " + strings.inControl)
 
@@ -153,6 +184,7 @@ function releaseUserControl(user) {
     $('#userInControl').html(strings.noOneInControl);
     if(_user === user) {
         clearInterval(refreshIntervalId);
+        clearInterval(refreshIntervalIdPic);
     }
 }
 

@@ -1,4 +1,5 @@
 var socketClass = io('/classes');
+var socketPic = io('/pic');
 
 
 $(document).ready(function () {
@@ -16,6 +17,14 @@ function initSocket() {
         var audio = new Audio('/images/alert.mp3');
         audio.play();
     });
+
+    socketClass.on('picUpdate', function (msg) {
+        msg = JSON.parse(msg);
+        var img = $('#room' + msg.room + ' img');
+        if (img.length === 1) {
+            img.attr('src', "data:image/png;base64, " + msg.src);
+        }
+    })
 }
 
 function addAlertToRoom(roomID, color) {
@@ -53,10 +62,7 @@ function getRoomsHtml() {
 
 
 function cleanRoomAlertClick(roomID) {
-    var btn = window.event.which;
-    if (btn === 1 || btn === 2) {
-        cleanRoomBorder(roomID);
-    }
+    cleanRoomBorder(roomID);
 }
 
 
