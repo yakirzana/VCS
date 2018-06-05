@@ -65,7 +65,6 @@
         document.getElementById('selectInput').value = val;
     }
 
-
     // Attach a submit handler to the form
     $("#addRoomForm").submit(function (event) {
         $('#loading-indicator').show();
@@ -109,6 +108,7 @@
             }
             $('#addRoomForm')[0].reset();
             $('#loading-indicator').hide();
+            $('html,body').scrollTop(0);
             $("#resultAddRoom").fadeOut().fadeIn();
             getUsers("selectUsers", 0, 0);
         });
