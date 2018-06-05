@@ -3,9 +3,9 @@ var User = require('../classes/User.js');
 module.exports = function (db, log) {
     this.addUser = function (user) {
         db.collection('users').insertOne(user, function (err, r) {
-            log.info("Add user " + user + " Completed");
+            log.info("Add user " + JSON.stringify(user) + " Completed");
             if (err)
-                log.error("Add user " + user + " Failed " + err.message);
+                log.error("Add user " + JSON.stringify(user) + " Failed " + err.message);
         });
     };
 
