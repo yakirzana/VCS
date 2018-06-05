@@ -1,6 +1,5 @@
-# VCS
+# VCS - When cooperative learning meets technology
 Final project for degree
-When cooperative learning meets technology
 
 ### How to run
 nohup sudo forever src/Server/app.js &
