@@ -34,8 +34,9 @@
 }
 
 .card > img {
-    height: 220px;
-    width: 80%;
+    height: 200px;
+    width: 100%;
+    max-width: 240px;
     text-align: center;
     margin: 5px auto;
     padding-bottom: 5px;

@@ -114,7 +114,6 @@ function getAlertColor(alertType) {
 
 function fixNav() {
     var elementPosition = $('#key').offset();
-
     $(window).scroll(function () {
         if ($(window).scrollTop() > elementPosition.top) {
             $('#key').addClass("fixed-top");
