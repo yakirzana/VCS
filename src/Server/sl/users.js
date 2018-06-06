@@ -6,7 +6,7 @@ module.exports = function (bl) {
             await bl.users.getUserByUserName(username);
         }
         catch (err) {
-            throw new Error("the user don't exist in system");
+            throw new Error("the user doesn't exist in system");
         }
         if (!await bl.users.isPassMatch(username, password))
             throw new Error("illegal password");

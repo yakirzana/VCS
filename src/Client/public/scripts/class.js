@@ -9,14 +9,15 @@ $(document).ready(function () {
 
 function initSocket() {
     console.log("init");
-    socketClass.on('alert', function (msg) {
-        msg = JSON.parse(msg);
-        var color = getAlertColor(msg.alertType);
-        console.log("got " + JSON.stringify(msg) + " and color is " + color);
-        addAlertToRoom(msg.roomID, color);
-        var audio = new Audio('/images/alert.mp3');
-        audio.play();
-    });
+    if (isTeacher)
+        socketClass.on('alert', function (msg) {
+            msg = JSON.parse(msg);
+            var color = getAlertColor(msg.alertType);
+            console.log("got " + JSON.stringify(msg) + " and color is " + color);
+            addAlertToRoom(msg.roomID, color);
+            var audio = new Audio('/images/alert.mp3');
+            audio.play();
+        });
 
     socketClass.on('picUpdate', function (msg) {
         msg = JSON.parse(msg);

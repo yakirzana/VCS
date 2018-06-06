@@ -18,7 +18,7 @@ exports.group = {
             test.ok(false);
         }
         catch (err) {
-            test.equal(err.message, "the user don't exist in system");
+            test.equal(err.message, "the user doesn't exist in system\"");
         }
         test.done();
     },
