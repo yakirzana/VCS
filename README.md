@@ -9,3 +9,11 @@ sudo forever stop 0
 
 ### Config Path:
 src/Server/config/index.js
+
+### Working Demo:
+http://vcs-team.tk/
+
+Admin user: <br>
+username: admin, password: admin <br>
+Regular User: <br>
+username: stud1, password: 1234
