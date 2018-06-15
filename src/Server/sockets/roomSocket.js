@@ -70,29 +70,37 @@ module.exports = function (io, sl, classSocket, log) {
 
 
 function addUser(socket, roomId, log, classSocket) {
-    if (usersInRooms[roomId] == undefined)
+    if (usersInRooms[roomId] === undefined)
         usersInRooms[roomId] = [];
-    if (userCount[roomId] == undefined)
+    if (userCount[roomId] === undefined)
         userCount[roomId] = new Map();
+
     if (!userCount[roomId].has(socket.user))
         userCount[roomId].set(socket.user, 0);
-    if (userCount[roomId].get(socket.user) == 0)
+    if (userCount[roomId].get(socket.user) === 0) {
         usersInRooms[roomId].push(socket.user);
+
+        // Send only if this the first connection
+        sendPost(config.urlRestConnect, roomId, socket.user, log, classSocket);
+    }
+
     userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) + 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
-    sendPost(config.urlRestConnect, roomId, socket.user, log, classSocket);
+
 }
 
 function removeUser(socket, roomId, log, classSocket) {
-    if (usersInRooms[roomId] == undefined) return;
-    if (userCount[roomId].has(socket.user) && userCount[roomId].get(socket.user) == 1) {
+    if (usersInRooms[roomId] === undefined) return;
+    if (userCount[roomId].has(socket.user) && userCount[roomId].get(socket.user) === 1) {
         usersInRooms[roomId] = usersInRooms[roomId].filter(e => e !== socket.user);
+
+        // Send only if this the last connection
+        sendPost(config.urlRestDisconnect, roomId, socket.user, log, classSocket);
     }
     userCount[roomId].set(socket.user, userCount[roomId].get(socket.user) - 1);
     socket.emit('listOfUsers', usersInRooms[roomId]);
     socket.broadcast.to(roomId).emit('listOfUsers', usersInRooms[roomId]);
-    sendPost(config.urlRestDisconnect, roomId, socket.user, log, classSocket);
 }
 
 function sendPost(url, roomID, username, log, classSocket) {
