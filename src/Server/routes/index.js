@@ -54,7 +54,7 @@ module.exports = function (app, sl, socket, log) {
             if (!(post && post.username && post.password))
                 throw new Error("Missing info");
             var user = await sl.users.register(post.username, post.password, post.firstName, post.lastName, post.gender, post.email, false);
-            req.session.userHash = await sl.users.createUserHash(user.username);
+            req.session.userHash = await sl.users.createUserHash(post.username);
             req.session.username = post.username;
             res.redirect('/');
         }

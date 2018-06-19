@@ -36,7 +36,8 @@ module.exports = function (dl) {
 
     this.createUserHash = async function (username) {
         var user = await this.getUserByUserName(username);
-        return crypto.createHash('sha256').update(username + user.password).digest('hex');
+        var hash = await crypto.createHash('sha256').update(username + user.password).digest('hex');
+        return hash;
     };
 
     this.deleteUser = async function (username) {
