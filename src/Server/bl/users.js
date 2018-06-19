@@ -35,6 +35,7 @@ module.exports = function (dl) {
     };
 
     this.createUserHash = async function (username) {
+        await new Promise(resolve => setTimeout(resolve, 500));
         var user = await this.getUserByUserName(username);
         var hash = await crypto.createHash('sha256').update(username + user.password).digest('hex');
         return hash;
