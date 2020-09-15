@@ -19,7 +19,7 @@
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "moment": "^2.22.0",
-    "mongodb": "^2.2.34",
+    "mongodb": "^3.6.2",
     "nodeunit": "^0.11.2",
     "request": "latest",
     "socket.io": "^2.0.4"
